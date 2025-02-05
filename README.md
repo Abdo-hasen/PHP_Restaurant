@@ -4,6 +4,67 @@ A PHP-based web application for managing restaurant operations, including menu m
 
 ![Preview](assets/customer/images/preview.png) <!-- Add a screenshot later -->
 
+## Directory Structure
+restaurant-app/
+│
+├── assets/ # Static assets (CSS, JS, images)
+│ ├── admin/ # Staff dashboard assets
+│ │ ├── css/
+│ │ ├── js/
+│ │ └── images/
+│ │
+│ └── customer/ # Customer interface assets
+│ ├── css/
+│ ├── js/
+│ └── images/
+│
+├── includes/ # Reusable PHP components
+│ ├── admin/ # Staff dashboard includes
+│ │ ├── header.php
+│ │ ├── footer.php
+│ │ └── sidebar.php
+│ │
+│ ├── customer/ # Customer interface includes
+│ │ ├── header.php
+│ │ └── footer.php
+│ │
+│ └── common/ # Shared components
+│ ├── db.php # Database connection
+│ ├── auth.php # Authentication logic
+│ └── config.php # Global settings
+│
+├── admin/ # Staff dashboard
+│ ├── dashboard.php # Main dashboard
+│ ├── manage_users.php
+│ ├── manage_menu.php
+│ ├── manage_orders.php
+│ └── manage_reservations.php
+│
+├── customer/ # Customer interface
+│ ├── menu.php
+│ ├── order.php
+│ ├── reservation.php
+│ ├── order_tracking.php
+│ └── profile.php
+│
+├── functions/ # Business logic
+│ ├── orders.php
+│ ├── payments.php
+│ └── notifications.php
+│
+├── config/ # Configuration files
+│ └── constants.php # Environment constants
+│
+├── database/ # Database schemas
+│ ├── schema.sql # Table structure
+│ └── sample_data.sql # Initial test data
+│
+├── index.php # Landing page
+├── login.php # Shared login
+├── register.php # Registration
+├── logout.php # Session destroy
+└── .htaccess # URL routing (optional)
+
 ## Features
 - **User Management**: Staff/customer registration, login, and role-based access
 - **Menu Management**: CRUD operations for categories/items (staff-only)
