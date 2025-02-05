@@ -5,65 +5,67 @@ A PHP-based web application for managing restaurant operations, including menu m
 ![Preview](assets/customer/images/preview.png) <!-- Add a screenshot later -->
 
 ## Directory Structure
+```
 restaurant-app/
 │
-├── assets/ # Static assets (CSS, JS, images)
-│ ├── admin/ # Staff dashboard assets
-│ │ ├── css/
-│ │ ├── js/
-│ │ └── images/
-│ │
-│ └── customer/ # Customer interface assets
-│ ├── css/
-│ ├── js/
-│ └── images/
+├── assets/
+│   ├── admin/
+│   │   ├── css/
+│   │   ├── js/
+│   │   └── images/
+│   │
+│   └── customer/
+│       ├── css/
+│       ├── js/
+│       └── images/
 │
-├── includes/ # Reusable PHP components
-│ ├── admin/ # Staff dashboard includes
-│ │ ├── header.php
-│ │ ├── footer.php
-│ │ └── sidebar.php
-│ │
-│ ├── customer/ # Customer interface includes
-│ │ ├── header.php
-│ │ └── footer.php
-│ │
-│ └── common/ # Shared components
-│ ├── db.php # Database connection
-│ ├── auth.php # Authentication logic
-│ └── config.php # Global settings
+├── includes/
+│   ├── admin/
+│   │   ├── header.php
+│   │   ├── footer.php
+│   │   └── sidebar.php
+│   │
+│   ├── customer/
+│   │   ├── header.php
+│   │   └── footer.php
+│   │
+│   └── common/
+│       ├── db.php
+│       ├── auth.php
+│       └── config.php
 │
-├── admin/ # Staff dashboard
-│ ├── dashboard.php # Main dashboard
-│ ├── manage_users.php
-│ ├── manage_menu.php
-│ ├── manage_orders.php
-│ └── manage_reservations.php
+├── admin/
+│   ├── dashboard.php
+│   ├── manage_users.php
+│   ├── manage_menu.php
+│   ├── manage_orders.php
+│   └── manage_reservations.php
 │
-├── customer/ # Customer interface
-│ ├── menu.php
-│ ├── order.php
-│ ├── reservation.php
-│ ├── order_tracking.php
-│ └── profile.php
+├── customer/
+│   ├── menu.php
+│   ├── order.php
+│   ├── reservation.php
+│   ├── order_tracking.php
+│   └── profile.php
 │
-├── functions/ # Business logic
-│ ├── orders.php
-│ ├── payments.php
-│ └── notifications.php
+├── functions/
+│   ├── orders.php
+│   ├── payments.php
+│   └── notifications.php
 │
-├── config/ # Configuration files
-│ └── constants.php # Environment constants
+├── config/
+│   └── constants.php
 │
-├── database/ # Database schemas
-│ ├── schema.sql # Table structure
-│ └── sample_data.sql # Initial test data
+├── database/
+│   ├── schema.sql
+│   └── sample_data.sql
 │
-├── index.php # Landing page
-├── login.php # Shared login
-├── register.php # Registration
-├── logout.php # Session destroy
-└── .htaccess # URL routing (optional)
+├── index.php
+├── login.php
+├── register.php
+├── logout.php
+└── .htaccess
+```
 
 ## Features
 - **User Management**: Staff/customer registration, login, and role-based access
