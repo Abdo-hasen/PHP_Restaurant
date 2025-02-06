@@ -124,18 +124,6 @@ CREATE TABLE suppliers (
     phone VARCHAR(20)
 );
 
--- 12. Supplier Orders Table
-/*CREATE TABLE supplier_orders (
-    supplier_order_id INT AUTO_INCREMENT PRIMARY KEY,
-    supplier_id INT NOT NULL,
-    item_id INT NOT NULL,
-    quantity INT NOT NULL,
-    order_date DATE NOT NULL,
-    delivery_date DATE,
-    FOREIGN KEY (supplier_id) REFERENCES suppliers(supplier_id),
-    FOREIGN KEY (item_id) REFERENCES menu_items(item_id)
-);*/
-
 -- 12. Notifications Table
 CREATE TABLE notifications (
     notification_id INT AUTO_INCREMENT PRIMARY KEY,
