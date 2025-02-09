@@ -52,9 +52,8 @@ CREATE TABLE special_offers (
 CREATE TABLE orders (
     order_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
-    --order_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     status ENUM('Pending', 'Preparing', 'Ready', 'Delivered') DEFAULT 'Pending',
     total_amount DECIMAL(10,2) NOT NULL,
     special_instructions TEXT,
@@ -109,7 +108,7 @@ CREATE TABLE payments (
 -- 10. Inventory Table
 CREATE TABLE inventory (
     item_id INT PRIMARY KEY,
-	quantity INT NOT NULL.
+	quantity INT NOT NULL,
 	unit VARCHAR(50) NOT NULL,
     reorder_level INT DEFAULT 10,
     last_restocked DATE,
