@@ -1,5 +1,4 @@
 <?php
-
 $menuData = file_get_contents("assets/customer/menu.json");
 $menu = json_decode($menuData, true);
 ?>
@@ -352,18 +351,6 @@ $menu = json_decode($menuData, true);
             </div>
         </div>
     </footer>
-
-
-
-
-
-
-
-
-
-
-
-
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="script.js" defer></script>
 </body>
