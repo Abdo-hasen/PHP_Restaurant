@@ -11,7 +11,7 @@ class Database
   
 
     //helper properties
-    private $mysqli;
+    public $mysqli;
     private $table;
     private $addedSuccess = "added successfully";
     private $updatedSuccess = "updated successfully";

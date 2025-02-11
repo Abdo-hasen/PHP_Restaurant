@@ -12,18 +12,6 @@ require_once "./init.php";
 </head>
 
 <body class="bg-light">
-    <!--  check error -->
-
-    <?php if (isset($_SESSION["errors"])) : ?>
-        <?php foreach ($_SESSION["errors"] as $error) : ?>
-            <div class="alert alert-danger text-center mx-auto w-50">
-                <?= htmlspecialchars($error); ?>
-            </div>
-        <?php endforeach; ?>
-        <?php unset($_SESSION["errors"]); ?>
-    <?php endif; ?>
-
-
 
     <div class="container">
         <div class="row justify-content-center mt-5">
@@ -47,7 +35,15 @@ require_once "./init.php";
                                     <input type="file" id="profilePic" name="profilePic" class="d-none" accept="image/*">
                                 </div>
                             </div>
-
+                            <!-- check errors -->
+                            <?php if (isset($_SESSION["errors"])) : ?>
+                                <?php foreach ($_SESSION["errors"] as $error) : ?>
+                                    <div class="alert alert-danger text-center mx-auto w-50">
+                                        <?= htmlspecialchars($error); ?>
+                                    </div>
+                                <?php endforeach; ?>
+                                <?php unset($_SESSION["errors"]); ?>
+                            <?php endif; ?>
                             <div class="mb-3">
                                 <label for="fullName" class="form-label">Full Name</label>
                                 <input type="text" class="form-control" id="fullName" name="fullName" required>

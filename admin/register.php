@@ -3,8 +3,8 @@ session_start();
 
 require_once "./../init.php";
 
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+$errors= [];
+if (checkRequestMethod('POST')) { 
 
     $fullName = sanitizeInput($_POST['fullName']);
     $email = sanitizeInput($_POST['email']);
@@ -42,9 +42,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $maxFileSize = 2 * 1024 * 1024; // 2MB
 
         if (!in_array($fileType, $allowedTypes)) {
-            $errors[] = "Only JPEG, PNG, and GIF images are allowed.";
+            $errors[] = "Only JPEG, PNG, and GIF images are allowed";
         } elseif ($fileSize > $maxFileSize) {
-            $errors[] = "File size must be less than 2MB.";
+            $errors[] = "File size must be less than 2MB";
         } else {
             $upload_dir = './../assets/profile-image/'; 
             if (!file_exists($upload_dir)) {
