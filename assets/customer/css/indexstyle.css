@@ -36,7 +36,7 @@
     position: relative;
     width: 100%;
     height: 100vh;
-    background: url("assets/2.jpg") center/cover no-repeat;
+    background: url("/assets/customer/images/header1.jpg") center/cover no-repeat;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -264,16 +264,6 @@
     background: #a93226;
   }
   
-  /* Responsive */
-  @media (max-width: 768px) {
-    .reservation-container {
-      flex-direction: column;
-    }
-  
-    .input-row {
-      flex-direction: column;
-    }
-  }
   
   /* gallery styling */
   #imageSlider {

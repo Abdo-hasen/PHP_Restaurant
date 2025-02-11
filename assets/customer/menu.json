@@ -5,28 +5,28 @@
         "name": "Falafel (Ta'ameya)",
         "description": "Crispy deep-fried fava bean patties served with tahini sauce.",
         "price": 35,
-        "image": "assets/menu/flafel.jpg"
+        "image": "assets/customer/images/menu/flafel.jpg"
       },
       {
         "id": 2,
         "name": "Hummus",
         "description": "Creamy blend of chickpeas, tahini, garlic, and lemon juice.",
         "price": 40,
-        "image": "assets/menu/hummus.webp"
+        "image": "assets/customer/images/menu/hummus.webp"
       },
       {
         "id": 3,
         "name": "Hummus",
         "description": "Creamy blend of chickpeas, tahini, garlic, and lemon juice.",
         "price": 40,
-        "image": "assets/menu/hummus.webp"
+        "image": "assets/customer/images/menu/hummus.webp"
       },
       {
         "id": 4,
         "name": "Hummus",
         "description": "Creamy blend of chickpeas, tahini, garlic, and lemon juice.",
         "price": 40,
-        "image": "assets/menu/hummus.webp"
+        "image": "assets/customer/images/menu/hummus.webp"
       }
     ],
     "Breakfast": [
@@ -35,7 +35,7 @@
         "name": "Foul Medames",
         "description": "Mashed fava beans cooked with olive oil, cumin, and lemon juice.",
         "price": 30,
-        "image": "assets/menu/foul.jpg"
+        "image": "assets/customer/images/menu/foul.jpg"
       }
     ],
     "Lunch": [
@@ -44,7 +44,7 @@
         "name": "Koshari",
         "description": "A delicious mix of rice, pasta, lentils, chickpeas, and crispy onions with a tangy tomato sauce.",
         "price": 60,
-        "image": "../assets/menu/koushari.jpg"
+        "image": "assets/customer/images/menu/koushari.jpg"
       }
     ],
     "Dinner": [
@@ -53,7 +53,7 @@
         "name": "Molokhia with Chicken",
         "description": "Traditional green soup made from finely chopped jute leaves, served with roasted chicken and rice.",
         "price": 85,
-        "image": "assets/menu/molokhia.jpg"
+        "image": "assets/customer/images/menu/molokhia.jpg"
       }
     ]
   }

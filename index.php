@@ -1,5 +1,7 @@
 <?php
-require_once "handlers/indexphp.php"
+
+$menuData = file_get_contents("assets/customer/menu.json");
+$menu = json_decode($menuData, true);
 ?>
 
 <!DOCTYPE html>
@@ -9,10 +11,10 @@ require_once "handlers/indexphp.php"
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resto</title>
-    <link rel="icon" type="image/x-icon" href="assets/favicon.png">
+    <link rel="icon" type="image/x-icon" href="assets/customer/images/favicon.png">
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="/assets/customer/indexstyle.css">
+    <link rel="stylesheet" href="/assets/customer/css/indexstyle.css">
 </head>
 
 <body>
@@ -60,7 +62,7 @@ require_once "handlers/indexphp.php"
 
         <div class="row mt-4">
             <div class="col-md-6">
-                <img src="assets/header.avif" class="img-fluid rounded" alt="Restaurant Image">
+                <img src="/assets/customer/images/about1.jpg" class="img-fluid rounded" alt="Restaurant Image">
             </div>
 
             <div class="col-md-6">
@@ -89,7 +91,7 @@ require_once "handlers/indexphp.php"
 
             <div class="col-md-6">
                 <div class="video-container">
-                    <img src="assets/header.avif" class="img-fluid rounded" alt="Food Video">
+                    <img src="assets/customer/images/about2.avif" class="img-fluid rounded" alt="Food Video">
                     <i class="fas fa-play-circle"></i>
                 </div>
             </div>
@@ -158,7 +160,7 @@ require_once "handlers/indexphp.php"
         </div>
         <div class=" container-fluid my-5 reservation-container">
             <div class="reservation-image">
-                <img class="img-fluid rounded" src="assets/3.jpg" alt="Table Reservation">
+                <img class="img-fluid rounded" src="assets/customer/images/about1.jpg" alt="Table Reservation">
             </div>
             <div class="reservation-form">
                 <form action="#">
@@ -188,22 +190,22 @@ require_once "handlers/indexphp.php"
         <div id="imageSlider" class="carousel slide my-5 rounded" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active rounded">
-                    <img src="assets/gallery1.jpg" class="d-block w-100 rounded" alt="Image 1">
+                    <img src="assets/customer/images/gallery/gallery1.jpg" class="d-block w-100 rounded" alt="Image 1">
                 </div>
                 <div class="carousel-item">
-                    <img src="assets/gallery2.jpg" class="d-block w-100 rounded" alt="Image 2">
+                    <img src="assets/customer/images/gallery/gallery2.jpg" class="d-block w-100 rounded" alt="Image 2">
                 </div>
                 <div class="carousel-item">
-                    <img src="assets/gallery3.jpg" class="d-block w-100 rounded" alt="Image 3">
+                    <img src="assets/customer/images/gallery/gallery3.jpg" class="d-block w-100 rounded" alt="Image 3">
                 </div>
                 <div class="carousel-item">
-                    <img src="assets/gallery4.jpg" class="d-block w-100 rounded" alt="Image 3">
+                    <img src="assets/customer/images/gallery/gallery4.jpg" class="d-block w-100 rounded" alt="Image 3">
                 </div>
                 <div class="carousel-item">
-                    <img src="assets/gallery5.jpg" class="d-block w-100 rounded" alt="Image 3">
+                    <img src="assets/customer/images/gallery/gallery5.jpg" class="d-block w-100 rounded" alt="Image 3">
                 </div>
                 <div class="carousel-item">
-                    <img src="assets/gallery6.jpg" class="d-block w-100 rounded" alt="Image 3">
+                    <img src="assets/customer/images/gallery/gallery6.jpg" class="d-block w-100 rounded" alt="Image 3">
                 </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#imageSlider" data-bs-slide="prev">
