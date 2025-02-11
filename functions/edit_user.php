@@ -30,8 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-include '../includes/admin/header.php';
-?>
+include '../includes/admin/sidebar.php';?>
 
 <div class="container mt-4">
     <h2>Edit User</h2>

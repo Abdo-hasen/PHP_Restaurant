@@ -1,32 +1,25 @@
 <?php
-// dashboard.php
-require_once '../includes/common/db.php';
-// echo "Connected to database successfully!";
+require_once '../includes/common/db.php'; // Include the Database class
 
 // Fetch total products
-$query = "SELECT COUNT(*) AS total_products FROM menu_items";
-$result = $conn->query($query);
-$row = $result->fetch_assoc();
-$total_products = $row['total_products'];
+$db->query("SELECT COUNT(*) AS total_products FROM menu_items");
+$total_products = $db->single()['total_products'];
 
 // Fetch total orders
-$query = "SELECT COUNT(*) AS total_orders FROM orders";
-$result = $conn->query($query);
-$row = $result->fetch_assoc();
-$total_orders = $row['total_orders'];
+$db->query("SELECT COUNT(*) AS total_orders FROM orders");
+$total_orders = $db->single()['total_orders'];
 
 // Fetch monthly orders
-$query = "SELECT MONTH(created_at) AS month, COUNT(*) AS orders FROM orders GROUP BY MONTH(created_at)";
-$result = $conn->query($query);
+$db->query("SELECT MONTH(created_at) AS month, COUNT(*) AS orders FROM orders GROUP BY MONTH(created_at)");
 $monthly_orders = [];
-while ($row = $result->fetch_assoc()) {
+$results = $db->resultSet();
+foreach ($results as $row) {
     $monthly_orders[$row['month']] = $row['orders'];
 }
+
+include '../includes/admin/sidebar.php';
 include '../includes/admin/header.php';
 ?>
-
-    <div class="content animate__animated animate__fadeInUp">
-
         <div class="container">
             <div class="row mb-4">
                 <div class="col-md-4">

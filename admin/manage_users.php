@@ -38,6 +38,7 @@ if (empty($users)) {
     echo "<p class='alert alert-warning'>No users found.</p>";
 }
 
+include '../includes/admin/sidebar.php';
 include '../includes/admin/header.php';
 ?>
 
