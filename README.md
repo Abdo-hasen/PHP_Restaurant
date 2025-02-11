@@ -92,10 +92,7 @@ restaurant-app/
 
 ### 2. Installation
 ```bash
+
 # Clone repository
 git clone git@github.com:Abdo-hasen/PHP_Restaurant.git
 cd PHP_Restaurant
-
-# # Set up database
-# mysql -u root -p < database/schema.sql
-# mysql -u root -p restaurant_db < database/sample_data.sql
