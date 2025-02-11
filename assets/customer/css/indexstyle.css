@@ -1,0 +1,346 @@
+.navbar-nav .nav-link {
+    color: #6c757d; 
+    font-weight: 500;
+    transition: color 0.3s;
+  }
+  
+  .navbar-nav .nav-link:hover,
+  .navbar-nav .nav-link.active {
+    color: black;
+    position: relative;
+  }
+  
+  .navbar-nav .nav-link.active::after {
+    content: "";
+    display: block;
+    width: 40%;
+    height: 2px;
+    margin: auto;
+    margin-top: 2px;
+  }
+  
+  .btn-book {
+    background-color: #b42e23; 
+    color: white;
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-weight: bold;
+  }
+  
+  .btn-book:hover {
+    background-color: #921e1a;
+  }
+  
+  /* Hero Section Styling */
+  .hero-section {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: url("/assets/customer/images/header1.jpg") center/cover no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .hero-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  
+  .hero-overlay {
+    position: relative;
+    z-index: 2;
+  }
+  
+  .hero-title {
+    font-size: 8rem;
+    font-weight: 900;
+    color:#b42e23; 
+    text-transform: uppercase;
+    line-height: 0.85;
+    text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.7);
+  }
+  
+  .hero-text {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: white;
+    max-width: 800px;
+    margin: 20px auto;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  }
+  
+  /* Book a Table Button */
+  .btn-book {
+    background-color: #b42e23;
+    color: white;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-weight: bold;
+    transition: background 0.3s;
+  }
+  
+  .btn-book:hover {
+    background-color: #921e1a;
+  }
+  
+  /* Watch Video Button */
+  .btn-watch {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: black;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  .btn-watch:hover {
+    color: #b42e23;
+  }
+  
+  .btn-watch i {
+    border: 2px solid #b42e23;
+    border-radius: 50%;
+    padding: 6px;
+    color: #b42e23;
+  }
+  
+  .hero img {
+    max-width: 100%;
+    border-radius: 10px;
+  }
+  
+  .about-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+  .about-title span {
+    color: #b22222;
+  }
+  .book-table {
+    border: 2px solid #333;
+    padding: 15px;
+    text-align: center;
+    border-radius: 12px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+  }
+  .book-table p {
+    margin-bottom: 0;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  .book-table span {
+    color: #b22222;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  .video-container {
+    position: relative;
+    cursor: pointer;
+  }
+  .video-container i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+    color: #b22222;
+  }
+  
+  
+  .menu-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+  .menu-title span {
+    color: #b22222; 
+  }
+  .nav-tabs .nav-link.active {
+    border-bottom: 3px solid #b22222;
+    font-weight: bold;
+    color: #b22222;
+  }
+  .menu-item {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  .card-img-top {
+    width: 100%;
+    max-width: 200px;
+    border-radius: 50%;
+  }
+  .card-title {
+    margin-top: 15px;
+    font-weight: bold;
+  }
+  .card-text {
+    color: gray;
+  }
+  .card-price {
+    font-weight: bold;
+    color: #b22222;
+    font-size: 1.2rem;
+  }
+  .card-btn{
+      background-color: #b42e23; 
+    color: white;
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-weight: bold;
+  }
+  
+  /* book a table styling */
+  .reservation-container {
+    display: flex;
+    margin: auto;
+    background: #f8f8f8;
+    border-radius: 12px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  .reservation-image {
+    flex: 1;
+  }
+  
+  .reservation-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .reservation-form {
+    flex: 1;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .input-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .input-row input {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+  }
+  
+  textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    margin-bottom: 15px;
+  }
+  
+  .btn-reserve {
+    width: 100%;
+    padding: 14px;
+    background: #c0392b;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+  }
+  
+  .btn-reserve:hover {
+    background: #a93226;
+  }
+  
+  
+  /* gallery styling */
+  #imageSlider {
+    height: 700px;
+  }
+  
+  #imageSlider .carousel-inner,
+  #imageSlider .carousel-item,
+  #imageSlider img {
+    height: 700px;
+    object-fit: cover;
+  }
+  
+  /* contact stylying */
+  .contact-box {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .info-box {
+    display: flex;
+    align-items: center;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .info-box i {
+    font-size: 30px;
+    color: #c0392b;
+    margin-right: 15px;
+  }
+  
+  .btn-custom {
+    background-color: #c0392b;
+    color: white;
+    border-radius: 25px;
+    padding: 10px 30px;
+    border: none;
+  }
+  
+  .btn-custom:hover {
+    background-color: #a52a2a;
+  }
+  /* Footer Styling */
+  .footer {
+    background: #000;
+    padding-bottom: 20px;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Social Icons */
+  .social-icon {
+    font-size: 20px;
+    transition: transform 0.3s ease, color 0.3s ease;
+  }
+  .social-icon:hover {
+    transform: scale(1.2);
+    color: #b22222;
+  }
+  
+  /* Menu & Links */
+  .menu-link {
+    text-decoration: none;
+    color: #f8f9fa;
+    font-weight: 500;
+    display: block;
+    padding: 5px 0;
+    transition: all 0.3s ease-in-out;
+  }
+  .menu-link:hover {
+    padding-left: 8px;
+    color: #b22222;
+  }
+  
