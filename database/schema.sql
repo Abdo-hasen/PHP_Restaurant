@@ -11,7 +11,7 @@ CREATE TABLE users (
     role ENUM('staff', 'customer') NOT NULL DEFAULT 'customer',
     profile_picture VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     password_reset_token VARCHAR(255),
     INDEX (role)
 );
@@ -22,7 +22,7 @@ CREATE TABLE categories (
     category_name VARCHAR(50) NOT NULL UNIQUE,
     description TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 -- 3. Menu Items Table
@@ -53,7 +53,7 @@ CREATE TABLE orders (
     order_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     status ENUM('Pending', 'Preparing', 'Ready', 'Delivered') DEFAULT 'Pending',
     total_amount DECIMAL(10,2) NOT NULL,
     special_instructions TEXT,
@@ -68,7 +68,7 @@ CREATE TABLE order_items (
     quantity INT NOT NULL DEFAULT 1,
     notes TEXT, -- e.g., "extra cheese, no onions"
     FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE,
-    FOREIGN KEY (item_id) REFERENCES menu_items(item_id)
+    FOREIGN KEY (item_id) REFERENCES menu_items(item_id) ON DELETE CASCADE
 );
 
 -- 7. Tables Table (for reservations)
@@ -89,7 +89,7 @@ CREATE TABLE reservations (
     guests INT NOT NULL,
     status ENUM('Confirmed', 'Cancelled') DEFAULT 'Confirmed',
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
-    FOREIGN KEY (table_id) REFERENCES tables(table_id)
+    FOREIGN KEY (table_id) REFERENCES tables(table_id) ON DELETE CASCADE
 );
 
 -- 9. Payments Table
@@ -102,14 +102,14 @@ CREATE TABLE payments (
     status ENUM('Completed', 'Failed') DEFAULT 'Completed',
     invoice_number VARCHAR(50),
     invoice_date DATE,
-    FOREIGN KEY (order_id) REFERENCES orders(order_id)
+    FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE
 );
 
 -- 10. Inventory Table
 CREATE TABLE inventory (
     item_id INT PRIMARY KEY,
-	quantity INT NOT NULL,
-	unit VARCHAR(50) NOT NULL,
+    quantity INT NOT NULL,
+    unit VARCHAR(50) NOT NULL,
     reorder_level INT DEFAULT 10,
     last_restocked DATE,
     FOREIGN KEY (item_id) REFERENCES menu_items(item_id) ON DELETE CASCADE
