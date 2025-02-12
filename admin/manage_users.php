@@ -2,7 +2,10 @@
 // // Include necessary files
 // require_once '../includes/common/auth.php';
 // requireStaff(); // Ensure only staff can access this page
-require_once '../includes/common/db.php';
+require_once '../includes/common/Database.php';
+
+include '../includes/admin/sidebar.php';
+include '../includes/admin/header.php';
 
 // Handle Delete User
 if (isset($_GET['delete_id'])) {
@@ -30,16 +33,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_user'])) {
     }
 }
 
-// Fetch all users from the database
-$db->query("SELECT * FROM users");
-$users = $db->resultSet();
+// // Fetch all users from the database
+// $db->query("SELECT * FROM users");
+// $users = $db->resultSet();
 
-if (empty($users)) {
-    echo "<p class='alert alert-warning'>No users found.</p>";
-}
+// if (empty($users)) {
+//     echo "<p class='alert alert-warning'>No users found.</p>";
+// }
 
-include '../includes/admin/sidebar.php';
-include '../includes/admin/header.php';
 ?>
 
 <div class="container mt-4">

@@ -1,18 +1,15 @@
 <?php
-require_once '../includes/common/db.php'; // Include the Database class
+require_once "./../init.php";
 
 // Fetch total products
-$db->query("SELECT COUNT(*) AS total_products FROM menu_items");
-$total_products = $db->single()['total_products'];
+$total_products = $db->table('menu_items')->read("COUNT(*) AS total_products")[0]['total_products'];
 
 // Fetch total orders
-$db->query("SELECT COUNT(*) AS total_orders FROM orders");
-$total_orders = $db->single()['total_orders'];
+$total_orders = $db->table('orders')->read("COUNT(*) AS total_orders")[0]['total_orders'];
 
 // Fetch monthly orders
-$db->query("SELECT MONTH(created_at) AS month, COUNT(*) AS orders FROM orders GROUP BY MONTH(created_at)");
 $monthly_orders = [];
-$results = $db->resultSet();
+$results = $db->table('orders')->read("MONTH(created_at) AS month, COUNT(*) AS orders", "GROUP BY MONTH(created_at)");
 foreach ($results as $row) {
     $monthly_orders[$row['month']] = $row['orders'];
 }
