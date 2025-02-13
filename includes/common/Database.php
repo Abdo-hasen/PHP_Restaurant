@@ -145,34 +145,29 @@ class Database
 }
 
 
-    // delete data in db 
-
-    public function delete($id)
-    {
-
-        try {
-
-            $query = "DELETE FROM `$this->table` WHERE `id`='$id'";
-            $result = $this->mysqli->query($query);
-            if ($result) {
-                $_SESSION["success"] =  $this->deletedSuccess;
-                redirect(URL);
-            } else {
-                $_SESSION["errors"][] = "No changes done";
-                redirect(URL);
-            }
-        } catch (Exception $e) {
-            die("Error : " . $e->getMessage());
+// delete data in db
+public function delete($id, $column = 'id') // Default to 'id' if no column is provided
+{
+    try {
+        $query = "DELETE FROM `$this->table` WHERE `$column`='$id'"; // Use dynamic column name
+        $result = $this->mysqli->query($query);
+        if ($result) {
+            $_SESSION["success"] = $this->deletedSuccess;
+            return true;
+        } else {
+            $_SESSION["errors"][] = "No changes done: " . $this->mysqli->error;
+            return false;
         }
+    } catch (Exception $e) {
+        die("Error: " . $e->getMessage());
     }
+}
 
 
 
     // find id in db - get data of specefic item 
-
-    public function find($id)
-    {
-        $query = " SELECT * FROM `$this->table` WHERE `id` = '$id' ";
+    public function find($id, $column = 'id') {
+        $query = "SELECT * FROM `$this->table` WHERE `$column` = '$id'";
         $result = $this->mysqli->query($query);
 
         if ($result) {
@@ -182,7 +177,8 @@ class Database
 
             return false;
         } else {
-            $_SESSION["errors"][] = "data not exists";
+            $_SESSION["errors"][] = "Data not found.";
+            return false;
         }
     }
 
