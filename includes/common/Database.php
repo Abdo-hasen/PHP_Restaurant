@@ -1,201 +1,220 @@
 <?php
 
-
 class Database
 {
-    // database information
+    // Database information
     const HOSTNAME = "localhost";
     const USERNAME = "root";
-    const PASSWORD = "";
+    const PASSWORD = "2001";
     const DATABASE = "restaurant_db";
-  
 
-    //helper properties
-    public $mysqli;
+    // Helper properties
+    private $mysqli;
     private $table;
     private $addedSuccess = "added successfully";
     private $updatedSuccess = "updated successfully";
     private $deletedSuccess = "deleted successfully";
 
-
-
-
     public function __construct()
     {
         try {
-
             $this->mysqli = new mysqli(self::HOSTNAME, self::USERNAME, self::PASSWORD, self::DATABASE);
+            if ($this->mysqli->connect_error) {
+                throw new RuntimeException("Connection failed: " . $this->mysqli->connect_error);
+            }
         } catch (Exception $e) {
-            die("connection failed: " . $e->getMessage()); 
+            error_log("Database connection error: " . $e->getMessage());
+            throw $e;
         }
     }
 
-
-    // take table of db
-
-    public function table($table)
+    // Set the table name
+    public function table(string $table): self
     {
         $this->table = $table;
         return $this;
     }
 
-    // insert data in db
-
-    public function insert($data)
+    // Insert data into the database
+    public function insert(array $data): bool
     {
-
-        $names = ""; 
-        $values = ""; 
-        foreach ($data as $key => $value) {
-            $names .= "`$key`,"; //  comma for multible data
-            $values .= "'$value',"; //  
+        if (empty($data)) {
+            throw new InvalidArgumentException("Data array cannot be empty.");
         }
 
-        $names = substr($names, 0, -1); // to remove comma in the end 
-        $values = substr($values, 0, -1);
-
-
-        $query = " INSERT INTO `$this->table` ($names) VALUES ($values) ";
-        $result = $this->mysqli->query($query);
-
-        if ($result) 
-        {
-            return $this->addedSuccess;
-        } else {
-            $_SESSION["errors"][] = "Error in insertion";
-        }
-    }
-
-
-    // read data from db
-
-    public function read($columns = "*")
-    {
+        $columns = implode('`, `', array_keys($data));
+        $placeholders = implode(', ', array_fill(0, count($data), '?'));
+        $query = "INSERT INTO `$this->table` (`$columns`) VALUES ($placeholders)";
 
         try {
-            $query = " SELECT $columns FROM `$this->table` ";
-            $result = $this->mysqli->query($query);
-            $data = [];
-            if ($result) {
-                try {
-
-                    if ($result->num_rows) // to check if found data or not
-                    {
-                        while ($row = $result->fetch_assoc()) {
-                            $data[] = $row;
-                        }
-                    }
-
-                    return $data;
-                    
-
-                } catch (Exception $e) {
-                    die("Error : " . $e->getMessage());
-                       
-                }
+            $stmt = $this->mysqli->prepare($query);
+            if (!$stmt) {
+                throw new RuntimeException("Failed to prepare the insert query: " . $this->mysqli->error);
             }
+
+            $types = $this->getParamTypes($data);
+            $stmt->bind_param($types, ...array_values($data));
+
+            $success = $stmt->execute();
+            $stmt->close();
+
+            return $success;
         } catch (Exception $e) {
-            die("Error : " . $e->getMessage());
+            error_log("Insert error: " . $e->getMessage());
+            throw $e;
         }
     }
 
+    // Read data from the database
+    public function read(string $columns = "*"): array
+    {
+        $query = "SELECT $columns FROM `$this->table`";
 
-
-    // update data in db
-    public function update($data, $condition)
-{
-    try {
-        $fields = [];
-        foreach ($data as $key => $value) {
-            // Escape the value to prevent SQL injection
-            $escapedValue = $this->mysqli->real_escape_string($value);
-            $fields[] = "`$key` = '$escapedValue'";
-        }
-
-        $setClause = implode(', ', $fields);
-
-        $whereClause = '';
-        if (!empty($condition)) {
-            $conditions = [];
-            foreach ($condition as $key => $value) {
-                $escapedValue = $this->mysqli->real_escape_string($value);
-                $conditions[] = "`$key` = '$escapedValue'";
+        try {
+            $result = $this->mysqli->query($query);
+            if (!$result) {
+                throw new RuntimeException("Failed to execute the read query: " . $this->mysqli->error);
             }
-            $whereClause = 'WHERE ' . implode(' AND ', $conditions);
+
+            $data = [];
+            while ($row = $result->fetch_assoc()) {
+                $data[] = $row;
+            }
+
+            $result->free();
+            return $data;
+        } catch (Exception $e) {
+            error_log("Read error: " . $e->getMessage());
+            throw $e;
+        }
+    }
+
+    // Update data in the database
+    public function update(array $data, array $condition): bool
+    {
+        if (empty($data)) {
+            throw new InvalidArgumentException("Data array cannot be empty.");
         }
 
+        $setClause = $this->prepareSetClause($data);
+        $whereClause = $this->prepareWhereClause($condition);
         $query = "UPDATE `$this->table` SET $setClause $whereClause";
 
-        $result = $this->mysqli->query($query);
-
-        if ($result) {
-            if ($this->mysqli->affected_rows > 0) {
-                $_SESSION["success"] = $this->updatedSuccess;
-            } else {
-                $_SESSION["errors"][] = "No changes were made"; 
-            }
-        } else {
-            $_SESSION["errors"][] = "Failed to execute the update query";
-        }
-
-
-    } catch (Exception $e) {
-        die("Error: " . $e->getMessage());
-    }
-}
-
-
-// delete data in db
-public function delete($id, $column = 'id') // Default to 'id' if no column is provided
-{
-    try {
-        $query = "DELETE FROM `$this->table` WHERE `$column`='$id'"; // Use dynamic column name
-        $result = $this->mysqli->query($query);
-        if ($result) {
-            $_SESSION["success"] = $this->deletedSuccess;
-            return true;
-        } else {
-            $_SESSION["errors"][] = "No changes done: " . $this->mysqli->error;
-            return false;
-        }
-    } catch (Exception $e) {
-        die("Error: " . $e->getMessage());
-    }
-}
-
-
-
-    // find id in db - get data of specefic item 
-    public function find($id, $column = 'id') {
-        $query = "SELECT * FROM `$this->table` WHERE `$column` = '$id'";
-        $result = $this->mysqli->query($query);
-
-        if ($result) {
-            if ($result->num_rows) {
-                return $result->fetch_assoc();
+        try {
+            $stmt = $this->mysqli->prepare($query);
+            if (!$stmt) {
+                throw new RuntimeException("Failed to prepare the update query: " . $this->mysqli->error);
             }
 
-            return false;
-        } else {
-            $_SESSION["errors"][] = "Data not found.";
-            return false;
+            $types = $this->getParamTypes($data) . $this->getParamTypes($condition);
+            $params = array_merge(array_values($data), array_values($condition));
+            $stmt->bind_param($types, ...$params);
+
+            $success = $stmt->execute();
+            $stmt->close();
+
+            return $success;
+        } catch (Exception $e) {
+            error_log("Update error: " . $e->getMessage());
+            throw $e;
         }
     }
 
-    // fn to encrypt
+    // Delete data from the database
+    public function delete($id, string $column = 'id'): bool
+    {
+        $query = "DELETE FROM `$this->table` WHERE `$column` = ?";
 
-    public function encPassword($password)
+        try {
+            $stmt = $this->mysqli->prepare($query);
+            if (!$stmt) {
+                throw new RuntimeException("Failed to prepare the delete query: " . $this->mysqli->error);
+            }
+
+            $stmt->bind_param('s', $id);
+            $success = $stmt->execute();
+            $stmt->close();
+
+            return $success;
+        } catch (Exception $e) {
+            error_log("Delete error: " . $e->getMessage());
+            throw $e;
+        }
+    }
+
+    // Find a specific record by ID
+    public function find($id, string $column = 'id'): ?array
+    {
+        $query = "SELECT * FROM `$this->table` WHERE `$column` = ?";
+
+        try {
+            $stmt = $this->mysqli->prepare($query);
+            if (!$stmt) {
+                throw new RuntimeException("Failed to prepare the find query: " . $this->mysqli->error);
+            }
+
+            $stmt->bind_param('s', $id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+            $stmt->close();
+
+            return $row ?: null;
+        } catch (Exception $e) {
+            error_log("Find error: " . $e->getMessage());
+            throw $e;
+        }
+    }
+
+    // Encrypt password
+    public function encPassword(string $password): string
     {
         return password_hash($password, PASSWORD_DEFAULT);
     }
 
-
-
-    // close connection
-
+    // Close the database connection
     public function __destruct()
     {
         $this->mysqli->close();
     }
-}
 
+    // Helper method to prepare SET clause for UPDATE
+    private function prepareSetClause(array $data): string
+    {
+        $fields = [];
+        foreach ($data as $key => $value) {
+            $fields[] = "`$key` = ?";
+        }
+        return implode(', ', $fields);
+    }
+
+    // Helper method to prepare WHERE clause
+    private function prepareWhereClause(array $condition): string
+    {
+        if (empty($condition)) {
+            return '';
+        }
+
+        $conditions = [];
+        foreach ($condition as $key => $value) {
+            $conditions[] = "`$key` = ?";
+        }
+        return 'WHERE ' . implode(' AND ', $conditions);
+    }
+
+    // Helper method to get parameter types for binding
+    private function getParamTypes(array $data): string
+    {
+        $types = '';
+        foreach ($data as $value) {
+            if (is_int($value)) {
+                $types .= 'i';
+            } elseif (is_float($value)) {
+                $types .= 'd';
+            } else {
+                $types .= 's';
+            }
+        }
+        return $types;
+    }
+}
