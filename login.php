@@ -1,6 +1,13 @@
 <?php
-require_once "./init.php";
+require_once __DIR__ . "/handlers/auth_handler.php";
+
+if (checkRequestMethod('POST')) {
+    $email = sanitizeInput($_POST['email']);
+    $password = sanitizeInput($_POST['password']);
+    handleLogin($email, $password);
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,7 +41,7 @@ require_once "./init.php";
                         <?php endif; ?>
 
 
-                        <form action="admin/login.php" method="POST">
+                        <form action="login.php" method="POST">
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email address</label>
                                 <input type="email" class="form-control" id="email" name="email" required>
