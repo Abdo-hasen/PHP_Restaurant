@@ -3,14 +3,12 @@
 
 class Database
 {
-    // database information
     const HOSTNAME = "localhost";
     const USERNAME = "root";
     const PASSWORD = "";
     const DATABASE = "restaurant_db";
   
 
-    //helper properties
     public $mysqli;
     private $table;
     private $addedSuccess = "added successfully";
@@ -31,15 +29,12 @@ class Database
     }
 
 
-    // take table of db
-
     public function table($table)
     {
         $this->table = $table;
         return $this;
     }
 
-    // insert data in db
 
     public function insert($data)
     {
@@ -67,7 +62,6 @@ class Database
     }
 
 
-    // read data from db
 
     public function read($columns = "*")
     {
@@ -100,66 +94,67 @@ class Database
     }
 
 
-
-    // update data in db
     public function update($data, $condition)
-{
-    try {
-        $fields = [];
-        foreach ($data as $key => $value) {
-            // Escape the value to prevent SQL injection
-            $escapedValue = $this->mysqli->real_escape_string($value);
-            $fields[] = "`$key` = '$escapedValue'";
-        }
-
-        $setClause = implode(', ', $fields);
-
-        $whereClause = '';
-        if (!empty($condition)) {
-            $conditions = [];
-            foreach ($condition as $key => $value) {
-                $escapedValue = $this->mysqli->real_escape_string($value);
-                $conditions[] = "`$key` = '$escapedValue'";
-            }
-            $whereClause = 'WHERE ' . implode(' AND ', $conditions);
-        }
-
-        $query = "UPDATE `$this->table` SET $setClause $whereClause";
-
-        $result = $this->mysqli->query($query);
-
-        if ($result) {
-            if ($this->mysqli->affected_rows > 0) {
-                $_SESSION["success"] = $this->updatedSuccess;
-            } else {
-                $_SESSION["errors"][] = "No changes were made"; 
-            }
-        } else {
-            $_SESSION["errors"][] = "Failed to execute the update query";
-        }
-
-
-    } catch (Exception $e) {
-        die("Error: " . $e->getMessage());
-    }
-}
-
-
-    // delete data in db 
-
-    public function delete($id)
     {
-
         try {
+            $fields = [];
+            foreach ($data as $key => $value) {
+                
+                $escapedValue = $this->mysqli->real_escape_string($value);
+                $fields[] = "`$key` = '$escapedValue'";
+            }
 
-            $query = "DELETE FROM `$this->table` WHERE `id`='$id'";
+            $setClause = implode(', ', $fields);
+
+            $whereClause = '';
+            if (!empty($condition)) {
+                $conditions = [];
+                foreach ($condition as $key => $value) {
+                    $escapedValue = $this->mysqli->real_escape_string($value);
+                    $conditions[] = "`$key` = '$escapedValue'";
+                }
+                $whereClause = 'WHERE ' . implode(' AND ', $conditions);
+            }
+
+            $query = "UPDATE `$this->table` SET $setClause $whereClause";
             $result = $this->mysqli->query($query);
+
             if ($result) {
-                $_SESSION["success"] =  $this->deletedSuccess;
-                redirect(URL);
+                if ($this->mysqli->affected_rows > 0) {
+                    return true;
+                } else {
+                    return false;
+                }
             } else {
-                $_SESSION["errors"][] = "No changes done";
-                redirect(URL);
+                $_SESSION["errors"][] = "Failed to execute the update query";
+            }
+
+        } catch (Exception $e) {
+            die("Error: " . $e->getMessage());
+        }
+    }
+
+
+    public function delete($condition)
+    {
+        try {
+            $whereClause = '';
+            if (!empty($condition)) {
+                $conditions = [];
+                foreach ($condition as $key => $value) {
+                    $escapedValue = $this->mysqli->real_escape_string($value);
+                    $conditions[] = "`$key` = '$escapedValue'";
+                }
+                $whereClause = 'WHERE ' . implode(' AND ', $conditions);
+            }
+
+            $query = "DELETE FROM `$this->table` $whereClause";
+            $result = $this->mysqli->query($query);
+            
+            if ($result) {
+                return true; 
+            } else {
+                return false;
             }
         } catch (Exception $e) {
             die("Error : " . $e->getMessage());
@@ -168,25 +163,25 @@ class Database
 
 
 
-    // find id in db - get data of specefic item 
 
-    public function find($id)
+    public function find($value, $column = 'id')
     {
-        $query = " SELECT * FROM `$this->table` WHERE `id` = '$id' ";
+        $escapedValue = $this->mysqli->real_escape_string($value);
+        $escapedColumn = "`" . str_replace("`", "``", $column) . "`";
+        
+        $query = "SELECT * FROM `$this->table` WHERE $escapedColumn = '$escapedValue'";
         $result = $this->mysqli->query($query);
 
         if ($result) {
             if ($result->num_rows) {
                 return $result->fetch_assoc();
             }
-
             return false;
         } else {
             $_SESSION["errors"][] = "data not exists";
         }
     }
 
-    // fn to encrypt
 
     public function encPassword($password)
     {
@@ -195,7 +190,6 @@ class Database
 
 
 
-    // close connection
 
     public function __destruct()
     {

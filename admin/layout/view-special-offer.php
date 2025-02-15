@@ -15,6 +15,22 @@ $offers = $db->mysqli->query("
     <div class="row">
         <div class="col-12">
             <h1 class="mb-4">Special Offers</h1>
+            <?php if (isset($_SESSION['success'])): ?>
+                <div class="alert alert-success">
+                    <?= $_SESSION['success']; ?>
+                </div>
+                <?php unset($_SESSION['success']); ?>
+            <?php endif; ?>
+
+            <?php if (isset($_SESSION['errors'])): ?>
+                <?php foreach ($_SESSION['errors'] as $error): ?>
+                    <div class="alert alert-danger">
+                        <?= $error; ?>
+                    </div>
+                <?php endforeach; ?>
+                <?php unset($_SESSION['errors']); ?>
+            <?php endif; ?>
+
             <div class="table-responsive">
                 <table class="table table-striped table-hover">
                     <thead class="table-dark">
@@ -35,13 +51,13 @@ $offers = $db->mysqli->query("
                                     <td><?= date('M d, Y', strtotime($offer['start_date'])) ?></td>
                                     <td><?= date('M d, Y', strtotime($offer['expiry_date'])) ?></td>
                                     <td>
-                                        <a href="<?= URL ?>admin/layout/edit-offer.php?id=<?= $offer['offer_id'] ?>" 
-                                           class="btn btn-sm btn-warning">
+                                        <a href="<?= URL ?>admin/layout/edit-offer.php?id=<?= $offer['offer_id'] ?>"
+                                            class="btn btn-sm btn-warning">
                                             <i class="fas fa-edit"></i> Edit
                                         </a>
-                                        <a href="<?= URL ?>admin/handelers/delete-offer-handler.php?id=<?= $offer['offer_id'] ?>" 
-                                           class="btn btn-sm btn-danger" 
-                                           onclick="return confirm('Are you sure you want to delete this offer?')">
+                                        <a href="<?= URL ?>admin/handelers/delete-offer-handler.php?id=<?= $offer['offer_id'] ?>"
+                                            class="btn btn-sm btn-danger"
+                                            onclick="return confirm('Are you sure you want to delete this offer?')">
                                             <i class="fas fa-trash"></i> Delete
                                         </a>
                                     </td>
