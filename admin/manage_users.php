@@ -16,7 +16,7 @@ if (isset($_GET['delete_id'])) {
     } else {
         $_SESSION['error'] = "Invalid user ID.";
     }
-    header("Location: manage_users.php"); // Redirect to avoid resubmission
+    header("Location: manage_users.php"); // Redirect without query string
     exit();
 }
 
@@ -84,12 +84,14 @@ if (isset($_SESSION['error'])) {
                         <td><?php echo htmlspecialchars($user['email']); ?></td>
                         <td><?php echo htmlspecialchars($user['role']); ?></td>
                         <td>
+                            <!-- Edit Button (Link to Edit Page) -->
                             <a href="../functions/edit_user.php?id=<?php echo $user['user_id']; ?>" class="btn btn-warning btn-sm">Edit</a>
-                            <a href="manage_users.php?delete_id=<?php echo $user['user_id']; ?>" 
-                               class="btn btn-danger btn-sm" 
-                               onclick="return confirm('Are you sure you want to delete this user?');">
-                                Delete
-                            </a>
+
+                            <!-- Delete Button (Form for POST Request) -->
+                            <form action="manage_users.php" method="GET" style="display: inline;">
+                                <input type="hidden" name="delete_id" value="<?php echo $user['user_id']; ?>">
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this user?');">Delete</button>
+                            </form>
                         </td>
                     </tr>
                 <?php endforeach; ?>
