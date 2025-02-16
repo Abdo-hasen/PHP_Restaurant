@@ -5,11 +5,11 @@ class Database
     // Database information
     const HOSTNAME = "localhost";
     const USERNAME = "root";
-    const PASSWORD = "";
+    const PASSWORD = "2001";
     const DATABASE = "restaurant_db";
 
     // Helper properties
-    private $mysqli;
+    public $mysqli;
     private $table;
     private $addedSuccess = "added successfully";
     private $updatedSuccess = "updated successfully";
@@ -66,12 +66,9 @@ class Database
     }
 
     // Read data from the database
-        public function read(string $columns = "*", string $where = ""): array
+    public function read(string $columns = "*"): array
     {
         $query = "SELECT $columns FROM `$this->table`";
-        if (!empty($where)) {
-            $query .= " WHERE $where";
-        }
 
         try {
             $result = $this->mysqli->query($query);

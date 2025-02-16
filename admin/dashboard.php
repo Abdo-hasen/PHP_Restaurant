@@ -1,85 +1,72 @@
 <?php
+session_start(); // Start the session
 require_once "./../init.php";
 
 include '../includes/admin/sidebar.php';
 include '../includes/admin/header.php';
+include '../functions/stats.php'; // Include the functions file
 
-// Fetch total products
-$total_products = $db->table('menu_items')->read("COUNT(*) AS total_products")[0]['total_products'];
-
-// Fetch total orders
-$total_orders = $db->table('orders')->read("COUNT(*) AS total_orders")[0]['total_orders'];
-
-// Fetch monthly orders
-$monthly_orders = [];
-$results = $db->table('orders')->read("MONTH(created_at) AS month, COUNT(*) AS orders", "GROUP BY MONTH(created_at)");
-foreach ($results as $row) {
-    $monthly_orders[$row['month']] = $row['orders'];
-}
-
+// Fetch analytics data
+$totalOrders = getTotalOrders($db);
+$totalRevenue = getTotalRevenue($db);
+$mostPopularItem = getMostPopularItem($db);
+$activeOrders = getActiveOrders($db);
+$totalReservations = getTotalReservations($db);
 ?>
-<div class="container">
-    <div class="row mb-4">
-        <div class="col-md-4">
-            <div class="card p-3 animate__animated animate__zoomIn">
-                <h5>Products</h5>
-                <p><?php echo $total_products; ?></p>
-                <p class="text-success">Increased 21%</p>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar is included from navbar.php -->
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Orders</h5>
+                        <p class="card-text"><?php echo $totalOrders; ?></p>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card p-3 animate__animated animate__zoomIn" style="animation-delay: 0.2s;">
-                <h5>Orders</h5>
-                <p><?php echo $total_orders; ?></p>
-                <p class="text-success">Increased 12%</p>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Revenue</h5>
+                        <p class="card-text">$<?php echo number_format($totalRevenue, 2); ?></p>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card p-3 animate__animated animate__zoomIn" style="animation-delay: 0.4s;">
-                <h5>Revenue</h5>
-                <p>$65,950</p>
-                <p class="text-danger">Decreased 7%</p>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Most Popular Item</h5>
+                        <p class="card-text"><?php echo $mostPopularItem; ?></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Active Orders</h5>
+                        <p class="card-text"><?php echo $activeOrders; ?></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Reservations</h5>
+                        <p class="card-text"><?php echo $totalReservations; ?></p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
-    <div class="card p-3 animate__animated animate__fadeInUp" style="animation-delay: 0.6s;">
-        <h5>Orders & Revenue</h5>
-        <canvas id="barChart"></canvas>
-            </div>
-    </div>
-</div>
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const ctx = document.getElementById('barChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-            datasets: [
-                {
-                    label: "Orders",
-                    backgroundColor: "rgba(75,192,192,0.6)",
-                    data: [
-                        <?php echo $monthly_orders[1] ?? 0; ?>,
-                        <?php echo $monthly_orders[2] ?? 0; ?>,
-                        <?php echo $monthly_orders[3] ?? 0; ?>,
-                        <?php echo $monthly_orders[4] ?? 0; ?>,
-                        <?php echo $monthly_orders[5] ?? 0; ?>,
-                        <?php echo $monthly_orders[6] ?? 0; ?>,
-                        <?php echo $monthly_orders[7] ?? 0; ?>,
-                        <?php echo $monthly_orders[8] ?? 0; ?>,
-                        <?php echo $monthly_orders[9] ?? 0; ?>,
-                        <?php echo $monthly_orders[10] ?? 0; ?>,
-                        <?php echo $monthly_orders[11] ?? 0; ?>,
-                        <?php echo $monthly_orders[12] ?? 0; ?>
-                    ]
-                }
-            ]
-        }
-    });
-});
-</script>
 </body>
 </html>
