@@ -5,7 +5,7 @@ class Database
     // Database information
     const HOSTNAME = "localhost";
     const USERNAME = "root";
-    const PASSWORD = "";
+    const PASSWORD = "2001";
     const DATABASE = "restaurant_db";
 
     // Helper properties
@@ -44,7 +44,7 @@ class Database
 
         $columns = implode('`, `', array_keys($data));
         $placeholders = implode(', ', array_fill(0, count($data), '?'));
-        $query = "INSERT INTO $this->table ($columns) VALUES ($placeholders)";
+        $query = "INSERT INTO `$this->table` (`$columns`) VALUES ($placeholders)";
 
         try {
             $stmt = $this->mysqli->prepare($query);
@@ -68,7 +68,7 @@ class Database
     // Read data from the database
     public function read(string $columns = "*"): array
     {
-        $query = "SELECT $columns FROM $this->table";
+        $query = "SELECT $columns FROM `$this->table`";
 
         try {
             $result = $this->mysqli->query($query);
@@ -98,7 +98,7 @@ class Database
 
         $setClause = $this->prepareSetClause($data);
         $whereClause = $this->prepareWhereClause($condition);
-        $query = "UPDATE $this->table SET $setClause $whereClause";
+        $query = "UPDATE `$this->table` SET $setClause $whereClause";
 
         try {
             $stmt = $this->mysqli->prepare($query);
@@ -123,7 +123,7 @@ class Database
     // Delete data from the database
     public function delete($id, string $column = 'id'): bool
     {
-        $query = "DELETE FROM $this->table WHERE $column = ?";
+        $query = "DELETE FROM `$this->table` WHERE `$column` = ?";
 
         try {
             $stmt = $this->mysqli->prepare($query);
@@ -145,7 +145,7 @@ class Database
     // Find a specific record by ID
     public function find($id, string $column = 'id'): ?array
     {
-        $query = "SELECT * FROM $this->table WHERE $column = ?";
+        $query = "SELECT * FROM `$this->table` WHERE `$column` = ?";
 
         try {
             $stmt = $this->mysqli->prepare($query);
@@ -183,7 +183,7 @@ class Database
     {
         $fields = [];
         foreach ($data as $key => $value) {
-            $fields[] = "$key = ?";
+            $fields[] = "`$key` = ?";
         }
         return implode(', ', $fields);
     }
@@ -197,7 +197,7 @@ class Database
 
         $conditions = [];
         foreach ($condition as $key => $value) {
-            $conditions[] = "$key = ?";
+            $conditions[] = "`$key` = ?";
         }
         return 'WHERE ' . implode(' AND ', $conditions);
     }

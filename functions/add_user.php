@@ -55,9 +55,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_user'])) {
             // Insert the user into the database
             try {
                 if ($db->table('users')->insert($data)) {
-                    echo "<p class='alert alert-success'>User added successfully!</p>";
+                    $_SESSION['success'] = "User added successfully!";
+                    header("Location: ../admin/manage_users.php");
+                    exit();
                 } else {
-                    echo "<p class='alert alert-danger'>Failed to add user.</p>";
+                    $_SESSION['error'] = "Failed to add user.";
+                    header("Location: ../admin/manage_users.php");
+                    exit();
                 }
             } catch (mysqli_sql_exception $e) {
                 // Handle duplicate email error
