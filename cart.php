@@ -109,7 +109,7 @@ require_once "init.php";
                             <button type="submit" name="update_cart" class="btn btn-warning me-2 mb-2">
                                 <i class="fas fa-sync-alt"></i> Update Cart
                             </button>
-                            <a href="#" class="btn btn-success mb-2">
+                            <a href="<?= URL ?>admin/handelers/checkout-handler.php" class="btn btn-success mb-2">
                                 <i class="fas fa-credit-card"></i> Proceed to Checkout
                             </a>
                         </div>
