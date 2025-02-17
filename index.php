@@ -1,6 +1,8 @@
 <?php
-$menuData = file_get_contents("assets/customer/menu.json");
-$menu = json_decode($menuData, true);
+session_start();
+require_once "init.php";
+
+$menu = $db->table("menu_items")->read();
 ?>
 
 <!DOCTYPE html>
@@ -34,13 +36,27 @@ $menu = json_decode($menuData, true);
                     <li class="nav-item"><a class="nav-link" href="#menu">Menu</a></li>
                     <li class="nav-item"><a class="nav-link" href="#gallery">Gallery</a></li>
                     <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= URL ?>cart.php">
+                            <i class="fas fa-shopping-cart"></i> Cart
+                            <?php if (!empty($_SESSION['cart'])): ?>
+                                <span class="badge bg-danger"><?= array_sum($_SESSION['cart']) ?></span>
+                            <?php endif; ?>
+                        </a>
+                    </li>
                 </ul>
             </div>
 
             <a href="#reservation" class="btn btn-book">Book a Table</a>
         </div>
     </nav>
-
+   
+    <?php if (isset($_SESSION['success'])): ?>
+        <div class="alert alert-success">
+            <?= $_SESSION['success']; ?>
+        </div>
+        <?php unset($_SESSION['success']); ?>
+    <?php endif; ?>
 
     <!-- home -->
     <section class="hero-section" id="home">
@@ -68,9 +84,9 @@ $menu = json_decode($menuData, true);
                 <p class="fst-italic text-muted">
                     Welcome to Resto Restaurant, where the rich flavors of authentic Egyptian cuisine come alive! Located in the heart of Port Said, we take pride in serving traditional Egyptian dishes made with fresh, high-quality ingredients and a touch of home-cooked warmth.
 
-                    From the sizzling grilled kebabs to the comforting koshari, every bite at Resto Restaurant is a journey through Egypt’s culinary heritage. Our chefs bring passion and tradition to every dish, ensuring an experience that feels both nostalgic and unforgettable.
+                    From the sizzling grilled kebabs to the comforting koshari, every bite at Resto Restaurant is a journey through Egypt's culinary heritage. Our chefs bring passion and tradition to every dish, ensuring an experience that feels both nostalgic and unforgettable.
 
-                    Whether you're craving a classic Molokhia, a hearty Fattah, or a sweet Basbousa, we've got something special for everyone. At Resto Restaurant, we don’t just serve food – we share culture, tradition, and a true taste of Egypt.
+                    Whether you're craving a classic Molokhia, a hearty Fattah, or a sweet Basbousa, we've got something special for everyone. At Resto Restaurant, we don't just serve food – we share culture, tradition, and a true taste of Egypt.
 
                     Come visit us and let your taste buds explore the magic of Egyptian flavors!
                 </p>
@@ -101,54 +117,34 @@ $menu = json_decode($menuData, true);
 
     <!-- Menu -->
     <div class="container-fluid py-5" id="menu">
-
         <div class="text-center">
             <p class="text-muted">OUR MENU</p>
             <h2 class="menu-title">Check Our <span>Menu</span></h2>
         </div>
 
-
-
+        <!-- items view -->
         <div class="container mt-5">
-            <ul class="nav nav-tabs justify-content-center mt-4 text-light" id="menuTabs">
-                <?php $firstTab = true; ?>
-                <?php foreach ($menu as $category => $items): ?>
-                    <li class="nav-item">
-                        <a class="nav-link <?php echo $firstTab ? 'active' : ''; ?>" data-bs-toggle="tab" href="#<?php echo strtolower($category); ?>">
-                            <?php echo $category; ?>
-                        </a>
-                    </li>
-                    <?php $firstTab = false; ?>
-                <?php endforeach; ?>
-            </ul>
-
-            <div class="tab-content mt-4">
-                <?php $firstContent = true; ?>
-                <?php foreach ($menu as $category => $items): ?>
-                    <div class="tab-pane fade <?php echo $firstContent ? 'show active' : ''; ?>" id="<?php echo strtolower($category); ?>">
-                        <div class="row">
-                            <?php foreach ($items as $item): ?>
-                                <div class="card mx-2 mb-5 " style="width: 18rem;">
-                                    <img src="<?php echo $item['image']; ?>" class="card-img-top rounded-circle img-fluid mt-2 mx-auto" alt="<?php echo $item['name']; ?>">
-                                    <div class="card-body text-center">
-                                        <h5 class="card-title"><?php echo $item['name']; ?></h5>
-                                        <p class="card-text"><?php echo $item['description']; ?></p>
-                                        <p class="card-price"><?php echo $item['price']; ?> EGP</p>
-
-                                        <a href="#" class="card-btn mx-auto">
-                                            <i class="fas fa-shopping-cart"></i>
-                                        </a>
-
-                                    </div>
-                                </div>
-                            <?php endforeach; ?>
+            <div class="row">
+                <?php foreach ($menu as $item): ?>
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <!-- dispaly image -->
+                                <h5 class="card-title"><?php echo $item['item_name']; ?></h5>
+                                <p class="card-text"><?php echo $item['description']; ?></p>
+                                <p class="card-price"><?php echo $item['price']; ?> EGP</p>
+                                <form action="<?= URL ?>admin/handelers/cart-handler.php" method="POST">
+                                    <input type="hidden" name="item_id" value="<?= $item['item_id'] ?>">
+                                    <button type="submit" name="add_to_cart" class="btn btn-primary">Add to Cart</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                    <?php $firstContent = false; ?>
                 <?php endforeach; ?>
             </div>
         </div>
     </div>
+
 
 
     <!-- book a table -->
