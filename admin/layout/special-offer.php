@@ -32,7 +32,7 @@ $menuItems = $db->table("menu_items")->read();
                     <h3 class="card-title text-center">Add Special Offer</h3>
                 </div>
                 <div class="card-body">
-                    <form action="<?= URL . "admin/handelers/special-offer.php" ?>"  method="POST">
+                    <form action="<?= URL . "handlers/admin/special-offer.php" ?>"  method="POST">
                         <div class="mb-3">
                             <label for="item_id" class="form-label">Select Menu Item</label>
                             <select class="form-select" id="item_id" name="item_id" required>
