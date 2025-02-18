@@ -12,7 +12,7 @@ if ($conn->connect_error) {
 
  
 function uploadImage($file) {
-    $targetDir = "uploads/";
+    $targetDir = "/assets/menu_item/";
     $fileName = basename($file["name"]);
     $targetFilePath = $targetDir . $fileName;
 
