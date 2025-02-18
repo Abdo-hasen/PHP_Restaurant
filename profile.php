@@ -1,81 +1,200 @@
 <?php
-require_once "./init.php";
-include './includes/admin/sidebar.php';
+require_once __DIR__ . "/init.php";
 include './includes/admin/header.php';
+include './includes/admin/sidebar.php';
 
-// // Check if the user ID is provided
-// if (!isset($_GET['id'])) {
-//     header("Location: profile.php");
-//     exit();
-// }
+if (!isset($_SESSION['user_id'])) {
+    redirect('login.php');
+}
 
-// $id = $_GET['id'];
+$db->table('users');
+$user_id = $_SESSION['user_id'];
+$current_user = $db->find($user_id, 'user_id');
 
-// // Fetch the user's data from the database
-// $user = $db->table('users')->find($id, 'user_id');
+// Handle form submission
+if (checkRequestMethod('POST') && checkInput($_POST, 'update_profile')) {
+    $errors = [];
+    
+    // Sanitize inputs
+    $data = [
+        'full_name' => sanitizeInput($_POST['full_name']),
+        'email' => sanitizeInput($_POST['email']),
+        'phone' => sanitizeInput($_POST['phone'] ?? null),
+        'address' => sanitizeInput($_POST['address'] ?? null)
+    ];
 
-// if (!$user) {
-//     echo "<p class='alert alert-danger'>User not found.</p>";
-//     exit();
-// }
+    // Validation
+    if (requiredVal($data['full_name'])) {
+        $errors[] = "Full name is required";
+    }
+    
+    if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+        $errors[] = "Invalid email format";
+    }
 
-// // Handle form submission
-// if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_user'])) {
-//     $fields = [
-//         'full_name' => $_POST['full_name'],
-//         'email' => $_POST['email'],
-//         'role' => $_POST['role']
-//     ];
+    // Handle password change
+    if (!empty($_POST['new_password'])) {
+        if (empty($_POST['current_password'])) {
+            $errors[] = "Current password is required to change password";
+        } elseif (!password_verify($_POST['current_password'], $current_user['password'])) {
+            $errors[] = "Current password is incorrect";
+        } elseif ($_POST['new_password'] !== $_POST['confirm_password']) {
+            $errors[] = "New passwords do not match";
+        } else {
+            $data['password'] = $db->encPassword($_POST['new_password']);
+        }
+    }
 
-//     if ($db->table('users')->update($fields, ['user_id' => $id])) {
-//         echo "<p class='alert alert-success'>User updated successfully!</p>";
-//     } else {
-//         echo "<p class='alert alert-danger'>Failed to update user.</p>";
-//     }
-// }
+    // Handle file upload
+    if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] === UPLOAD_ERR_OK) {
+        $file = $_FILES['profile_picture'];
+        $max_size = 2 * 1024 * 1024; // 2MB
+        $allowed_types = ['image/jpeg', 'image/png', 'image/gif'];
+        
+        if ($file['size'] > $max_size) {
+            $errors[] = "File size exceeds 2MB limit";
+        } elseif (!in_array($file['type'], $allowed_types)) {
+            $errors[] = "Only JPG, PNG, and GIF files are allowed";
+        } else {
+            $upload_dir = './assets/profile_images/';
+            if (!file_exists($upload_dir)) {
+                mkdir($upload_dir, 0755, true);
+            }
+            
+            $file_ext = pathinfo($file['name'], PATHINFO_EXTENSION);
+            $filename = "user_{$user_id}_" . time() . ".{$file_ext}";
+            $target_path = $upload_dir . $filename;
+            
+            if (move_uploaded_file($file['tmp_name'], $target_path)) {
+                // Delete old image if exists
+                if ($current_user['profile_picture'] && file_exists($current_user['profile_picture'])) {
+                    unlink($current_user['profile_picture']);
+                }
+                $data['profile_picture'] = $target_path;
+            } else {
+                $errors[] = "Failed to upload profile picture";
+            }
+        }
+    }
+
+    if (empty($errors)) {
+        if ($db->update($data, ['user_id' => $user_id])) {
+            setToastMessage('success', 'Profile updated successfully');
+            redirect('profile.php');
+        } else {
+            setToastMessage('danger', 'Failed to update profile');
+        }
+    } else {
+        $_SESSION['errors'] = $errors;
+    }
+}
+
+// Refresh user data after potential update
+$current_user = $db->find($user_id, 'user_id');
 ?>
 
 <div class="container mt-4">
-    <h2>My Profile</h2>
-    <form class="row g-3" method="POST" action="edit_user.php?id=<?php echo $id; ?>">
-        <div class="col-12 mb-3">
-            <label for="full_name" class="form-label">Full Name</label>
-            <input type="text" class="form-control" id="full_name" name="full_name" value="<?php echo htmlspecialchars($user['full_name']); ?>" required>
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h3 class="card-title mb-0">
+                <i class="fas fa-user-circle me-2"></i>My Profile
+            </h3>
         </div>
-        <div class="col-12 mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" required>
+        
+        <div class="card-body">
+            <?php showToast(); ?>
+            
+            <div class="row">
+                <!-- Profile Picture Section -->
+                <div class="col-md-4 text-center mb-4">
+                    <div class="position-relative">
+                        <img src="<?= $current_user['profile_picture'] ?? 'assets/default-profile.png' ?>" 
+                             class="img-thumbnail rounded-circle mb-3" 
+                             style="width: 200px; height: 200px; object-fit: cover" 
+                             alt="Profile Picture">
+                        
+                        <form method="POST" enctype="multipart/form-data">
+                            <div class="input-group">
+                                <input type="file" class="form-control" name="profile_picture" 
+                                       id="profilePicture" accept="image/*" hidden>
+                                <label for="profilePicture" class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-camera"></i> Change Photo
+                                </label>
+                            </div>
+                    </div>
+                </div>
+
+                <!-- Profile Form -->
+                <div class="col-md-8">
+                    <form method="POST" enctype="multipart/form-data">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Full Name</label>
+                                <input type="text" class="form-control" name="full_name" required
+                                       value="<?= htmlspecialchars($current_user['full_name']) ?>">
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label class="form-label">Email Address</label>
+                                <input type="email" class="form-control" name="email" required
+                                       value="<?= htmlspecialchars($current_user['email']) ?>">
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label class="form-label">Phone Number</label>
+                                <input type="tel" class="form-control" name="phone"
+                                       value="<?= htmlspecialchars($current_user['phone'] ?? '') ?>">
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label class="form-label">Address</label>
+                                <input type="text" class="form-control" name="address"
+                                       value="<?= htmlspecialchars($current_user['address'] ?? '') ?>">
+                            </div>
+                            
+                            <!-- Password Change Section -->
+                            <div class="col-12 mt-4">
+                                <div class="card border-warning">
+                                    <div class="card-header bg-warning text-dark">
+                                        <i class="fas fa-lock me-2"></i>Change Password
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row g-2">
+                                            <div class="col-md-4">
+                                                <input type="password" class="form-control" 
+                                                       name="current_password" 
+                                                       placeholder="Current Password">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <input type="password" class="form-control" 
+                                                       name="new_password" 
+                                                       placeholder="New Password">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <input type="password" class="form-control" 
+                                                       name="confirm_password" 
+                                                       placeholder="Confirm Password">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-12 mt-4">
+                                <button type="submit" name="update_profile" 
+                                        class="btn btn-primary px-4">
+                                    <i class="fas fa-save me-2"></i>Save Changes
+                                </button>
+                                <a href="dashboard.php" class="btn btn-outline-secondary">
+                                    Cancel
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="col-12 mb-3">
-            <label for="phone" class="form-label">Phone Number</label>
-            <input type="phone" class="form-control" id="phone" name="phone" value="<?php echo htmlspecialchars($user['phone']); ?>" required>
-        </div>
-        <div class="col-12 mb-3">
-            <label for="inputAddress" class="form-label">Address</label>
-            <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-        </div>
-        <div class="col-md-6">
-            <label for="inputCity" class="form-label">City</label>
-            <input type="text" class="form-control" id="inputCity">
-        </div>
-        <div class="col-md-4">
-            <label for="inputState" class="form-label">State</label>
-            <select id="inputState" class="form-select">
-            <option selected>Choose...</option>
-            <option>...</option>
-            </select>
-        </div>
-        <div class="col-md-2">
-            <label for="inputZip" class="form-label">Zip</label>
-            <input type="text" class="form-control" id="inputZip">
-        </div>
-        <div>
-            <label class="form-label" for="customFile">Upload Profile Picture</label>
-            <input type="file" class="form-control" id="customFile" />
-        </div class="col-12 mb-3">
-        <button type="submit" class="btn btn-primary" name="edit_user">Save Changes</button>
-        <a href="manage_users.php" class="btn btn-secondary">Cancel</a>
-    </form>
+    </div>
 </div>
 
-<?php include '../includes/admin/footer.php'; ?>
+<?php include './includes/admin/footer.php'; ?>
