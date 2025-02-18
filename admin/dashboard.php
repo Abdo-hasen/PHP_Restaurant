@@ -1,10 +1,19 @@
 <?php
-session_start(); // Start the session
-require_once "./../init.php";
+session_start();
 
+// Redirect to login if not logged in or not an admin
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'staff') {
+    header("Location: ../login.php");
+    exit();
+}
+
+require_once "./../init.php";
 include '../includes/admin/sidebar.php';
 include '../includes/admin/header.php';
-include '../functions/stats.php'; // Include the functions file
+include '../functions/stats.php';
+
+// // Retrieve the logged-in user's name from the session
+// $logged_in_user = $_SESSION['user'];
 
 // Fetch analytics data
 $totalOrders = getTotalOrders($db);
