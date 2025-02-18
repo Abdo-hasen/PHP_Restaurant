@@ -1,5 +1,5 @@
 <?php
-require_once "../handlers/categories.php"
+require_once "../handelers/categories.php"
 ?>
 <!DOCTYPE html>
 <html lang="en">

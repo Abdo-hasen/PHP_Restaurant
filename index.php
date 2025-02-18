@@ -7,6 +7,7 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
+require_once "./customer/handlers/reservation.php"
 ?>
 
 <!DOCTYPE html>
@@ -168,20 +169,30 @@ if (!isset($_SESSION['user_id'])) {
                 <img class="img-fluid rounded" src="assets/customer/images/about1.jpg" alt="Table Reservation">
             </div>
             <div class="reservation-form">
-                <form action="#">
-                    <div class="input-row">
-                        <input type="text" placeholder="Your Name" required>
-                        <input type="email" placeholder="Your Email" required>
-                        <input type="tel" placeholder="Your Phone" required>
-                    </div>
-                    <div class="input-row">
-                        <input type="date" required>
-                        <input type="time" required>
-                        <input type="number" placeholder="# of people" required>
-                    </div>
-                    <textarea placeholder="Message" rows="4"></textarea>
-                    <button type="submit" class="btn-reserve">Book a Table</button>
-                </form>
+            <div class="container my-5">
+        <h2 class="text-center">Book A Table</h2>
+        <form method="POST">
+            <input type="date" name="reservation_date" required value="<?= $_POST['reservation_date'] ?? '' ?>">
+            <input type="time" name="time_slot" required value="<?= $_POST['time_slot'] ?? '' ?>">
+            <button type="submit" name="check_availability">Check Availability</button>
+        </form>
+        
+        <?php if (!empty($_POST['reservation_date']) && !empty($_POST['time_slot'])): ?>
+        <form method="POST">
+            <input type="hidden" name="reservation_date" value="<?= $_POST['reservation_date'] ?>">
+            <input type="hidden" name="time_slot" value="<?= $_POST['time_slot'] ?>">
+            <select name="table_id" required>
+                <?= $tablesOptions ?>
+            </select>
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <input type="tel" name="phone" placeholder="Your Phone" required>
+            <input type="number" name="guests" placeholder="# of people" required>
+            <textarea name="message" placeholder="Message" rows="4"></textarea>
+            <button type="submit" name="book_table">Book a Table</button>
+        </form>
+        <?php endif; ?>
+    </div>
             </div>
         </div>
     </div>
