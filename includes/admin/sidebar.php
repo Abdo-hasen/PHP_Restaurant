@@ -1,7 +1,7 @@
 
 <body>
     <div class="sidebar animate__animated animate__fadeInLeft">
-        <h4 class="text-center">Admin Dashboard</h4>
+        <h4 class="text-center">[restaurant]</h4>
         <a href="dashboard.php" class="d-block mb-2">Admin Dashboard</a>
         <a href="manage_menu.php" class="d-block mb-2">Menu Management</a>
         <a href="manage_orders.php" class="d-block mb-2">Order Management</a>
