@@ -41,7 +41,7 @@ $menuItems = $db->table("menu_items")->read();
                     <h3 class="card-title text-center">Edit Special Offer</h3>
                 </div>
                 <div class="card-body">
-                    <form action="<?= URL . "admin/handelers/edit-offer-handler.php" ?>" method="POST">
+                    <form action="<?= URL . "handlers/admin/edit-offer-handler.php" ?>" method="POST">
                         <input type="hidden" name="offer_id" value="<?= $offer['offer_id'] ?>">
 
                         <div class="mb-3">
