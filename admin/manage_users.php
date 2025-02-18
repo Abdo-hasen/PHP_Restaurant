@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_user'])) {
     }
 }
 
-// Fetch all users from the database
+
 $users = $db->table('users')->read();
 
 if (empty($users)) {
