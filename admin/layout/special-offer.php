@@ -1,7 +1,7 @@
 <?php
 require_once "./../../init.php";
 $pageTitle = "Special Offer";
-require_once ROOT . "./includes/admin/header.php";
+require_once "./../../includes/admin/header.php";
 $menuItems = $db->table("menu_items")->read();
 ?>
 
@@ -71,5 +71,5 @@ $menuItems = $db->table("menu_items")->read();
 </div>
 
 <?php
-require_once ROOT . "./includes/admin/footer.php";
+require_once "./../../includes/admin/footer.php";
 ?>

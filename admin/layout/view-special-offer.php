@@ -1,7 +1,7 @@
 <?php
 require_once "./../../init.php";
 $pageTitle = "View Special Offers";
-require_once ROOT . "./includes/admin/header.php";
+require_once "./../../includes/admin/header.php";
 
 $offers = $db->mysqli->query("
     SELECT so.*, mi.item_name 
@@ -76,5 +76,5 @@ $offers = $db->mysqli->query("
 </div>
 
 <?php
-require_once ROOT . "./includes/admin/footer.php";
+require_once "./../../includes/admin/footer.php";
 ?>

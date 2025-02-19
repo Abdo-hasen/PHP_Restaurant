@@ -1,7 +1,7 @@
 <?php
 require_once "./../../init.php";
 $pageTitle = "Edit Special Offer";
-require_once ROOT . "./includes/admin/header.php";
+require_once "./../../includes/admin/header.php";
 
 // Get offer ID from URL
 $offer_id = isset($_GET['id']) ? $_GET['id'] : 0;
@@ -86,5 +86,5 @@ $menuItems = $db->table("menu_items")->read();
 </div>
 
 <?php
-require_once ROOT . "./includes/admin/footer.php";
+require_once "./../../includes/admin/footer.php";
 ?>
