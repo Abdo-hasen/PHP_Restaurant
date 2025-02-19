@@ -1,5 +1,6 @@
 <?php
-require_once "../../init.php";
+require_once "./../../init.php";
+// require_once "../../init.php";
 $db = new Database();
 $db->table("tables");
 
