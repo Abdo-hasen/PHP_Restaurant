@@ -1,5 +1,8 @@
 <?php
+session_start();
 require_once __DIR__ . "/handlers/auth_handler.php";
+
+// var_dump($_SESSION);
 
 if (checkRequestMethod('POST')) {
     $email = sanitizeInput($_POST['email']);
@@ -26,7 +29,7 @@ if (checkRequestMethod('POST')) {
                     <div class="card-body p-5">
                         <div class="text-center mb-4">
                             <!-- put image logo here -->
-                            <img src="/api/placeholder/80/80" alt="Logo" class="mb-4 rounded-circle">
+                            <!-- <img src="/api/placeholder/80/80" alt="Logo" class="mb-4 rounded-circle"> -->
                             <h2 class="fw-bold">Welcome Back</h2>
                             <p class="text-muted">Please login to your account</p>
                         </div>

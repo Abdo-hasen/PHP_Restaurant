@@ -47,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_user'])) {
     exit();
 }
 
-// Fetch all users from the database
+
 $users = $db->table('users')->read();
 
 // Display success/error messages
