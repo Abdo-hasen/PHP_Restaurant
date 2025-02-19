@@ -3,8 +3,19 @@
 require_once "init.php";
 
 $menu = $db->table("menu_items")->read();
-// $menuData = file_get_contents("assets/customer/menu.json");
-// $menu = json_decode($menuData, true);
+
+//active offer
+$specialOffers = $db->mysqli->query("
+    SELECT so.* 
+    FROM special_offers so
+    WHERE so.start_date <= CURDATE() AND so.expiry_date >= CURDATE()
+")->fetch_all(MYSQLI_ASSOC);
+
+
+$discountMap = [];
+foreach ($specialOffers as $offer) {
+    $discountMap[$offer['item_id']] = $offer;
+}
 
 // Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
@@ -126,32 +137,40 @@ require_once "./customer/handlers/reservation.php"
 
 
     <!-- Menu -->
-    <div class="container-fluid py-5" id="menu">
+    <div class="container py-5" id="menu">
         <div class="text-center">
             <p class="text-muted">OUR MENU</p>
-            <h2 class="menu-title">Check Our <span>Menu</span></h2>
+            <h2 class="menu-title">Check Our <span>Delicious Menu</span></h2>
         </div>
 
-        <!-- items view -->
-        <div class="container mt-5">
-            <div class="row">
-                <?php foreach ($menu as $item): ?>
-                    <div class="col-md-4 mb-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <!-- dispaly image -->
-                                <h5 class="card-title"><?php echo $item['item_name']; ?></h5>
-                                <p class="card-text"><?php echo $item['description']; ?></p>
-                                <p class="card-price"><?php echo $item['price']; ?> EGP</p>
-                                <form action="<?= URL ?>admin/handelers/cart-handler.php" method="POST">
-                                    <input type="hidden" name="item_id" value="<?= $item['item_id'] ?>">
-                                    <button type="submit" name="add_to_cart" class="btn btn-primary">Add to Cart</button>
-                                </form>
-                            </div>
+        <div class="row mt-4">
+            <?php foreach ($menu as $item): ?>
+                <?php
+                $isDiscounted = isset($discountMap[$item['item_id']]);
+                $discountPercent = $isDiscounted ? $discountMap[$item['item_id']]['discount_percent'] : 0;
+                $discountedPrice = $item['price'] * (1 - ($discountPercent / 100));
+                ?>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <?php if ($item['image_url']): ?>
+                            <img src="<?= $item['image_url'] ?>" class="card-img-top" alt="<?= $item['item_name'] ?>" style="height: 200px; object-fit: cover;">
+                        <?php endif; ?>
+                        <div class="card-body">
+                            <h5 class="card-title"><?= $item['item_name'] ?></h5>
+                            <?php if ($isDiscounted): ?>
+                                <p class="text-muted">
+                                    <span class="text-decoration-line-through">$<?= number_format($item['price'], 2) ?></span>
+                                    <span class="text-danger fw-bold"> $<?= number_format($discountedPrice, 2) ?></span>
+                                </p>
+                                <p class="text-success fw-bold"><?= $discountPercent ?>% OFF</p>
+                            <?php else: ?>
+                                <p class="text-muted fw-bold">$<?= number_format($item['price'], 2) ?></p>
+                            <?php endif; ?>
+                            <p class="card-text"><?= $item['description'] ?></p>
                         </div>
                     </div>
-                <?php endforeach; ?>
-            </div>
+                </div>
+            <?php endforeach; ?>
         </div>
     </div>
 

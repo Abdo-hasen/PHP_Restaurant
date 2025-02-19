@@ -16,10 +16,14 @@ try {
     $db->mysqli->begin_transaction();
 
     $orderData = [
-        'user_id' => $_SESSION['user_id'] ?? 1, //handel login and remove 1 
+        'user_id' => $_SESSION['user_id'] ?? null,
         'total_amount' => $total,
         'status' => 'Pending'
     ];
+
+    if ($user_id = null) {
+        redirect(URL. "login.php");
+    }
     $db->table('orders')->insert($orderData);
     $order_id = $db->mysqli->insert_id;
 
@@ -35,7 +39,7 @@ try {
 
     $paymentData = [
         'order_id' => $order_id,
-        'payment_method' => 'Credit Card', 
+        'payment_method' => 'Credit Card',
         'amount' => $total,
         'status' => 'Completed'
     ];
@@ -45,10 +49,9 @@ try {
 
 
     unset($_SESSION['cart']);
-    
+
     $_SESSION['success'] = "Payment processed successfully!";
     redirect(URL . "cart.php");
-
 } catch (Exception $e) {
     $db->mysqli->rollback();
     $_SESSION['error'] = "Payment processing failed. Please try again.";
