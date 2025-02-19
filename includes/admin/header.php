@@ -10,25 +10,29 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
-</head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
+    <link rel="icon" href="../assets/admin/img/kaiadmin/favicon.ico" type="image/x-icon" />
 
-<body>
-<nav class="navbar border-bottom border-body">  
-<div class="container-fluid">
-    <a class="navbar-brand">
-        <?php
-        if (isset($_SESSION['admin_username'])) {
-            echo "Welcome, " . $_SESSION['admin_username'];
-        } else {
-            echo "Welcome, Admin";
-        }
-        ?>
-    </a>
-    <div class="d-flex">
-      <a href="../../profile.php" class="nav-link">
-        <i class="bi bi-person-circle"></i>
-      </a>
-    </div>
-  </div>
-</nav>
+    <!-- Fonts and icons -->
+    <script src="../assets/admin/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+		WebFont.load({
+			google: {"families":["Public Sans:300,400,500,600,700"]},
+			custom: {"families":["Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: ['../assets/admin/css/fonts.min.css']},
+			active: function() {
+				sessionStorage.fonts = true;
+			}
+		});
+	</script>
 
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="../assets/admin/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../assets/admin/css/plugins.min.css" />
+    <link rel="stylesheet" href="../assets/admin/css/kaiadmin.min.css" />
+
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link rel="stylesheet" href="../assets/admin/css/demo.css" />
+  </head>
+  <body>
+    <div class="wrapper">
