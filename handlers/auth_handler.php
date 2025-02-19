@@ -47,6 +47,10 @@ function handleLogin($email, $password) {
     // Set session variables
     $_SESSION['user_id'] = $user['user_id'];
     $_SESSION['role'] = $user['role'];
+    $_SESSION['username'] = $user['full_name']; // Store the user's name
+    $_SESSION['email'] = $user['email']; // Store the user's email
+    $_SESSION['profile_picture'] = $user['profile_picture']; // Store the profile picture path
+
 
     // Redirect based on role
     if ($user['role'] === 'customer') {
