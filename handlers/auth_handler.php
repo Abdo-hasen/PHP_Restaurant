@@ -50,11 +50,9 @@ function handleLogin($email, $password) {
 
     // Redirect based on role
     if ($user['role'] === 'customer') {
-        header("Location: ../index.php");
-        exit();
+        redirect(URL."index.php");
     } else {
-        header("Location: ../admin/dashboard.php");
-        exit();
+        redirect(URL."admin/dashboard.php");
     }
 }
 

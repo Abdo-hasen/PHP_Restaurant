@@ -31,24 +31,6 @@ if (checkRequestMethod('POST')) {
                             <h2 class="fw-bold">Create Account</h2>
                             <p class="text-muted">Fill in your details to get started</p>
                         </div>
-<<<<<<< HEAD
-
-                        <form action="admin/register.php" method="POST" enctype="multipart/form-data">
-                            <div class="text-center mb-4">
-                                <div class="position-relative d-inline-block">
-                                    <img src="/api/placeholder/100/100" alt="Profile Preview" id="profilePreview"
-                                        class="rounded-circle border" style="width: 100px; height: 100px; object-fit: cover;">
-                                    <label for="profilePic" class="position-absolute bottom-0 end-0 bg-white rounded-circle p-2 shadow-sm"
-                                        style="cursor: pointer;">
-
-                                    </label>
-                                    <input type="file" id="profilePic" name="profilePic" class="d-none" accept="image/*">
-                                </div>
-                            </div>
-                            <!-- check errors -->
-            
-
-=======
                         <?php if (isset($_SESSION['errors'])): ?>
                             <?php foreach ($_SESSION['errors'] as $error): ?>
                                 <div class="alert alert-danger"><?= htmlspecialchars($error); ?></div>
@@ -56,7 +38,6 @@ if (checkRequestMethod('POST')) {
                             <?php unset($_SESSION['errors']); ?>
                         <?php endif; ?>
                         <form method="POST" enctype="multipart/form-data">
->>>>>>> 7fd9e2d8e989f847ffdd5e87aab60faeacd1721e
                             <div class="mb-3">
                                 <label for="full_name" class="form-label">Full Name</label>
                                 <input type="text" class="form-control" id="full_name" name="full_name" required>

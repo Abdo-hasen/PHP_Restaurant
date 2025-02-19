@@ -2,9 +2,9 @@
 // session_start();
 require_once "init.php";
 
-// $menu = $db->table("menu_items")->read();
-$menuData = file_get_contents("assets/customer/menu.json");
-$menu = json_decode($menuData, true);
+$menu = $db->table("menu_items")->read();
+// $menuData = file_get_contents("assets/customer/menu.json");
+// $menu = json_decode($menuData, true);
 
 // Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {

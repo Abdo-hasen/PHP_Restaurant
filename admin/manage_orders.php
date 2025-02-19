@@ -1,7 +1,7 @@
 <?php
 require_once "../init.php";
 $pageTitle = "Manage Orders";
-require_once ROOT . "includes/admin/header.php";
+require_once "./../includes/admin/header.php";
 
 $orders = $db->mysqli->query("
     SELECT o.*, u.full_name, u.email, 
@@ -192,5 +192,5 @@ function showToast(type, message) {
 </script>
 
 <?php
-require_once ROOT . "includes/admin/footer.php";
+require_once "./../includes/admin/footer.php";
 ?>
