@@ -9,7 +9,6 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["save_supplier"])) {
        
@@ -134,7 +133,6 @@ $suppliers = $conn->query("SELECT * FROM suppliers");
             document.body.appendChild(form);
             form.submit();
         }
-
         function resetForm() {
             document.getElementById("formTitle").innerText = "Add New Supplier";
             document.getElementById("supplier_id").value = "";
@@ -145,7 +143,6 @@ $suppliers = $conn->query("SELECT * FROM suppliers");
     </script>
 </body>
 </html>
-
 <?php
 $conn->close();
 ?>

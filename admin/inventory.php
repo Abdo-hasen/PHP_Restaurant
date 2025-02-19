@@ -5,19 +5,17 @@ $user = "root";
 $pass = "";
 $dbname = "restaurant_db";
 
+
 $conn = new mysqli($host, $user, $pass, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-
-
 if (isset($_POST["add_inventory"])) {
     $item_id = $_POST["item_id"];
     $quantity = $_POST["quantity"];
     $unit = $_POST["unit"];
     $reorder_level = $_POST["reorder_level"];
     $last_restocked = date("Y-m-d");
-
     $sql = "INSERT INTO inventory (item_id, quantity, unit, reorder_level, last_restocked) 
             VALUES ('$item_id', '$quantity', '$unit', '$reorder_level', '$last_restocked') 
             ON DUPLICATE KEY UPDATE quantity = quantity + VALUES(quantity), last_restocked = VALUES(last_restocked)";

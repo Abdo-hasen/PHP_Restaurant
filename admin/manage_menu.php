@@ -1,5 +1,4 @@
 <?php
-
 $host = "localhost";
 $user = "root";
 $pass = "";
@@ -10,24 +9,20 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
- 
 function uploadImage($file) {
     $targetDir = "uploads/";
     $fileName = basename($file["name"]);
     $targetFilePath = $targetDir . $fileName;
 
-    
     if (!is_dir($targetDir)) {
         mkdir($targetDir, 0777, true);
     }
 
-   
     if (move_uploaded_file($file["tmp_name"], $targetFilePath)) {
         return $targetFilePath;
     }
     return false;
 }
-
 
 if (isset($_POST["add_item"])) {
     $category_id = $_POST["category_id"];
@@ -36,7 +31,6 @@ if (isset($_POST["add_item"])) {
     $price = $_POST["price"];
     $is_available = isset($_POST["is_available"]) ? 1 : 0;
 
-    
     $image_url = uploadImage($_FILES["image"]);
     if (!$image_url) {
         echo "<script>alert('Image upload failed!');</script>";
@@ -61,7 +55,7 @@ if (isset($_POST["update_item"])) {
     $price = $_POST["price"];
     $is_available = isset($_POST["is_available"]) ? 1 : 0;
 
-   
+
     if ($_FILES["image"]["name"] != "") {
         $image_url = uploadImage($_FILES["image"]);
     } else {
@@ -92,7 +86,6 @@ $menu_items = $conn->query("SELECT menu_items.*, categories.category_name
                             FROM menu_items 
                             JOIN categories ON menu_items.category_id = categories.category_id");
 
-
 $categories = $conn->query("SELECT * FROM categories");
 ?>
 
@@ -109,7 +102,6 @@ $categories = $conn->query("SELECT * FROM categories");
 
     <h2 class="text-center mb-4">Menu Items</h2>
 
-    
     <div class="row">
         <?php while ($row = $menu_items->fetch_assoc()): ?>
             <div class="col-md-4">
@@ -138,7 +130,7 @@ $categories = $conn->query("SELECT * FROM categories");
         <?php endwhile; ?>
     </div>
 
-  
+
     <div class="card p-4">
         <h3 id="form-title">Add New Item</h3>
         <form id="menu-form" action="" method="POST" enctype="multipart/form-data">
@@ -179,7 +171,6 @@ $categories = $conn->query("SELECT * FROM categories");
             $("#form-title").text("Edit Menu Item");
             $("#submit-btn").addClass("d-none");
             $("#update-btn, #cancel-edit").removeClass("d-none");
-
             $("#item_id").val($(this).data("id"));
             $("#category_id").val($(this).data("category"));
             $("#item_name").val($(this).data("name"));
@@ -187,7 +178,6 @@ $categories = $conn->query("SELECT * FROM categories");
             $("#price").val($(this).data("price"));
             $("#current_image").val($(this).data("image"));
         });
-
         $("#cancel-edit").click(function () {
             location.reload();
         });
