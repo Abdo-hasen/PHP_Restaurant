@@ -56,7 +56,7 @@ if (checkRequestMethod('POST') && checkInput($_POST, 'update_profile')) {
         } elseif (!in_array($file['type'], $allowed_types)) {
             $errors[] = "Only JPG, PNG, and GIF files are allowed";
         } else {
-            $upload_dir = './assets/profile_images/';
+            $upload_dir = './assets/profile-image/';
             if (!file_exists($upload_dir)) {
                 mkdir($upload_dir, 0755, true);
             }
