@@ -11,7 +11,7 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
-require_once "./customer/handlers/reservation.php"
+require_once "./handlers/customer/reservation.php"
 ?>
 
 <!DOCTYPE html>
@@ -143,7 +143,7 @@ require_once "./customer/handlers/reservation.php"
                                 <h5 class="card-title"><?php echo $item['item_name']; ?></h5>
                                 <p class="card-text"><?php echo $item['description']; ?></p>
                                 <p class="card-price"><?php echo $item['price']; ?> EGP</p>
-                                <form action="<?= URL ?>admin/handelers/cart-handler.php" method="POST">
+                                <form action="<?= URL ?>handlers/admin/cart-handler.php" method="POST">
                                     <input type="hidden" name="item_id" value="<?= $item['item_id'] ?>">
                                     <button type="submit" name="add_to_cart" class="btn btn-primary">Add to Cart</button>
                                 </form>

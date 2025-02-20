@@ -114,7 +114,7 @@ document.querySelectorAll('.status-select').forEach(select => {
         const orderId = this.getAttribute('data-order-id');
         const newStatus = this.value;
         
-        fetch('handelers/update_order_status.php', {
+        fetch('../handlers/admin/update_order_status.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -149,7 +149,7 @@ document.querySelectorAll('.view-details').forEach(button => {
     button.addEventListener('click', function() {
         const orderId = this.getAttribute('data-order-id');
         console.log(`Order details for order ${orderId}`);
-        fetch(`handelers/order_details.php?order_id=${orderId}`)
+        fetch(`../handlers/admin/order_details.php?order_id=${orderId}`)
             .then(response => response.text())
             .then(html => {
                 document.getElementById('orderDetailsContent').innerHTML = html;

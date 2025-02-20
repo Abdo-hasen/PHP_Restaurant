@@ -1,5 +1,5 @@
 <?php
-require_once "../handelers/reservation.php"
+require_once "../../handlers/admin/reservation.php"
 ?>
 <!DOCTYPE html>
 <html lang="en">

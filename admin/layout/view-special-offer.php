@@ -55,7 +55,7 @@ $offers = $db->mysqli->query("
                                             class="btn btn-sm btn-warning">
                                             <i class="fas fa-edit"></i> Edit
                                         </a>
-                                        <a href="<?= URL ?>admin/handelers/delete-offer-handler.php?id=<?= $offer['offer_id'] ?>"
+                                        <a href="<?= URL ?>handlers/admin/delete-offer-handler.php?id=<?= $offer['offer_id'] ?>"
                                             class="btn btn-sm btn-danger"
                                             onclick="return confirm('Are you sure you want to delete this offer?')">
                                             <i class="fas fa-trash"></i> Delete
