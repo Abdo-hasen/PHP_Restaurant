@@ -23,59 +23,79 @@ $activeOrders = getActiveOrders($db);
 $totalReservations = getTotalReservations($db);
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-    <!-- Navbar is included from navbar.php -->
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Total Orders</h5>
-                        <p class="card-text"><?php echo $totalOrders; ?></p>
+<!-- Navbar is included from navbar.php -->
+<div class="container">
+    <div class="page-inner mt-5">
+        <div class="page-header">
+            <h4 class="page-title">Dashboard</h4>
+            <ul class="breadcrumbs">
+                <li class="nav-home">
+                    <a href="#">
+                        <i class="icon-home"></i>
+                    </a>
+                </li>
+                <li class="separator">
+                    <i class="icon-arrow-right"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">Pages</a>
+                </li>
+                <li class="separator">
+                    <i class="icon-arrow-right"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">Starter Page</a>
+                </li>
+            </ul>
+        </div>
+        <div class="page-category">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Total Orders</h5>
+                            <p class="card-text"><?php echo $totalOrders; ?></p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Total Revenue</h5>
-                        <p class="card-text">$<?php echo number_format($totalRevenue, 2); ?></p>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Total Revenue</h5>
+                            <p class="card-text">$<?php echo number_format($totalRevenue, 2); ?></p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Most Popular Item</h5>
-                        <p class="card-text"><?php echo $mostPopularItem; ?></p>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Most Popular Item</h5>
+                            <p class="card-text"><?php echo $mostPopularItem; ?></p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Active Orders</h5>
-                        <p class="card-text"><?php echo $activeOrders; ?></p>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Active Orders</h5>
+                            <p class="card-text"><?php echo $activeOrders; ?></p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Total Reservations</h5>
-                        <p class="card-text"><?php echo $totalReservations; ?></p>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Total Reservations</h5>
+                            <p class="card-text"><?php echo $totalReservations; ?></p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
 </body>
 </html>
+
+<?php include '../includes/admin/footer.php'; ?>

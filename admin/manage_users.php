@@ -60,48 +60,74 @@ if (isset($_SESSION['error'])) {
     unset($_SESSION['error']);
 }
 ?>
+<div class="container mt-5">
+          <div class="page-inner">
+            <div class="page-header">
+              <h4 class="page-title">Manage Users</h4>
+              <ul class="breadcrumbs">
+                <li class="nav-home">
+                  <a href="#">
+                    <i class="icon-home"></i>
+                  </a>
+                </li>
+                <li class="separator">
+                  <i class="icon-arrow-right"></i>
+                </li>
+                <li class="nav-item">
+                  <a href="#">Pages</a>
+                </li>
+                <li class="separator">
+                  <i class="icon-arrow-right"></i>
+                </li>
+                <li class="nav-item">
+                  <a href="#">Starter Page</a>
+                </li>
+              </ul>
+            </div>
+            <div class="page-category">
+            <div class="container mt-4">
+                <a href="../functions/add_user.php" class="btn btn-primary mb-3">Add User</a>
 
-<div class="container mt-4">
-    <h2>Manage Users</h2>
-    <a href="../functions/add_user.php" class="btn btn-primary mb-3">Add User</a>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (is_array($users) && !empty($users)): ?>
+                            <?php foreach ($users as $user): ?>
+                                <tr>
+                                    <td><?php echo htmlspecialchars($user['user_id']); ?></td>
+                                    <td><?php echo htmlspecialchars($user['full_name']); ?></td>
+                                    <td><?php echo htmlspecialchars($user['email']); ?></td>
+                                    <td><?php echo htmlspecialchars($user['role']); ?></td>
+                                    <td>
+                                        <!-- Edit Button (Link to Edit Page) -->
+                                        <a href="../functions/edit_user.php?id=<?php echo $user['user_id']; ?>" class="btn btn-warning btn-sm">Edit</a>
 
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php if (is_array($users) && !empty($users)): ?>
-                <?php foreach ($users as $user): ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($user['user_id']); ?></td>
-                        <td><?php echo htmlspecialchars($user['full_name']); ?></td>
-                        <td><?php echo htmlspecialchars($user['email']); ?></td>
-                        <td><?php echo htmlspecialchars($user['role']); ?></td>
-                        <td>
-                            <!-- Edit Button (Link to Edit Page) -->
-                            <a href="../functions/edit_user.php?id=<?php echo $user['user_id']; ?>" class="btn btn-warning btn-sm">Edit</a>
-
-                            <!-- Delete Button (Form for POST Request) -->
-                            <form action="manage_users.php" method="GET" style="display: inline;">
-                                <input type="hidden" name="delete_id" value="<?php echo $user['user_id']; ?>">
-                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this user?');">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <tr>
-                    <td colspan="5" class="text-center">No users found.</td>
-                </tr>
-            <?php endif; ?>
-        </tbody>
-    </table>
-</div>
+                                        <!-- Delete Button (Form for POST Request) -->
+                                        <form action="manage_users.php" method="GET" style="display: inline;">
+                                            <input type="hidden" name="delete_id" value="<?php echo $user['user_id']; ?>">
+                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this user?');">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="5" class="text-center">No users found.</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>                
+            </div>
+          </div>
+        </div>
 
 <?php include '../includes/admin/footer.php'; ?>
