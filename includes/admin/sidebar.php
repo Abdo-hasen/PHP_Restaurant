@@ -505,7 +505,7 @@
     >
         <div class="avatar-sm">
             <img
-                src="<?php echo !empty($_SESSION['profile_picture']) ? $_SESSION['profile_picture'] : '../assets/admin/img/profile.jpg'; ?>"
+                src="<?php echo !empty($_SESSION['profile_picture']) ? $_SESSION['profile_picture'] : '../../assets/profile-image/avatar.png'; ?>"
                 alt="Profile Picture"
                 class="avatar-img rounded-circle"
             />
@@ -521,7 +521,7 @@
                 <div class="user-box">
                     <div class="avatar-lg">
                         <img
-                            src="<?php echo !empty($_SESSION['profile_picture']) ? $_SESSION['profile_picture'] : '../assets/admin/img/profile.jpg'; ?>"
+                            src="<?php echo !empty($_SESSION['profile_picture']) ? $_SESSION['profile_picture'] : '../../assets/profile-image/avatar.png';?>"
                             alt="Profile Picture"
                             class="avatar-img rounded"
                         />
