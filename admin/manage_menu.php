@@ -1,36 +1,44 @@
 <?php
+session_start();
+
+// Redirect to login if not logged in or not an admin
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ../login.php");
+    exit();
+}
+
+require_once "./../init.php"; // Include the initialization file
 include './../includes/admin/sidebar.php';
 include './../includes/admin/header.php';
 
-$host = "localhost";
-$user = "root";
-$pass = "";
-$dbname = "restaurant_db";
+// Create a new instance of the Database class
+$db = new Database();
 
-$conn = new mysqli($host, $user, $pass, $dbname);
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+// Fetch all menu items
+$menu_items = $db->table('menu_items')->read();
 
- 
+// Fetch all categories
+$categories = $db->table('categories')->read();
+
+// Function to upload image
 function uploadImage($file) {
-    $targetDir = "../../assets/admin/uploads";
+    $targetDir = "../../assets/admin/uploads/";
     $fileName = basename($file["name"]);
     $targetFilePath = $targetDir . $fileName;
 
-    
+    // Create the directory if it doesn't exist
     if (!is_dir($targetDir)) {
         mkdir($targetDir, 0777, true);
     }
 
-   
+    // Move the uploaded file to the target directory
     if (move_uploaded_file($file["tmp_name"], $targetFilePath)) {
         return $targetFilePath;
     }
     return false;
 }
 
-
+// Handle adding a new menu item
 if (isset($_POST["add_item"])) {
     $category_id = $_POST["category_id"];
     $item_name = $_POST["item_name"];
@@ -38,23 +46,30 @@ if (isset($_POST["add_item"])) {
     $price = $_POST["price"];
     $is_available = isset($_POST["is_available"]) ? 1 : 0;
 
-    
+    // Upload the image
     $image_url = uploadImage($_FILES["image"]);
     if (!$image_url) {
         echo "<script>alert('Image upload failed!');</script>";
     }
 
-    $sql = "INSERT INTO menu_items (category_id, item_name, description, price, image_url, is_available) 
-            VALUES ('$category_id', '$item_name', '$description', '$price', '$image_url', '$is_available')";
+    // Insert the new menu item into the database
+    $data = [
+        'category_id' => $category_id,
+        'item_name' => $item_name,
+        'description' => $description,
+        'price' => $price,
+        'image_url' => $image_url,
+        'is_available' => $is_available
+    ];
 
-    if ($conn->query($sql) === TRUE) {
+    if ($db->table('menu_items')->insert($data)) {
         echo "<script>alert('New menu item added successfully!'); window.location.href='manage_menu.php';</script>";
     } else {
-        echo "<script>alert('Error: " . $conn->error . "');</script>";
+        echo "<script>alert('Error adding menu item!');</script>";
     }
 }
 
-
+// Handle updating a menu item
 if (isset($_POST["update_item"])) {
     $item_id = $_POST["item_id"];
     $category_id = $_POST["category_id"];
@@ -63,39 +78,50 @@ if (isset($_POST["update_item"])) {
     $price = $_POST["price"];
     $is_available = isset($_POST["is_available"]) ? 1 : 0;
 
-   
+    // If a new image is uploaded, update the image URL
     if ($_FILES["image"]["name"] != "") {
         $image_url = uploadImage($_FILES["image"]);
     } else {
         $image_url = $_POST["current_image"];
     }
 
-    $sql = "UPDATE menu_items SET 
-            category_id='$category_id', item_name='$item_name', description='$description', 
-            price='$price', image_url='$image_url', is_available='$is_available' 
-            WHERE item_id='$item_id'";
+    // Update the menu item in the database
+    $data = [
+        'category_id' => $category_id,
+        'item_name' => $item_name,
+        'description' => $description,
+        'price' => $price,
+        'image_url' => $image_url,
+        'is_available' => $is_available
+    ];
 
-    if ($conn->query($sql) === TRUE) {
+    $condition = ['item_id' => $item_id];
+
+    if ($db->table('menu_items')->update($data, $condition)) {
         echo "<script>alert('Menu item updated successfully!'); window.location.href='manage_menu.php';</script>";
     } else {
-        echo "<script>alert('Error updating: " . $conn->error . "');</script>";
+        echo "<script>alert('Error updating menu item!');</script>";
     }
 }
 
-
+// Handle deleting a menu item
 if (isset($_GET["delete"])) {
     $item_id = $_GET["delete"];
-    $conn->query("DELETE FROM menu_items WHERE item_id = $item_id");
-    echo "<script>alert('Menu item deleted!'); window.location.href='manage_menu.php';</script>";
+    if ($db->table('menu_items')->delete($item_id, 'item_id')) {
+        echo "<script>alert('Menu item deleted!'); window.location.href='manage_menu.php';</script>";
+    } else {
+        echo "<script>alert('Error deleting menu item!');</script>";
+    }
 }
 
+// Fetch all menu items with their categories
+$menu_items = $db->table('menu_items')
+    ->join('categories', 'menu_items.category_id = categories.category_id')
+    ->select('menu_items.*, categories.category_name')
+    ->get();
 
-$menu_items = $conn->query("SELECT menu_items.*, categories.category_name 
-                            FROM menu_items 
-                            JOIN categories ON menu_items.category_id = categories.category_id");
-
-
-$categories = $conn->query("SELECT * FROM categories");
+// Fetch all categories
+$categories = $db->table('categories')->select('*')->get();
 ?>
 
 <div class="container">
@@ -127,9 +153,8 @@ $categories = $conn->query("SELECT * FROM categories");
 
 <h2 class="text-center mb-4">Menu Items</h2>
 
-
 <div class="row">
-    <?php while ($row = $menu_items->fetch_assoc()): ?>
+    <?php foreach ($menu_items as $row): ?>
         <div class="col-md-4">
             <div class="card mb-4">
                 <img src="<?= $row['image_url']; ?>" class="card-img-top" alt="<?= $row['item_name']; ?>" style="height: 200px; object-fit: cover;">
@@ -153,9 +178,8 @@ $categories = $conn->query("SELECT * FROM categories");
                 </div>
             </div>
         </div>
-    <?php endwhile; ?>
+    <?php endforeach; ?>
 </div>
-
 
 <div class="card p-4">
     <h3 id="form-title">Add New Item</h3>
@@ -166,9 +190,9 @@ $categories = $conn->query("SELECT * FROM categories");
         <label>Category:</label>
         <select name="category_id" id="category_id" class="form-control" required>
             <option value="">Select Category</option>
-            <?php while ($cat = $categories->fetch_assoc()): ?>
+            <?php foreach ($categories as $cat): ?>
                 <option value="<?= $cat['category_id']; ?>"><?= $cat['category_name']; ?></option>
-            <?php endwhile; ?>
+            <?php endforeach; ?>
         </select><br>
 
         <label>Item Name:</label>
@@ -196,23 +220,24 @@ $categories = $conn->query("SELECT * FROM categories");
   </div>
 </div>
 
-    <script>
-        $(".edit-btn").click(function () {
-            $("#form-title").text("Edit Menu Item");
-            $("#submit-btn").addClass("d-none");
-            $("#update-btn, #cancel-edit").removeClass("d-none");
+<script>
+    $(".edit-btn").click(function () {
+        $("#form-title").text("Edit Menu Item");
+        $("#submit-btn").addClass("d-none");
+        $("#update-btn, #cancel-edit").removeClass("d-none");
 
-            $("#item_id").val($(this).data("id"));
-            $("#category_id").val($(this).data("category"));
-            $("#item_name").val($(this).data("name"));
-            $("#description").val($(this).data("description"));
-            $("#price").val($(this).data("price"));
-            $("#current_image").val($(this).data("image"));
-        });
+        $("#item_id").val($(this).data("id"));
+        $("#category_id").val($(this).data("category"));
+        $("#item_name").val($(this).data("name"));
+        $("#description").val($(this).data("description"));
+        $("#price").val($(this).data("price"));
+        $("#current_image").val($(this).data("image"));
+        $("#is_available").prop("checked", $(this).data("available") == 1);
+    });
 
-        $("#cancel-edit").click(function () {
-            location.reload();
-        });
-    </script>
+    $("#cancel-edit").click(function () {
+        location.reload();
+    });
+</script>
 
-<?php $conn->close(); ?>
+<?php $db->close(); ?>
