@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . "/handlers/register_handler.php";
+require_once __DIR__ . "/handlers/common/register_handler.php";
 
 if (checkRequestMethod('POST')) {
     $data = [

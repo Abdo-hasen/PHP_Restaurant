@@ -1,6 +1,7 @@
 <?php
 require_once "../init.php";
 $pageTitle = "Manage Orders";
+require_once "./../includes/admin/sidebar.php";
 require_once "./../includes/admin/header.php";
 
 $orders = $db->mysqli->query("

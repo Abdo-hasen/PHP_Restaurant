@@ -195,26 +195,30 @@ $categories = $db->table('categories')->select('*')->get();
             <?php endforeach; ?>
         </select><br>
 
-            <label>Item Name:</label>
-            <input type="text" name="item_name" id="item_name" class="form-control" required><br>
+        <label>Item Name:</label>
+        <input type="text" name="item_name" id="item_name" class="form-control" required><br>
 
-            <label>Description:</label>
-            <textarea name="description" id="description" class="form-control" required></textarea><br>
+        <label>Description:</label>
+        <textarea name="description" id="description" class="form-control" required></textarea><br>
 
-            <label>Price:</label>
-            <input type="number" name="price" id="price" class="form-control" step="0.01" required><br>
+        <label>Price:</label>
+        <input type="number" name="price" id="price" class="form-control" step="0.01" required><br>
 
-            <label>Image:</label>
-            <input type="file" name="image" id="image" class="form-control"><br>
+        <label>Image:</label>
+        <input type="file" name="image" id="image" class="form-control"><br>
 
-            <label>Available:</label>
-            <input type="checkbox" name="is_available" id="is_available"><br><br>
+        <label>Available:</label>
+        <input type="checkbox" name="is_available" id="is_available"><br><br>
 
-            <button type="submit" name="add_item" id="submit-btn" class="btn btn-primary">Add Item</button>
-            <button type="submit" name="update_item" id="update-btn" class="btn btn-success d-none">Update Item</button>
-            <button type="button" id="cancel-edit" class="btn btn-secondary d-none">Cancel</button>
-        </form>
+        <button type="submit" name="add_item" id="submit-btn" class="btn btn-primary">Add Item</button>
+        <button type="submit" name="update_item" id="update-btn" class="btn btn-success d-none">Update Item</button>
+        <button type="button" id="cancel-edit" class="btn btn-secondary d-none">Cancel</button>
+    </form>
+</div>
+
     </div>
+  </div>
+</div>
 
 <script>
     $(".edit-btn").click(function () {

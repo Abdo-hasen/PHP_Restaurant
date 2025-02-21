@@ -1,20 +1,35 @@
 <?php
 require_once '../init.php';
+include '../includes/admin/sidebar.php';
+include '../includes/admin/header.php';
 require_once "../handlers/admin/reservation.php";
 ?>
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Staff Dashboard - Manage Tables</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</head>
-
-<body class="bg-light">
-
+<div class="container">
+  <div class="page-inner">
+    <div class="page-header">
+      <h4 class="page-title">Dashboard</h4>
+      <ul class="breadcrumbs">
+        <li class="nav-home">
+          <a href="#">
+            <i class="icon-home"></i>
+          </a>
+        </li>
+        <li class="separator">
+          <i class="icon-arrow-right"></i>
+        </li>
+        <li class="nav-item">
+          <a href="#">Pages</a>
+        </li>
+        <li class="separator">
+          <i class="icon-arrow-right"></i>
+        </li>
+        <li class="nav-item">
+          <a href="#">Starter Page</a>
+        </li>
+      </ul>
+    </div>
+    <div class="page-category">
     <div class="container mt-5">
         <h2 class="text-center mb-4">Manage Restaurant Tables</h2>
 
@@ -193,6 +208,11 @@ require_once "../handlers/admin/reservation.php";
                 </table>
             </div>
         </div>
+    </div>
+  </div>
+</div>
+
+    
         <?php showToast(); ?>
 
         <script>
