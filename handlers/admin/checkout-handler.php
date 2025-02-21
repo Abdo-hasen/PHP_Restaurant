@@ -6,14 +6,14 @@ if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
     redirect(URL . "cart.php");
 }
 
-$total = 0;
-foreach ($_SESSION['cart'] as $item_id => $quantity) {
-    $item = $db->table('menu_items')->find($item_id, "item_id");
-    $total += $item['price'] * $quantity;
-}
-
 try {
     $db->mysqli->begin_transaction();
+
+    $total = 0;
+    foreach ($_SESSION['cart'] as $item_id => $itemData) {
+        $item = $db->table('menu_items')->find($item_id, "item_id");
+        $total += $item['price'] * $itemData['quantity'];
+    }
 
     $orderData = [
         'user_id' => $_SESSION['user_id'] ?? null,
@@ -21,22 +21,30 @@ try {
         'status' => 'Pending'
     ];
 
-    if ($user_id = null) {
+    if ($orderData['user_id'] === null) {
         redirect(URL. "login.php");
     }
+    
+    //Add Order
     $db->table('orders')->insert($orderData);
     $order_id = $db->mysqli->insert_id;
 
-
-    foreach ($_SESSION['cart'] as $item_id => $quantity) {
+    //add Order Items
+    foreach ($_SESSION['cart'] as $item_id => $itemData) {
+        $quantity = $itemData['quantity'];
+        $notes = $itemData['notes'];
+        
         $orderItemData = [
             'order_id' => $order_id,
             'item_id' => $item_id,
-            'quantity' => $quantity
+            'quantity' => $quantity,
+            'notes' => $notes
         ];
+        
         $db->table('order_items')->insert($orderItemData);
     }
 
+    // Add payment
     $paymentData = [
         'order_id' => $order_id,
         'payment_method' => 'Credit Card',
@@ -46,7 +54,6 @@ try {
     $db->table('payments')->insert($paymentData);
 
     $db->mysqli->commit();
-
 
     unset($_SESSION['cart']);
 

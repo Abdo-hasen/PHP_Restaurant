@@ -61,7 +61,10 @@ require_once "./handlers/customer/reservation.php"
                         <a class="nav-link" href="<?= URL ?>cart.php">
                             <i class="fas fa-shopping-cart"></i> Cart
                             <?php if (!empty($_SESSION['cart'])): ?>
-                                <span class="badge bg-danger"><?= array_sum($_SESSION['cart']) ?></span>
+                                <?php 
+                                $totalItems = array_sum(array_column($_SESSION['cart'], 'quantity'));
+                                ?>
+                                <span class="badge bg-danger"><?= $totalItems ?></span>
                             <?php endif; ?>
                         </a>
                     </li>
@@ -167,10 +170,35 @@ require_once "./handlers/customer/reservation.php"
                                 <p class="text-muted fw-bold">$<?= number_format($item['price'], 2) ?></p>
                             <?php endif; ?>
                             <p class="card-text"><?= $item['description'] ?></p>
-                            <form action="<?= URL ?>handlers/admin/cart-handler.php" method="POST">
-                                <input type="hidden" name="item_id" value="<?= $item['item_id'] ?>">
-                                <button type="submit" name="add_to_cart" class="btn btn-primary">Add to Cart</button>
-                            </form>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#itemModal<?= $item['item_id'] ?>">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal for Special Requests -->
+                <div class="modal fade" id="itemModal<?= $item['item_id'] ?>" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title"><?= $item['item_name'] ?></h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="<?= URL ?>handlers/admin/cart-handler.php" method="POST">
+                                    <input type="hidden" name="item_id" value="<?= $item['item_id'] ?>">
+                                    <div class="mb-3">
+                                        <label for="quantity<?= $item['item_id'] ?>" class="form-label">Quantity</label>
+                                        <input type="number" name="quantity" id="quantity<?= $item['item_id'] ?>" class="form-control" value="1" min="1">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="notes<?= $item['item_id'] ?>" class="form-label">Special Requests</label>
+                                        <textarea name="notes" id="notes<?= $item['item_id'] ?>" class="form-control" rows="3" placeholder="e.g., no onions, extra cheese"></textarea>
+                                    </div>
+                                    <button type="submit" name="add_to_cart" class="btn btn-primary">Add to Cart</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

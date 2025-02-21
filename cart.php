@@ -1,5 +1,10 @@
 <?php
 require_once "init.php";
+
+// Temporary fix to clear invalid cart data
+if (isset($_SESSION['cart']) && !is_array($_SESSION['cart'])) {
+    unset($_SESSION['cart']);
+}
 ?>
 
 <!DOCTYPE html>
@@ -71,13 +76,17 @@ require_once "init.php";
                                 <th>Price</th>
                                 <th>Quantity</th>
                                 <th>Total</th>
+                                <th>Special Requests</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php 
                             $total = 0;
-                            foreach ($_SESSION['cart'] as $item_id => $quantity): 
+                            foreach ($_SESSION['cart'] as $item_id => $itemData): 
+                               
+                                $quantity = $itemData['quantity'];
+                                $notes = $itemData['notes'];
                                 $item = $db->table('menu_items')->find($item_id, "item_id");
                                 $itemTotal = $item['price'] * $quantity;
                                 $total += $itemTotal;
@@ -90,6 +99,7 @@ require_once "init.php";
                                                value="<?= $quantity ?>" min="1" class="form-control">
                                     </td>
                                     <td><?= $itemTotal ?> EGP</td>
+                                    <td><?= $notes ?: 'No special requests' ?></td>
                                     <td>
                                         <a href="<?= URL ?>handlers/admin/cart-handler.php?remove_from_cart=<?= $item_id ?>" 
                                            class="btn btn-danger btn-sm">Remove</a>
