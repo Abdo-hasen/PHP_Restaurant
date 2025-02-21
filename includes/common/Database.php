@@ -5,7 +5,7 @@ class Database
     // Database information
     const HOSTNAME = "localhost";
     const USERNAME = "root";
-    const PASSWORD = "2001";
+    const PASSWORD = "";
     const DATABASE = "restaurant_db";
 
     // Helper properties
