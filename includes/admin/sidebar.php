@@ -50,7 +50,22 @@
                 <li class="nav-item">
                     <a href="../../admin/manage_reservations.php">
                         <i class="fas fa-pen-square"></i>
-                        <p>Reservations</p>
+                        <p>Reservation Management</p>
+                    </a>
+                </li>
+
+                  <!-- Reservations -->
+                  <li class="nav-item">
+                    <a href="../../admin/inventory.php">
+                        <i class="fas fa-pen-square"></i>
+                        <p>Inventory Management</p>
+                    </a>
+                </li>
+                  <!-- Reservations -->
+                  <li class="nav-item">
+                    <a href="../../admin/supplier.php">
+                        <i class="fas fa-pen-square"></i>
+                        <p>Supplier Management</p>
                     </a>
                 </li>
 
