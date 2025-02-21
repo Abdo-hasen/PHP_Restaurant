@@ -34,13 +34,15 @@ if (checkRequestMethod('POST')) {
                             <p class="text-muted">Please login to your account</p>
                         </div>
                         <!-- check errors -->
-                        <?php if (isset($_SESSION["errors"])) : ?>
-                            <?php foreach ($_SESSION["errors"] as $error) : ?>
-                                <div class="alert alert-danger text-center mx-auto w-50">
-                                    <?= htmlspecialchars($error); ?>
-                                </div>
-                            <?php endforeach; ?>
-                            <?php unset($_SESSION["errors"]); ?>
+                    
+                        <?php if (isset($_SESSION['error'])): ?>
+                            <div class="alert alert-danger"><?= htmlspecialchars($_SESSION['error']) ?></div>
+                            <?php unset($_SESSION['error']); ?>
+                        <?php endif; ?>
+
+                        <?php if (isset($_SESSION['success'])): ?>
+                            <div class="alert alert-success"><?= htmlspecialchars($_SESSION['success']) ?></div>
+                            <?php unset($_SESSION['success']); ?>
                         <?php endif; ?>
 
 
