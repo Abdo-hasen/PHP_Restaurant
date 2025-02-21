@@ -31,24 +31,50 @@
                 </li>
 
                 <!-- Menu Management -->
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a href="../../admin/manage_menu.php">
                         <i class="fas fa-layer-group"></i>
                         <p>Menu Management</p>
                     </a>
-                </li>
+                </li> -->
+      <!-- Menu Management Dropdown -->
+      <li class="nav-item">
+      <a href="../../admin/dashboard.php" data-bs-toggle="collapse" data-bs-target="#menuManagement">          <i class="fas fa-th-list"></i>
+          <p>Menu Management</p>
+          <span class="caret"></span>
+        </a>
+        <div class="collapse" id="menuManagement">
+          <ul class="nav nav-collapse">
+            <li>
+              <a href="../../admin/manage_menu.php">
+                <span class="sub-item">Menu Items</span>
+              </a>
+            </li>
+            <li>
+              <a href="../../admin/categories.php">
+                <span class="sub-item">Categories</span>
+              </a>
+            </li>
+            <li>
+              <a href="../../admin/view-special-offer.php">
+                <span class="sub-item">Special Offers</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
 
                 <!-- Special Offers -->
-                <li class="nav-item">
-                    <a href="<?= URL ?>admin/layout/view-special-offer.php">
+                <!-- <li class="nav-item">
+                    <a href="../../admin/layout/view-special-offer.php">
                         <i class="fas fa-layer-group"></i>
                         <p>Special Offer</p>
                     </a>
-                </li>
+                </li> -->
 
                 <!-- Order Management -->
                 <li class="nav-item">
-                    <a href="<?= URL . "admin/manage_orders.php" ?>">
+                    <a href="../../admin/manage_orders.php">
                         <i class="fas fa-th-list"></i>
                         <p>Order Management</p>
                     </a>
@@ -564,7 +590,7 @@
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#">Account Setting</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="../../handlers/logout.php">Logout</a>
+                <a class="dropdown-item" href="../../handlers/common/logout.php">Logout</a>
             </li>
         </div>
     </ul>
