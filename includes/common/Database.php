@@ -11,9 +11,9 @@ class Database
     // Helper properties
     public $mysqli;
     private $table;
-    private $addedSuccess = "added successfully";
-    private $updatedSuccess = "updated successfully";
-    private $deletedSuccess = "deleted successfully";
+    private $query = '';
+    private $where = '';
+    private $join = '';
 
     public function __construct()
     {
@@ -35,6 +35,53 @@ class Database
         return $this;
     }
 
+    // Add a SELECT clause
+    public function select(string $columns = "*"): self
+    {
+        $this->query = "SELECT $columns FROM `$this->table`";
+        return $this;
+    }
+
+    // Add a JOIN clause
+    public function join(string $table, string $condition, string $type = 'INNER'): self
+    {
+        $this->join .= " $type JOIN `$table` ON $condition";
+        return $this;
+    }
+
+    // Add a WHERE clause
+    public function where(array $conditions): self
+    {
+        $this->where = ' WHERE ' . implode(' AND ', array_map(function ($key, $value) {
+            return "`$key` = '$value'";
+        }, array_keys($conditions), $conditions));
+        return $this;
+    }
+
+    // Execute the query and fetch results
+    public function get(): array
+    {
+        $query = $this->query . $this->join . $this->where;
+        $result = $this->mysqli->query($query);
+
+        if (!$result) {
+            throw new RuntimeException("Query failed: " . $this->mysqli->error);
+        }
+
+        $data = [];
+        while ($row = $result->fetch_assoc()) {
+            $data[] = $row;
+        }
+
+        $result->free();
+        return $data;
+    }
+
+    // Close the database connection
+    public function close(): void
+    {
+        $this->mysqli->close();
+    }
     // Insert data into the database
     public function insert(array $data): bool
     {

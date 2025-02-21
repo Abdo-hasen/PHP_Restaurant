@@ -12,9 +12,6 @@ include '../includes/admin/sidebar.php';
 include '../includes/admin/header.php';
 include '../functions/stats.php';
 
-// // Retrieve the logged-in user's name from the session
-// $logged_in_user = $_SESSION['user'];
-
 // Fetch analytics data
 $totalOrders = getTotalOrders($db);
 $totalRevenue = getTotalRevenue($db);
@@ -94,8 +91,5 @@ $totalReservations = getTotalReservations($db);
         </div>
     </div>
 </div>
-
-</body>
-</html>
 
 <?php include '../includes/admin/footer.php'; ?>
