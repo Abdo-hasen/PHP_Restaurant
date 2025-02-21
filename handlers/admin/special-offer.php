@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ]);
         if ($result) {
             $_SESSION['success'] = "Special offer added successfully!";
-            redirect(URL . "admin/layout/view-special-offer.php");
+            redirect(URL . "admin/view-special-offer.php");
         } else {
             $_SESSION['error'] = "Failed to add special offer.";
             redirect(URL . "admin/layout/special-offer.php");

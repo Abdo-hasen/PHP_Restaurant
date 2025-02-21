@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($result) {
             $_SESSION['success'] = "Offer updated successfully!";
-            redirect(URL . "admin/layout/view-special-offer.php");
+            redirect(URL . "admin/view-special-offer.php");
         } else {
             $_SESSION['error'] = "Failed to update offer";
             redirect(URL . "admin/layout/edit-offer.php?id=" . $offer_id);
