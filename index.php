@@ -3,8 +3,19 @@
 require_once "init.php";
 
 $menu = $db->table("menu_items")->read();
-// $menuData = file_get_contents("assets/customer/menu.json");
-// $menu = json_decode($menuData, true);
+
+//active offer
+$specialOffers = $db->mysqli->query("
+    SELECT so.* 
+    FROM special_offers so
+    WHERE so.start_date <= CURDATE() AND so.expiry_date >= CURDATE()
+")->fetch_all(MYSQLI_ASSOC);
+
+
+$discountMap = [];
+foreach ($specialOffers as $offer) {
+    $discountMap[$offer['item_id']] = $offer;
+}
 
 // Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
@@ -60,7 +71,7 @@ require_once "./handlers/customer/reservation.php"
             <a href="#reservation" class="btn btn-book">Book a Table</a>
         </div>
     </nav>
-   
+
     <?php if (isset($_SESSION['success'])): ?>
         <div class="alert alert-success">
             <?= $_SESSION['success']; ?>
@@ -126,32 +137,45 @@ require_once "./handlers/customer/reservation.php"
 
 
     <!-- Menu -->
-    <div class="container-fluid py-5" id="menu">
+    <div class="container py-5" id="menu">
         <div class="text-center">
             <p class="text-muted">OUR MENU</p>
-            <h2 class="menu-title">Check Our <span>Menu</span></h2>
+            <h2 class="menu-title">Check Our <span>Delicious Menu</span></h2>
         </div>
 
-        <!-- items view -->
-        <div class="container mt-5">
-            <div class="row">
-                <?php foreach ($menu as $item): ?>
-                    <div class="col-md-4 mb-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <!-- dispaly image -->
-                                <h5 class="card-title"><?php echo $item['item_name']; ?></h5>
-                                <p class="card-text"><?php echo $item['description']; ?></p>
-                                <p class="card-price"><?php echo $item['price']; ?> EGP</p>
-                                <form action="<?= URL ?>handlers/admin/cart-handler.php" method="POST">
-                                    <input type="hidden" name="item_id" value="<?= $item['item_id'] ?>">
-                                    <button type="submit" name="add_to_cart" class="btn btn-primary">Add to Cart</button>
-                                </form>
-                            </div>
+        <div class="row mt-4">
+            <?php foreach ($menu as $item): ?>
+                <?php
+                $isDiscounted = isset($discountMap[$item['item_id']]);
+                $discountPercent = $isDiscounted ? $discountMap[$item['item_id']]['discount_percent'] : 0;
+                $discountedPrice = $item['price'] * (1 - ($discountPercent / 100));
+                ?>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <?php if ($item['image_url']): ?>
+                            <img src="<?= $item['image_url'] ?>" class="card-img-top" alt="<?= $item['item_name'] ?>" style="height: 200px; object-fit: cover;">
+                        <?php endif; ?>
+                        <div class="card-body">
+                            <h5 class="card-title"><?= $item['item_name'] ?></h5>
+                            <?php if ($isDiscounted): ?>
+                                <p class="text-muted">
+                                    <span class="text-decoration-line-through">$<?= number_format($item['price'], 2) ?></span>
+                                    <span class="text-danger fw-bold"> $<?= number_format($discountedPrice, 2) ?></span>
+                                </p>
+                                <p class="text-success fw-bold"><?= $discountPercent ?>% OFF</p>
+                            <?php else: ?>
+                                <p class="text-muted fw-bold">$<?= number_format($item['price'], 2) ?></p>
+                            <?php endif; ?>
+                            <p class="card-text"><?= $item['description'] ?></p>
+                            <form action="<?= URL ?>handlers/admin/cart-handler.php" method="POST">
+                                <input type="hidden" name="item_id" value="<?= $item['item_id'] ?>">
+                                <button type="submit" name="add_to_cart" class="btn btn-primary">Add to Cart</button>
+                            </form>
                         </div>
                     </div>
-                <?php endforeach; ?>
-            </div>
+                </div>
+
+            <?php endforeach; ?>
         </div>
     </div>
 
@@ -168,30 +192,30 @@ require_once "./handlers/customer/reservation.php"
                 <img class="img-fluid rounded" src="assets/customer/images/about1.jpg" alt="Table Reservation">
             </div>
             <div class="reservation-form">
-            <div class="container my-5">
-        <h2 class="text-center">Book A Table</h2>
-        <form method="POST">
-            <input type="date" name="reservation_date" required value="<?= $_POST['reservation_date'] ?? '' ?>">
-            <input type="time" name="time_slot" required value="<?= $_POST['time_slot'] ?? '' ?>">
-            <button type="submit" name="check_availability">Check Availability</button>
-        </form>
-        
-        <?php if (!empty($_POST['reservation_date']) && !empty($_POST['time_slot'])): ?>
-        <form method="POST">
-            <input type="hidden" name="reservation_date" value="<?= $_POST['reservation_date'] ?>">
-            <input type="hidden" name="time_slot" value="<?= $_POST['time_slot'] ?>">
-            <select name="table_id" required>
-                <?= $tablesOptions ?>
-            </select>
-            <input type="text" name="name" placeholder="Your Name" required>
-            <input type="email" name="email" placeholder="Your Email" required>
-            <input type="tel" name="phone" placeholder="Your Phone" required>
-            <input type="number" name="guests" placeholder="# of people" required>
-            <textarea name="message" placeholder="Message" rows="4"></textarea>
-            <button type="submit" name="book_table">Book a Table</button>
-        </form>
-        <?php endif; ?>
-    </div>
+                <div class="container my-5">
+                    <h2 class="text-center">Book A Table</h2>
+                    <form method="POST">
+                        <input type="date" name="reservation_date" required value="<?= $_POST['reservation_date'] ?? '' ?>">
+                        <input type="time" name="time_slot" required value="<?= $_POST['time_slot'] ?? '' ?>">
+                        <button type="submit" name="check_availability">Check Availability</button>
+                    </form>
+
+                    <?php if (!empty($_POST['reservation_date']) && !empty($_POST['time_slot'])): ?>
+                        <form method="POST">
+                            <input type="hidden" name="reservation_date" value="<?= $_POST['reservation_date'] ?>">
+                            <input type="hidden" name="time_slot" value="<?= $_POST['time_slot'] ?>">
+                            <select name="table_id" required>
+                                <?= $tablesOptions ?>
+                            </select>
+                            <input type="text" name="name" placeholder="Your Name" required>
+                            <input type="email" name="email" placeholder="Your Email" required>
+                            <input type="tel" name="phone" placeholder="Your Phone" required>
+                            <input type="number" name="guests" placeholder="# of people" required>
+                            <textarea name="message" placeholder="Message" rows="4"></textarea>
+                            <button type="submit" name="book_table">Book a Table</button>
+                        </form>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
     </div>

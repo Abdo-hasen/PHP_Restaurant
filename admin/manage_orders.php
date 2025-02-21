@@ -133,10 +133,6 @@ document.querySelectorAll('.status-select').forEach(select => {
                 
                 showToast('success', 'Order status updated successfully');
                 
-                // update inventory - Do It
-                if (newStatus === 'Delivered') {
-                    updateInventory(orderId);
-                }
             } else {
                 showToast('error', 'Failed to update order status');
             }
@@ -158,10 +154,6 @@ document.querySelectorAll('.view-details').forEach(button => {
     });
 });
 
-// inventory update - Do It
-function updateInventory(orderId) {
-    // console.log(`Inventory updated for order ${orderId}`);
-}
 
 //  toast notifications
 function showToast(type, message) {

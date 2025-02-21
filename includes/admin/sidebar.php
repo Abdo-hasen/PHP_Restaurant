@@ -38,9 +38,17 @@
                     </a>
                 </li>
 
+                <!-- Special Offers -->
+                <li class="nav-item">
+                    <a href="<?= URL ?>admin/layout/view-special-offer.php">
+                        <i class="fas fa-layer-group"></i>
+                        <p>Special Offer</p>
+                    </a>
+                </li>
+
                 <!-- Order Management -->
                 <li class="nav-item">
-                    <a href="../../admin/manage_orders.php">
+                    <a href="<?= URL . "admin/manage_orders.php" ?>">
                         <i class="fas fa-th-list"></i>
                         <p>Order Management</p>
                     </a>
