@@ -61,7 +61,7 @@ require_once "./handlers/customer/reservation.php"
                         <a class="nav-link" href="<?= URL ?>cart.php">
                             <i class="fas fa-shopping-cart"></i> Cart
                             <?php if (!empty($_SESSION['cart'])): ?>
-                                <?php 
+                                <?php
                                 $totalItems = array_sum(array_column($_SESSION['cart'], 'quantity'));
                                 ?>
                                 <span class="badge bg-danger"><?= $totalItems ?></span>
@@ -72,6 +72,15 @@ require_once "./handlers/customer/reservation.php"
             </div>
 
             <a href="#reservation" class="btn btn-book">Book a Table</a>
+            <div class="dropdown">
+                <button class="btn btn-light position-relative rounded-circle p-2" id="notificationBell" data-bs-toggle="dropdown">
+                    <i class="fas fa-bell fa-lg"></i>
+                    <span class="badge bg-danger position-absolute top-0 start-100 translate-middle rounded-pill" id="notificationCount"></span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end shadow-sm p-2" id="notificationDropdown" style="width: 300px; max-height: 300px; overflow-y: auto;">
+                    <li class="text-center text-muted small">No notifications</li>
+                </ul>
+            </div>
         </div>
     </nav>
 
@@ -215,37 +224,69 @@ require_once "./handlers/customer/reservation.php"
             <p class="text-muted">Reservvation</p>
             <h2 class="menu-title">Book A <span>Table</span></h2>
         </div>
-        <div class=" container-fluid my-5 reservation-container">
-            <div class="reservation-image">
-                <img class="img-fluid rounded" src="assets/customer/images/about1.jpg" alt="Table Reservation">
-            </div>
-            <div class="reservation-form">
-                <div class="container my-5">
-                    <h2 class="text-center">Book A Table</h2>
-                    <form method="POST">
-                        <input type="date" name="reservation_date" required value="<?= $_POST['reservation_date'] ?? '' ?>">
-                        <input type="time" name="time_slot" required value="<?= $_POST['time_slot'] ?? '' ?>">
-                        <button type="submit" name="check_availability">Check Availability</button>
-                    </form>
-
-                    <?php if (!empty($_POST['reservation_date']) && !empty($_POST['time_slot'])): ?>
-                        <form method="POST">
-                            <input type="hidden" name="reservation_date" value="<?= $_POST['reservation_date'] ?>">
-                            <input type="hidden" name="time_slot" value="<?= $_POST['time_slot'] ?>">
-                            <select name="table_id" required>
-                                <?= $tablesOptions ?>
-                            </select>
-                            <input type="text" name="name" placeholder="Your Name" required>
-                            <input type="email" name="email" placeholder="Your Email" required>
-                            <input type="tel" name="phone" placeholder="Your Phone" required>
-                            <input type="number" name="guests" placeholder="# of people" required>
-                            <textarea name="message" placeholder="Message" rows="4"></textarea>
-                            <button type="submit" name="book_table">Book a Table</button>
-                        </form>
-                    <?php endif; ?>
-                </div>
-            </div>
+        <div class="container my-5">
+    <div class="row align-items-center reservation-container p-4 rounded shadow">
+        <!-- صورة الحجز -->
+        <div class="col-lg-6 mb-4 mb-lg-0">
+            <img class="img-fluid rounded w-100" src="assets/customer/images/about1.jpg" alt="Table Reservation">
         </div>
+
+        <!-- نموذج الحجز -->
+        <div class="col-lg-6">
+            <h2 class="text-center mb-4 " style="color: #923A35;">Book A Table</h2>
+            <form method="POST" class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Select Date</label>
+                    <input type="date" class="form-control" name="reservation_date" required value="<?= $_POST['reservation_date'] ?? '' ?>">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Select Time</label>
+                    <input type="time" class="form-control" name="time_slot" required value="<?= $_POST['time_slot'] ?? '' ?>">
+                </div>
+                <div class="col-12 text-center">
+                    <button type="submit" name="check_availability" class="btn  w-100" style="background-color: #923A35; border-color: #923A35; color: white;">Check Availability</button>
+                </div>
+            </form>
+
+            <?php if (!empty($_POST['reservation_date']) && !empty($_POST['time_slot'])): ?>
+                <form method="POST" class="row g-3 mt-4">
+                    <input type="hidden" name="reservation_date" value="<?= $_POST['reservation_date'] ?>">
+                    <input type="hidden" name="time_slot" value="<?= $_POST['time_slot'] ?>">
+
+                    <div class="col-12">
+                        <label class="form-label">Select Table</label>
+                        <select name="table_id" class="form-select" required>
+                            <?= $tablesOptions ?>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Your Name</label>
+                        <input type="text" class="form-control" name="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Your Email</label>
+                        <input type="email" class="form-control" name="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Your Phone</label>
+                        <input type="tel" class="form-control" name="phone" placeholder="Your Phone" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Number of Guests</label>
+                        <input type="number" class="form-control" name="guests" placeholder="# of people" required>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Additional Message</label>
+                        <textarea name="message" class="form-control" placeholder="Message" rows="3"></textarea>
+                    </div>
+                    <div class="col-12 text-center">
+                        <button type="submit" name="book_table" class="btn btn-success w-100">Book a Table</button>
+                    </div>
+                </form>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
     </div>
 
     <!-- Gallery -->
@@ -419,8 +460,55 @@ require_once "./handlers/customer/reservation.php"
             </div>
         </div>
     </footer>
-    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="script.js" defer></script>
+    <?php showToast(); ?>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.getElementById("notificationBell").addEventListener("click", async function() {
+            let response = await fetch("../functions/mark_all_notifications_read.php", {
+                method: "POST"
+            });
+
+            if (response.ok) {
+                document.getElementById("notificationCount").textContent = "";
+                setTimeout(() => {
+                    loadUserNotifications();
+                }, 40000);
+            }
+        });
+        async function loadUserNotifications() {
+            let response = await fetch("../functions/fetch_notifications_user.php");
+            let notifications = await response.json();
+
+            let dropdown = document.getElementById("notificationDropdown");
+            let count = document.getElementById("notificationCount");
+
+            dropdown.innerHTML = "";
+            count.textContent = notifications.length;
+            console.log(notifications);
+
+            if (notifications.length === 0) {
+                dropdown.innerHTML = '<li class="dropdown-item text-muted">There is no Notifications</li>';
+                document.getElementById("notificationCount").textContent = "";
+            } else {
+                notifications.forEach(notification => {
+                    let li = document.createElement("li");
+                    li.className = "dropdown-item " + (notification.is_read == 1 ? "read" : "unread");
+                    li.textContent = notification.message;
+
+                    dropdown.appendChild(li);
+                });
+            }
+        }
+        document.getElementById("notificationBell").addEventListener("click", async function() {
+
+            document.getElementById("notificationCount").textContent = "";
+        });
+
+
+        loadUserNotifications();
+        setInterval(loadUserNotifications, 5000);
+    </script>
 </body>
 
 </html>

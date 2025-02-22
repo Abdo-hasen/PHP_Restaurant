@@ -5,8 +5,8 @@ class Database
     // Database information
     const HOSTNAME = "localhost";
     const USERNAME = "root";
-    const PASSWORD = "";
-    const DATABASE = "restaurant_db";
+    const PASSWORD = "Michael@11099";
+    const DATABASE = "final_db";
 
     // Helper properties
     public $mysqli;
