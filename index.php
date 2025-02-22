@@ -71,6 +71,26 @@ require_once "./handlers/customer/reservation.php"
                 </ul>
             </div>
 
+                        <!-- Profile Dropdown -->
+            <div class="nav-item topbar-user dropdown hidden-caret">
+                <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#" aria-expanded="false">
+                    <span>Profile</span>
+                </a>
+                <ul class="dropdown-menu dropdown-user animated fadeIn">
+                    <div class="dropdown-user-scroll scrollbar-outer">
+                        <li>
+                            <a class="dropdown-item" href="profile.php">My Profile</a>
+                            <a class="dropdown-item" href="#">Order History</a>
+                            <a class="dropdown-item" href="#">Inbox</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Account Setting</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="handlers/common/logout.php">Logout</a>
+                        </li>
+                    </div>
+                </ul>
+            </div>
+
             <a href="#reservation" class="btn btn-book">Book a Table</a>
         </div>
     </nav>
@@ -421,6 +441,4 @@ require_once "./handlers/customer/reservation.php"
     </footer>
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="script.js" defer></script>
-</body>
-
-</html>
+    <?php include 'includes/customer/footer.php'; ?>
