@@ -74,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['book_table'])) {
                 setToastMessage("success", "Your table reservation is placed!");
                 $db->table("notifications")->insert([
                     "user_id" => $user_id,
-                    "message" => " there is a reservation request from user:  $user_id!",
+                    "message" => "Reservation request from user: $user_id!",
                     "user_role" => "customer",
                     "type" => "Reservation"
                 ]);
