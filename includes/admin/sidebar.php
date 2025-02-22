@@ -7,13 +7,13 @@
               <img src="../assets/admin/img/kaiadmin/logo_light.svg" alt="navbar brand" class="navbar-brand" height="20" />
             </a>
             <div class="nav-toggle">
-						<button class="btn btn-toggle toggle-sidebar">
-							<i class="gg-menu-right"></i>
-						</button>
-						<button class="btn btn-toggle sidenav-toggler">
-							<i class="gg-menu-left"></i>
-						</button>
-					</div>
+              <button class="btn btn-toggle toggle-sidebar">
+                <i class="gg-menu-right"></i>
+              </button>
+              <button class="btn btn-toggle sidenav-toggler">
+                <i class="gg-menu-left"></i>
+              </button>
+            </div>
             <button class="topbar-toggler more">
               <i class="gg-more-vertical-alt"></i>
             </button>
@@ -23,93 +23,93 @@
         <div class="sidebar-wrapper scrollbar scrollbar-inner">
           <div class="sidebar-content">
             <ul class="nav nav-secondary">
-                <li class="nav-item active">
-                    <a href="./../admin/dashboard.php">
-                        <i class="fas fa-home"></i>
-                        <p>Dashboard</p>
-                    </a>
-                </li>
+              <li class="nav-item active">
+                <a href="./../admin/dashboard.php">
+                  <i class="fas fa-home"></i>
+                  <p>Dashboard</p>
+                </a>
+              </li>
 
-                <!-- Menu Management -->
-                <!-- <li class="nav-item">
+              <!-- Menu Management -->
+              <!-- <li class="nav-item">
                     <a href="../../admin/manage_menu.php">
                         <i class="fas fa-layer-group"></i>
                         <p>Menu Management</p>
                     </a>
                 </li> -->
-      <!-- Menu Management Dropdown -->
-      <li class="nav-item">
-      <a href="../../admin/dashboard.php" data-bs-toggle="collapse" data-bs-target="#menuManagement">          <i class="fas fa-th-list"></i>
-          <p>Menu Management</p>
-          <span class="caret"></span>
-        </a>
-        <div class="collapse" id="menuManagement">
-          <ul class="nav nav-collapse">
-            <li>
-              <a href="../../admin/manage_menu.php">
-                <span class="sub-item">Menu Items</span>
-              </a>
-            </li>
-            <li>
-              <a href="../../admin/categories.php">
-                <span class="sub-item">Categories</span>
-              </a>
-            </li>
-            <li>
-              <a href="../../admin/view-special-offer.php">
-                <span class="sub-item">Special Offers</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </li>
+              <!-- Menu Management Dropdown -->
+              <li class="nav-item">
+                <a href="../../admin/dashboard.php" data-bs-toggle="collapse" data-bs-target="#menuManagement"> <i class="fas fa-th-list"></i>
+                  <p>Menu Management</p>
+                  <span class="caret"></span>
+                </a>
+                <div class="collapse" id="menuManagement">
+                  <ul class="nav nav-collapse">
+                    <li>
+                      <a href="../../admin/manage_menu.php">
+                        <span class="sub-item">Menu Items</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="../../admin/categories.php">
+                        <span class="sub-item">Categories</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="../../admin/view-special-offer.php">
+                        <span class="sub-item">Special Offers</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
 
-                <!-- Special Offers -->
-                <!-- <li class="nav-item">
+              <!-- Special Offers -->
+              <!-- <li class="nav-item">
                     <a href="../../admin/layout/view-special-offer.php">
                         <i class="fas fa-layer-group"></i>
                         <p>Special Offer</p>
                     </a>
                 </li> -->
 
-                <!-- Order Management -->
-                <li class="nav-item">
-                    <a href="../../admin/manage_orders.php">
-                        <i class="fas fa-th-list"></i>
-                        <p>Order Management</p>
-                    </a>
-                </li>
+              <!-- Order Management -->
+              <li class="nav-item">
+                <a href="../../admin/manage_orders.php">
+                  <i class="fas fa-th-list"></i>
+                  <p>Order Management</p>
+                </a>
+              </li>
 
-                <!-- Reservations -->
-                <li class="nav-item">
-                    <a href="../../admin/manage_reservations.php">
-                        <i class="fas fa-pen-square"></i>
-                        <p>Reservation Management</p>
-                    </a>
-                </li>
+              <!-- Reservations -->
+              <li class="nav-item">
+                <a href="../../admin/manage_reservations.php">
+                  <i class="fas fa-pen-square"></i>
+                  <p>Reservation Management</p>
+                </a>
+              </li>
 
-                  <!-- Reservations -->
-                  <li class="nav-item">
-                    <a href="../../admin/inventory.php">
-                        <i class="fas fa-pen-square"></i>
-                        <p>Inventory Management</p>
-                    </a>
-                </li>
-                  <!-- Reservations -->
-                  <li class="nav-item">
-                    <a href="../../admin/supplier.php">
-                        <i class="fas fa-pen-square"></i>
-                        <p>Supplier Management</p>
-                    </a>
-                </li>
+              <!-- Reservations -->
+              <li class="nav-item">
+                <a href="../../admin/inventory.php">
+                  <i class="fas fa-pen-square"></i>
+                  <p>Inventory Management</p>
+                </a>
+              </li>
+              <!-- Reservations -->
+              <li class="nav-item">
+                <a href="../../admin/supplier.php">
+                  <i class="fas fa-pen-square"></i>
+                  <p>Supplier Management</p>
+                </a>
+              </li>
 
-                <!-- User Management -->
-                <li class="nav-item">
-                    <a href="../../admin/manage_users.php">
-                        <i class="fas fa-table"></i>
-                        <p>User Management</p>
-                    </a>
-                </li>
+              <!-- User Management -->
+              <li class="nav-item">
+                <a href="../../admin/manage_users.php">
+                  <i class="fas fa-table"></i>
+                  <p>User Management</p>
+                </a>
+              </li>
               <li class="nav-section">
                 <span class="sidebar-mini-icon">
                   <i class="fa fa-ellipsis-h"></i>
@@ -301,12 +301,10 @@
           </div>
           <!-- Navbar Header -->
           <nav
-            class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom"
-          >
+            class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
             <div class="container-fluid">
               <nav
-                class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex"
-              >
+                class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex">
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <button type="submit" class="btn btn-search pe-1">
@@ -325,8 +323,7 @@
                     href="#"
                     role="button"
                     aria-expanded="false"
-                    aria-haspopup="true"
-                  >
+                    aria-haspopup="true">
                     <i class="fa fa-search"></i>
                   </a>
                   <ul class="dropdown-menu dropdown-search animated fadeIn">
@@ -345,14 +342,12 @@
                     role="button"
                     data-bs-toggle="dropdown"
                     aria-haspopup="true"
-                    aria-expanded="false"
-                  >
+                    aria-expanded="false">
                     <i class="fa fa-envelope"></i>
                   </a>
                   <ul
                     class="dropdown-menu messages-notif-box animated fadeIn"
-                    aria-labelledby="messageDropdown"
-                  >
+                    aria-labelledby="messageDropdown">
                     <li>
                       <div class="dropdown-title d-flex justify-content-between align-items-center">
                         Messages
@@ -406,8 +401,7 @@
                       </div>
                     </li>
                     <li>
-                      <a class="see-all" href="javascript:void(0);"
-                        >See all messages<i class="fa fa-angle-right"></i>
+                      <a class="see-all" href="javascript:void(0);">See all messages<i class="fa fa-angle-right"></i>
                       </a>
                     </li>
                   </ul>
@@ -420,15 +414,13 @@
                     role="button"
                     data-bs-toggle="dropdown"
                     aria-haspopup="true"
-                    aria-expanded="false"
-                  >
+                    aria-expanded="false">
                     <i class="fa fa-bell"></i>
                     <span class="notification">4</span>
                   </a>
                   <ul
                     class="dropdown-menu notif-box animated fadeIn"
-                    aria-labelledby="notifDropdown"
-                  >
+                    aria-labelledby="notifDropdown">
                     <li>
                       <div class="dropdown-title">You have 4 new notification</div>
                     </li>
@@ -473,8 +465,7 @@
                       </div>
                     </li>
                     <li>
-                      <a class="see-all" href="javascript:void(0);"
-                        >See all notifications<i class="fa fa-angle-right"></i>
+                      <a class="see-all" href="javascript:void(0);">See all notifications<i class="fa fa-angle-right"></i>
                       </a>
                     </li>
                   </ul>
@@ -546,55 +537,52 @@
                 </li>
 
                 <li class="nav-item topbar-user dropdown hidden-caret">
-    <a
-        class="dropdown-toggle profile-pic"
-        data-bs-toggle="dropdown"
-        href="#"
-        aria-expanded="false"
-    >
-        <div class="avatar-sm">
-            <img
-                src="<?php echo !empty($_SESSION['profile_picture']) ? $_SESSION['profile_picture'] : '../../assets/profile-image/avatar.png'; ?>"
-                alt="Profile Picture"
-                class="avatar-img rounded-circle"
-            />
-        </div>
-        <span class="profile-username">
-            <span class="op-7">Hi,</span> 
-            <span class="fw-bold"><?php echo htmlspecialchars($_SESSION['username'] ?? 'Guest'); ?></span>
-        </span>
-    </a>
-    <ul class="dropdown-menu dropdown-user animated fadeIn">
-        <div class="dropdown-user-scroll scrollbar-outer">
-            <li>
-                <div class="user-box">
-                    <div class="avatar-lg">
-                        <img
-                            src="<?php echo !empty($_SESSION['profile_picture']) ? $_SESSION['profile_picture'] : '../../assets/profile-image/avatar.png';?>"
-                            alt="Profile Picture"
-                            class="avatar-img rounded"
-                        />
+                  <a
+                    class="dropdown-toggle profile-pic"
+                    data-bs-toggle="dropdown"
+                    href="#"
+                    aria-expanded="false">
+                    <div class="avatar-sm">
+                      <img
+                        src="<?php echo !empty($_SESSION['profile_picture']) ? $_SESSION['profile_picture'] : '../../assets/profile-image/avatar.png'; ?>"
+                        alt="Profile Picture"
+                        class="avatar-img rounded-circle" />
                     </div>
-                    <div class="u-text">
-                        <h4><?php echo htmlspecialchars($_SESSION['username'] ?? 'Guest'); ?></h4>
-                        <p class="text-muted"><?php echo htmlspecialchars($_SESSION['email'] ?? 'No email'); ?></p>
-                        <a href="../../profile.php" class="btn btn-xs btn-secondary btn-sm">View Profile</a>
+                    <span class="profile-username">
+                      <span class="op-7">Hi,</span>
+                      <span class="fw-bold"><?php echo htmlspecialchars($_SESSION['username'] ?? 'Guest'); ?></span>
+                    </span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-user animated fadeIn">
+                    <div class="dropdown-user-scroll scrollbar-outer">
+                      <li>
+                        <div class="user-box">
+                          <div class="avatar-lg">
+                            <img
+                              src="<?php echo !empty($_SESSION['profile_picture']) ? $_SESSION['profile_picture'] : '../../assets/profile-image/avatar.png'; ?>"
+                              alt="Profile Picture"
+                              class="avatar-img rounded" />
+                          </div>
+                          <div class="u-text">
+                            <h4><?php echo htmlspecialchars($_SESSION['username'] ?? 'Guest'); ?></h4>
+                            <p class="text-muted"><?php echo htmlspecialchars($_SESSION['email'] ?? 'No email'); ?></p>
+                            <a href="../../profile.php" class="btn btn-xs btn-secondary btn-sm">View Profile</a>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="../../profile.php">My Profile</a>
+                        <a class="dropdown-item" href="#">My Balance</a>
+                        <a class="dropdown-item" href="#">Inbox</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Account Setting</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="../../handlers/common/logout.php">Logout</a>
+                      </li>
                     </div>
-                </div>
-            </li>
-            <li>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="../../profile.php">My Profile</a>
-                <a class="dropdown-item" href="#">My Balance</a>
-                <a class="dropdown-item" href="#">Inbox</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Account Setting</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="../../handlers/common/logout.php">Logout</a>
-            </li>
-        </div>
-    </ul>
-</li>
+                  </ul>
+                </li>
               </ul>
             </div>
           </nav>
