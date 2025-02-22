@@ -1,7 +1,6 @@
 <?php
 
-require_once "../init.php"; // تأكد من أن `init.php` يحتوي على اتصال MySQLi
-
+require_once "../init.php"; 
 header('Content-Type: application/json');
 
 if (!isset($_SESSION["user_id"])) {  
@@ -10,17 +9,15 @@ if (!isset($_SESSION["user_id"])) {
 }
 
 try {
-    // نفترض أن لديك اتصال MySQLi موجود مسبقًا في `init.php`
+    
     $conn = new mysqli("localhost", "root", "Michael@11099", "final_db");
 
-    // التحقق من نجاح الاتصال
+   
     if ($conn->connect_error) {
         throw new Exception("Connection failed: " . $conn->connect_error);
     }
 
-    $user_id = intval($_SESSION["user_id"]); // تأكد من أن user_id عدد صحيح
-
-    // تنفيذ الاستعلام باستخدام MySQLi
+    $user_id = intval($_SESSION["user_id"]); 
     $stmt = $conn->prepare("SELECT * FROM notifications WHERE user_role = 'admin' AND is_read = '0' ORDER BY created_at DESC");
     // $stmt->bind_param("i", $user_id);
     $stmt->execute();
@@ -28,14 +25,12 @@ try {
     $result = $stmt->get_result();
     $notifications = $result->fetch_all(MYSQLI_ASSOC);
 
-    // تأمين الرسائل لمنع XSS
     foreach ($notifications as &$notification) {
         $notification["message"] = htmlspecialchars($notification["message"]);
     }
 
     echo json_encode($notifications);
 
-    // إغلاق الاتصال
     $stmt->close();
     $conn->close();
 } catch (Exception $e) {

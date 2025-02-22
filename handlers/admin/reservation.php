@@ -75,7 +75,7 @@ if (checkRequestMethod("POST") && checkInput($_POST, 'add_reservation')) {
     $existingReservation = array_filter(
         $existingReservation,
         fn($row) =>
-            $row['user_id'] == $user_id &&  // Ensure the same user is not booking the same table/time
+            $row['user_id'] == $user_id &&  
             $row['table_id'] == $table_id &&
             $row['reservation_date'] == $reservation_date &&
             $row['time_slot'] == $time_slot
@@ -102,12 +102,12 @@ if (checkRequestMethod("POST") && checkInput($_POST, 'add_reservation')) {
     }
 }
 // new
-$db->table('reservations'); // Set the table to 'reservations'
+$db->table('reservations'); 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_reservation_status'])) {
     $reservation_id = $_POST['reservation_id'];
     $new_status = $_POST['new_status'];
 
-    // Ensure values are valid
+   
     if (!empty($reservation_id) && ($new_status === 'accepted' || $new_status === 'rejected')) {
         
             $updateSuccess = $db->update(['status' => $new_status], ['reservation_id' => $reservation_id]);

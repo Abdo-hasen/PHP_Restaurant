@@ -9,7 +9,6 @@ try {
         throw new Exception("Connection failed: " . $conn->connect_error);
     }
 
-    // تحديث جميع الإشعارات إلى مقروءة
     $stmt = $conn->prepare("UPDATE notifications SET is_read = 1 WHERE  is_read = 0");
     $stmt->execute();
 
