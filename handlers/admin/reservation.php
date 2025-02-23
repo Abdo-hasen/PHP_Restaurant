@@ -3,7 +3,6 @@ require_once __DIR__ . "/../../init.php";
 // require_once "../../init.php";
 $db = new Database();
 $db->table("tables");
-
 // Handle Add Table
 if (checkRequestMethod("POST") && checkInput($_POST, 'add_table')) {
     $table_number = $_POST['table_number'];
@@ -76,7 +75,8 @@ if (checkRequestMethod("POST") && checkInput($_POST, 'add_reservation')) {
     $existingReservation = array_filter(
         $existingReservation,
         fn($row) =>
-        $row['table_id'] == $table_id &&
+            $row['user_id'] == $user_id &&  
+            $row['table_id'] == $table_id &&
             $row['reservation_date'] == $reservation_date &&
             $row['time_slot'] == $time_slot
     );
@@ -101,14 +101,46 @@ if (checkRequestMethod("POST") && checkInput($_POST, 'add_reservation')) {
         setToastMessage('success', 'Reservation is added successfully.');
     }
 }
-if (checkRequestMethod("POST") && checkInput($_POST, 'update_reservation_status')) {
+// new
+$db->table('reservations'); 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_reservation_status'])) {
     $reservation_id = $_POST['reservation_id'];
     $new_status = $_POST['new_status'];
 
-    // Update reservation status
-    $db->update(['status' => $new_status], ['reservation_id' => $reservation_id]);
-    setToastMessage('success', 'Reservation details updated successfully.');
+   
+    if (!empty($reservation_id) && ($new_status === 'accepted' || $new_status === 'rejected')) {
+        
+            $updateSuccess = $db->update(['status' => $new_status], ['reservation_id' => $reservation_id]);
+
+            if ($updateSuccess && $new_status === 'rejected') {
+                $notif_message = "Sorry Your reservation is rejected";
+
+                $db->table("notifications")->insert([
+                    "user_id" => $_SESSION['user_id'],
+                    "message" => $notif_message,
+                    "user_role" => 'admin'
+                ]);
+                setToastMessage('success', 'Reservation rejected successfully');
+
+                $db->table('reservations');
+            }
+            if ($updateSuccess && $new_status === 'accepted') {
+                $notif_message = "Welcome Your reservation is accepted";
+                $user_id= $_SESSION['user_id']; 
+                $db->table("notifications")->insert([
+                    "user_id" =>  $_SESSION['user_id'],
+                    "message" => $notif_message,
+                    "user_role" => 'admin'
+                ]);
+                setToastMessage('success', 'Reservation accepted successfully');
+
+                $db->table('reservations');
+            }
+        
+    }
 }
+
+// endnew
 if (checkRequestMethod("POST") && checkInput($_POST, 'delete_reservation')) {
     $reservation_id = $_POST['reservation_id'];
     $db->delete($reservation_id, 'reservation_id');

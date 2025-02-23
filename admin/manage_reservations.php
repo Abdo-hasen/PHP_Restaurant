@@ -32,6 +32,22 @@ require_once "../handlers/admin/reservation.php";
     <div class="page-category">
     <div class="container mt-5">
         <h2 class="text-center mb-4">Manage Restaurant Tables</h2>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary p-3">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="#">Admin Dashboard</a>
+        <div class="dropdown">
+            <button class="btn btn-light position-relative rounded-circle p-2" id="notificationBell" data-bs-toggle="dropdown">
+                <i class="fas fa-bell fa-lg"></i>
+                <span class="badge bg-danger position-absolute top-0 start-100 translate-middle rounded-pill" id="adminNotificationCount"></span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end shadow-sm p-2" id="adminNotificationDropdown" style="width: 300px; max-height: 300px; overflow-y: auto;">
+                <li class="text-center text-muted small">No notifications</li>
+            </ul>
+        </div>
+    </div>
+</nav>
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Manage Restaurant Tables</h2>
 
         <div class="card mb-4">
             <div class="card-header bg-primary text-white">Add New Table</div>
@@ -127,11 +143,11 @@ require_once "../handlers/admin/reservation.php";
             <div class="card-header bg-success text-white">Add New Reservation</div>
             <div class="card-body">
                 <form method="POST">
-                <div class="mb-3">
+                    <div class="mb-3">
                         <label class="form-label">User ID</label>
                         <input type="number" name="user_id" class="form-control" min="1">
                     </div>
-                <div class="mb-3">
+                    <div class="mb-3">
                         <label class="form-label">Reservation Date</label>
                         <input type="date" name="reservation_date" class="form-control" required>
                     </div>
@@ -139,7 +155,7 @@ require_once "../handlers/admin/reservation.php";
                         <label class="form-label">Time Slot</label>
                         <input type="time" name="time_slot" class="form-control" required>
                     </div>
-                    
+
                     <div class="mb-3">
                         <label class="form-label">Table ID</label>
                         <input type="number" name="table_id" class="form-control" min="1" required>
@@ -186,13 +202,20 @@ require_once "../handlers/admin/reservation.php";
                                 <td rowspan="2" class="text-center align-middle">
                                     <form method="POST">
                                         <input type="hidden" name="reservation_id" value="<?= $reservation['reservation_id']; ?>">
-                                        <input type="hidden" name="new_status" value="Confirmed">
-                                        <button type="submit" name="update_reservation_status" class="btn btn-success btn-sm w-100">Accept</button>
+                                        <input type="hidden" name="new_status" value="accepted">
+                                        <button type="submit" name="update_reservation_status" id="accept-btn-<?= $reservation['reservation_id']; ?>"
+                                            class="btn btn-success btn-sm w-100">
+                                            Accept
+                                        </button>
                                     </form>
+
                                     <form method="POST">
                                         <input type="hidden" name="reservation_id" value="<?= $reservation['reservation_id']; ?>">
-                                        <input type="hidden" name="new_status" value="Cancelled">
-                                        <button type="submit" name="update_reservation_status" class="btn btn-primary btn-sm w-100 mt-1">Reject</button>
+                                        <input type="hidden" name="new_status" value="rejected">
+                                        <button type="submit" name="update_reservation_status" id="reject-btn-<?= $reservation['reservation_id']; ?>"
+                                            class="btn btn-primary btn-sm w-100 mt-1">
+                                            Reject
+                                        </button>
                                     </form>
                                     <form method="POST">
                                         <input type="hidden" name="reservation_id" value="<?= $reservation['reservation_id']; ?>">
@@ -208,11 +231,6 @@ require_once "../handlers/admin/reservation.php";
                 </table>
             </div>
         </div>
-    </div>
-  </div>
-</div>
-
-    
         <?php showToast(); ?>
 
         <script>
@@ -222,6 +240,47 @@ require_once "../handlers/admin/reservation.php";
                 document.getElementById('edit_capacity').value = capacity;
                 document.getElementById('edit_status').value = status;
             }
+            document.getElementById("notificationBell").addEventListener("click", async function() {
+    let response = await fetch("../functions/mark_all_notifications_read.php", { method: "POST" });
+
+    if (response.ok) {
+        document.getElementById("adminNotificationCount").textContent = ""; 
+        setTimeout(() => {
+            loadAdminNotifications();
+        }, 40000); 
+    }
+});
+            async function loadAdminNotifications() {
+            let response = await fetch("../functions/fetch_notifications_admin.php");
+            let notifications = await response.json();
+
+            let dropdown = document.getElementById("adminNotificationDropdown");
+            let count = document.getElementById("adminNotificationCount");
+
+            dropdown.innerHTML = "";
+            count.textContent = notifications.length;
+            console.log(notifications);
+
+            if (notifications.length === 0) {
+                dropdown.innerHTML = '<li class="dropdown-item text-muted">There is no Notifications</li>';
+                document.getElementById("adminNotificationCount").textContent = "";
+            } else {
+                notifications.forEach(notification => {
+                    let li = document.createElement("li");
+                    li.className = "dropdown-item";
+                    li.textContent = notification.message;
+                    dropdown.appendChild(li);
+                });
+            }
+        }
+        document.getElementById("notificationBell").addEventListener("click", async function() {
+
+            document.getElementById("adminNotificationCount").textContent = "";
+        });
+
+
+        loadAdminNotifications();
+        setInterval(loadAdminNotifications, 5000);
         </script>
 
 </body>
