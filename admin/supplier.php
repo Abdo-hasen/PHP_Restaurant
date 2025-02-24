@@ -1,47 +1,54 @@
 <?php
-$host = "localhost";
-$user = "root";
-$pass = "";
-$dbname = "restaurant_db";
 
-$conn = new mysqli($host, $user, $pass, $dbname);
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+require_once '../init.php';
+include '../includes/admin/sidebar.php';
+include '../includes/admin/header.php';
+
+if (isset($_GET['delete_id'])) {
+    $id = filter_input(INPUT_GET, 'delete_id', FILTER_VALIDATE_INT);
+    if ($id) {
+        if ($db->table('suppliers')->delete($id, 'supplier_id')) {
+            $_SESSION['success'] = "Supplier deleted successfully!";
+        } else {
+            $_SESSION['error'] = "Failed to delete supplier.";
+        }
+    } else {
+        $_SESSION['error'] = "Invalid supplier ID.";
+    }
+    header("Location: manage_suppliers.php");
+    exit();
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST["save_supplier"])) {
-       
-        $supplier_id = isset($_POST["supplier_id"]) && $_POST["supplier_id"] !== "" ? $_POST["supplier_id"] : null;
-        $supplier_name = trim($_POST["supplier_name"]);
-        $contact_email = trim($_POST["contact_email"]);
-        $phone = trim($_POST["phone"]);
+    $id = isset($_POST['supplier_id']) ? filter_input(INPUT_POST, 'supplier_id', FILTER_VALIDATE_INT) : null;
+    $fields = [
+        'supplier_name' => filter_input(INPUT_POST, 'supplier_name', FILTER_SANITIZE_STRING),
+        'contact_email' => filter_input(INPUT_POST, 'contact_email', FILTER_SANITIZE_EMAIL),
+        'phone' => filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_STRING)
+    ];
 
-        if ($supplier_id) {
-            
-            $stmt = $conn->prepare("UPDATE suppliers SET supplier_name=?, contact_email=?, phone=? WHERE supplier_id=?");
-            $stmt->bind_param("sssi", $supplier_name, $contact_email, $phone, $supplier_id);
+    if (!empty($fields['supplier_name']) && !empty($fields['contact_email']) && !empty($fields['phone'])) {
+        if ($id) {
+            $condition = ['supplier_id' => $id];
+            $success = $db->table('suppliers')->update($fields, $condition);
+            $message = $success ? "Supplier updated successfully!" : "Failed to update supplier.";
         } else {
-            
-            $stmt = $conn->prepare("INSERT INTO suppliers (supplier_name, contact_email, phone) VALUES (?, ?, ?)");
-            $stmt->bind_param("sss", $supplier_name, $contact_email, $phone);
+            $success = $db->table('suppliers')->insert($fields);
+            $message = $success ? "Supplier added successfully!" : "Failed to add supplier.";
         }
-
-        $stmt->execute();
-        $stmt->close();
+        $_SESSION[$success ? 'success' : 'error'] = $message;
+    } else {
+        $_SESSION['error'] = "Invalid input data.";
     }
-
-    if (isset($_POST["delete_supplier"])) {
-        $supplier_id = $_POST["supplier_id"];
-        $stmt = $conn->prepare("DELETE FROM suppliers WHERE supplier_id = ?");
-        $stmt->bind_param("i", $supplier_id);
-        $stmt->execute();
-        $stmt->close();
-    }
+    header("Location: manage_suppliers.php");
+    exit();
 }
 
-
-$suppliers = $conn->query("SELECT * FROM suppliers");
+$suppliers = $db->table('suppliers')->read();
 ?>
 
 <!DOCTYPE html>
@@ -52,97 +59,48 @@ $suppliers = $conn->query("SELECT * FROM suppliers");
     <title>Manage Suppliers</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body class="container mt-4">
-    <h2 class="text-center mb-4">Supplier Management</h2>
+<body class="container mt-5">
+    <div class="card shadow p-4">
+        <h2 class="text-center mb-4">Manage Suppliers</h2>
 
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Supplier Name</th>
-                <th>Contact Email</th>
-                <th>Phone</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody id="supplierTable">
-            <?php while ($row = $suppliers->fetch_assoc()): ?>
-                <tr id="supplier-<?= $row['supplier_id']; ?>">
-                    <td><?= htmlspecialchars($row['supplier_name']); ?></td>
-                    <td><?= htmlspecialchars($row['contact_email']); ?></td>
-                    <td><?= htmlspecialchars($row['phone']); ?></td>
-                    <td>
-                        <button class="btn btn-warning btn-sm" onclick="editSupplier(<?= $row['supplier_id']; ?>, '<?= htmlspecialchars($row['supplier_name']); ?>', '<?= htmlspecialchars($row['contact_email']); ?>', '<?= htmlspecialchars($row['phone']); ?>')">Edit</button>
-                        <button class="btn btn-danger btn-sm" onclick="deleteSupplier(<?= $row['supplier_id']; ?>)">Delete</button>
-                    </td>
-                </tr>
-            <?php endwhile; ?>
-        </tbody>
-    </table>
-    
-    
-    <div class="card p-4">
-        <h3 id="formTitle">Add New Supplier</h3>
-        <form id="supplierForm" method="POST">
-            <input type="hidden" name="supplier_id" id="supplier_id">
-            
-            <label>Supplier Name:</label>
-            <input type="text" name="supplier_name" id="supplier_name" class="form-control" required><br>
-            
-            <label>Contact Email:</label>
-            <input type="email" name="contact_email" id="contact_email" class="form-control" required><br>
-            
-            <label>Phone:</label>
-            <input type="text" name="phone" id="phone" class="form-control" required><br>
-            
-            <button type="submit" name="save_supplier" class="btn btn-primary">Save Supplier</button>
-            <button type="button" class="btn btn-secondary" onclick="resetForm()">Cancel</button>
-        </form>
+        <?php if (isset($_SESSION['success'])): ?>
+            <div class="alert alert-success"> <?php echo $_SESSION['success']; unset($_SESSION['success']); ?> </div>
+        <?php endif; ?>
+        <?php if (isset($_SESSION['error'])): ?>
+            <div class="alert alert-danger"> <?php echo $_SESSION['error']; unset($_SESSION['error']); ?> </div>
+        <?php endif; ?>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Supplier Name</th>
+                        <th>Contact Email</th>
+                        <th>Phone</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if (!empty($suppliers)): ?>
+                        <?php foreach ($suppliers as $supplier): ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($supplier['supplier_name']); ?></td>
+                                <td><?php echo htmlspecialchars($supplier['contact_email']); ?></td>
+                                <td><?php echo htmlspecialchars($supplier['phone']); ?></td>
+                                <td>
+                                    <a href="manage_suppliers.php?edit_id=<?php echo $supplier['supplier_id']; ?>" class="btn btn-warning btn-sm">Edit</a>
+                                    <a href="manage_suppliers.php?delete_id=<?php echo $supplier['supplier_id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="4" class="text-center">No suppliers found.</td>
+                        </tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
     </div>
-
-    <script>
-        function editSupplier(id, name, email, phone) {
-            document.getElementById("formTitle").innerText = "Edit Supplier";
-            document.getElementById("supplier_id").value = id;
-            document.getElementById("supplier_name").value = name;
-            document.getElementById("contact_email").value = email;
-            document.getElementById("phone").value = phone;
-        }
-
-        function deleteSupplier(id) {
-            if (!confirm("Are you sure you want to delete this supplier?")) return;
-
-            let row = document.getElementById(`supplier-${id}`);
-            row.remove();
-
-            let form = document.createElement("form");
-            form.method = "POST";
-            form.action = "";
-
-            let input = document.createElement("input");
-            input.type = "hidden";
-            input.name = "supplier_id";
-            input.value = id;
-
-            let deleteInput = document.createElement("input");
-            deleteInput.type = "hidden";
-            deleteInput.name = "delete_supplier";
-            deleteInput.value = "1";
-
-            form.appendChild(input);
-            form.appendChild(deleteInput);
-            document.body.appendChild(form);
-            form.submit();
-        }
-        function resetForm() {
-            document.getElementById("formTitle").innerText = "Add New Supplier";
-            document.getElementById("supplier_id").value = "";
-            document.getElementById("supplier_name").value = "";
-            document.getElementById("contact_email").value = "";
-            document.getElementById("phone").value = "";
-        }
-    </script>
 </body>
 </html>
-<?php
-$conn->close();
-?>
