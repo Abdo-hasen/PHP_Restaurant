@@ -20,6 +20,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $message = "Your order #$orderId status has been updated to $newStatus";
             //  send notification
             // file_put_contents('notifications.log', $message . PHP_EOL, FILE_APPEND);
+            if ($newStatus== 'Ready'){
+                $notif_message = "Your Order Is Ready";
+                $user_id= $_SESSION['user_id']; 
+                $db->table("notifications")->insert([
+                    "user_id" =>  $_SESSION['user_id'],
+                    "message" => $notif_message,
+                    "user_role" => 'admin'
+                ]);
+            }
+            elseif ($newStatus== 'Delivered') {
+                $notif_message = "Your Order Is Delivered";
+                $user_id= $_SESSION['user_id']; 
+                $db->table("notifications")->insert([
+                    "user_id" =>  $_SESSION['user_id'],
+                    "message" => $notif_message,
+                    "user_role" => 'admin'
+                ]);
+            }
+            elseif ($newStatus== 'Preparing') {
+                $notif_message = "Your Order Is Preparing";
+                $user_id= $_SESSION['user_id']; 
+                $db->table("notifications")->insert([
+                    "user_id" =>  $_SESSION['user_id'],
+                    "message" => $notif_message,
+                    "user_role" => 'admin'
+                ]);
+            }
         }
         
         echo json_encode(['success' => true]);

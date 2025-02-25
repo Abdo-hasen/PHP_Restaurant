@@ -6,7 +6,7 @@ class Database
     const HOSTNAME = "localhost";
     const USERNAME = "root";
     const PASSWORD = "";
-    const DATABASE = "restaurant_db";
+    const DATABASE = "";
 
     // Helper properties
     public $mysqli;
