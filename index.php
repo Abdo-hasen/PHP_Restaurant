@@ -420,7 +420,8 @@ require_once "./handlers/customer/reservation.php"
         </div>
     </footer>
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="script.js" defer></script>
+    <script src="/assets/customer/js/script.js" defer></script>
+    <!-- <script src="script.js" defer></script> -->
 </body>
 
 </html>
