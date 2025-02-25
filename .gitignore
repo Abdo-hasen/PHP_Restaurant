@@ -1,78 +1,82 @@
-# Ignore node_modules directory
-node_modules/
-
-# Ignore vendor directory (if you use Composer)
+database.php
+assets/profile-image/
 vendor/
 
-# Ignore uploaded files
-assets/admin/uploads/
+# # Ignore node_modules directory
+# node_modules/
 
-# Ignore environment files
-.env
-.env.local
-.env.development
-.env.production
+# # Ignore vendor directory (if you use Composer)
+# vendor/
 
-# Ignore IDE specific files
-.idea/
-.vscode/
-*.swp
-*.swo
+# # Ignore uploaded files
+# assets/admin/uploads/
 
-# Ignore OS generated files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
+# # Ignore environment files
+# .env
+# .env.local
+# .env.development
+# .env.production
 
-# Ignore log files
-*.log
+# # Ignore IDE specific files
+# .idea/
+# .vscode/
+# *.swp
+# *.swo
 
-# Ignore cache directories
-.cache/
+# # Ignore OS generated files
+# .DS_Store
+# .DS_Store?
+# ._*
+# .Spotlight-V100
+# .Trashes
+# ehthumbs.db
+# Thumbs.db
 
-# Ignore Composer files
-composer.lock
-composer.phar
+# # Ignore log files
+# *.log
 
-# Ignore npm/yarn files
-package-lock.json
-yarn.lock
+# # Ignore cache directories
+# .cache/
 
-# Ignore build directories
-build/
-dist/
+# # Ignore Composer files
+# composer.lock
+# composer.phar
 
-# Ignore local development files
-*.local
-*.dev
+# # Ignore npm/yarn files
+# package-lock.json
+# yarn.lock
 
-# Ignore PHPUnit cache
-.phpunit.result.cache
+# # Ignore build directories
+# build/
+# dist/
 
-# Ignore user-specific files
-*.user.ini
+# # Ignore local development files
+# *.local
+# *.dev
 
-# Ignore temporary files
-*.tmp
-*.temp
+# # Ignore PHPUnit cache
+# .phpunit.result.cache
 
-# Ignore backup files
-*.bak
-*.backup
+# # Ignore user-specific files
+# *.user.ini
 
-# Ignore system files
-*.sys
-*.dll
-*.exe
+# # Ignore temporary files
+# *.tmp
+# *.temp
 
-# Ignore test files
-tests/_output/
-tests/_support/_generated/
+# # Ignore backup files
+# *.bak
+# *.backup
 
-# Ignore coverage reports
-coverage/
-.phpunit.cache
+# # Ignore system files
+# *.sys
+# *.dll
+# *.exe
+
+# # Ignore test files
+# tests/_output/
+# tests/_support/_generated/
+
+# # Ignore coverage reports
+# coverage/
+# .phpunit.cache
