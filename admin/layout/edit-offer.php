@@ -21,7 +21,7 @@ $offer = $result->fetch_assoc();
 
 if (!$offer) {
     $_SESSION['error'] = "Offer not found";
-    redirect(URL . "admin/layout/view-special-offer.php");
+    redirect(URL . "admin/view-special-offer.php");
 }
 
 // Fetch menu items for dropdown

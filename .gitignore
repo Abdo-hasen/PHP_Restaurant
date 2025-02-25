@@ -1,1 +1,82 @@
+database.php
+assets/profile-image/
 vendor/
+
+# # Ignore node_modules directory
+# node_modules/
+
+# # Ignore vendor directory (if you use Composer)
+# vendor/
+
+# # Ignore uploaded files
+# assets/admin/uploads/
+
+# # Ignore environment files
+# .env
+# .env.local
+# .env.development
+# .env.production
+
+# # Ignore IDE specific files
+# .idea/
+# .vscode/
+# *.swp
+# *.swo
+
+# # Ignore OS generated files
+# .DS_Store
+# .DS_Store?
+# ._*
+# .Spotlight-V100
+# .Trashes
+# ehthumbs.db
+# Thumbs.db
+
+# # Ignore log files
+# *.log
+
+# # Ignore cache directories
+# .cache/
+
+# # Ignore Composer files
+# composer.lock
+# composer.phar
+
+# # Ignore npm/yarn files
+# package-lock.json
+# yarn.lock
+
+# # Ignore build directories
+# build/
+# dist/
+
+# # Ignore local development files
+# *.local
+# *.dev
+
+# # Ignore PHPUnit cache
+# .phpunit.result.cache
+
+# # Ignore user-specific files
+# *.user.ini
+
+# # Ignore temporary files
+# *.tmp
+# *.temp
+
+# # Ignore backup files
+# *.bak
+# *.backup
+
+# # Ignore system files
+# *.sys
+# *.dll
+# *.exe
+
+# # Ignore test files
+# tests/_output/
+# tests/_support/_generated/
+
+# # Ignore coverage reports
+# coverage/
+# .phpunit.cache

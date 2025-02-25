@@ -31,8 +31,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['check_availability'])
             }
         }
     }
-    header("location:__DIR__ . ' ../../index.php#reservation");
-    die;
+    // header("location:__DIR__ . ' ../../index.php#reservation");
+    // die;
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['book_table'])) {
@@ -71,7 +71,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['book_table'])) {
             ]);
 
             if ($insertSuccess) {
-                setToastMessage("success", "Your table reservation is confirmed!");
+                setToastMessage("success", "Your table reservation is placed!");
+                $db->table("notifications")->insert([
+                    "user_id" => $user_id,
+                    "message" => "Reservation request from user: $user_id!",
+                    "user_role" => "customer",
+                    "type" => "Reservation"
+                ]);
+
             } else {
                 setToastMessage("danger", "Error booking your table. Please try again.");
             }

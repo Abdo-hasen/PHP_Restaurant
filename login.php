@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . "/handlers/auth_handler.php";
+require_once __DIR__ . "/handlers/common/auth_handler.php";
 
 // var_dump($_SESSION);
 

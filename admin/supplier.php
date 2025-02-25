@@ -1,4 +1,7 @@
 <?php
+include './../includes/admin/sidebar.php';
+include './../includes/admin/header.php';
+
 $host = "localhost";
 $user = "root";
 $pass = "";
@@ -12,18 +15,18 @@ if ($conn->connect_error) {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["save_supplier"])) {
-       
+
         $supplier_id = isset($_POST["supplier_id"]) && $_POST["supplier_id"] !== "" ? $_POST["supplier_id"] : null;
         $supplier_name = trim($_POST["supplier_name"]);
         $contact_email = trim($_POST["contact_email"]);
         $phone = trim($_POST["phone"]);
 
         if ($supplier_id) {
-            
+
             $stmt = $conn->prepare("UPDATE suppliers SET supplier_name=?, contact_email=?, phone=? WHERE supplier_id=?");
             $stmt->bind_param("sssi", $supplier_name, $contact_email, $phone, $supplier_id);
         } else {
-            
+
             $stmt = $conn->prepare("INSERT INTO suppliers (supplier_name, contact_email, phone) VALUES (?, ?, ?)");
             $stmt->bind_param("sss", $supplier_name, $contact_email, $phone);
         }
@@ -45,59 +48,77 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $suppliers = $conn->query("SELECT * FROM suppliers");
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Suppliers</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="container mt-4">
-    <h2 class="text-center mb-4">Supplier Management</h2>
+<div class="container">
+    <div class="page-inner">
+        <div class="page-header">
+            <h4 class="page-title">Dashboard</h4>
+            <ul class="breadcrumbs">
+                <li class="nav-home">
+                    <a href="#">
+                        <i class="icon-home"></i>
+                    </a>
+                </li>
+                <li class="separator">
+                    <i class="icon-arrow-right"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">Pages</a>
+                </li>
+                <li class="separator">
+                    <i class="icon-arrow-right"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">Starter Page</a>
+                </li>
+            </ul>
+        </div>
+        <div class="page-category">
+            <div class="container mt-4">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Supplier Name</th>
+                            <th>Contact Email</th>
+                            <th>Phone</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="supplierTable">
+                        <?php while ($row = $suppliers->fetch_assoc()): ?>
+                            <tr id="supplier-<?= $row['supplier_id']; ?>">
+                                <td><?= htmlspecialchars($row['supplier_name']); ?></td>
+                                <td><?= htmlspecialchars($row['contact_email']); ?></td>
+                                <td><?= htmlspecialchars($row['phone']); ?></td>
+                                <td>
+                                    <button class="btn btn-warning btn-sm" onclick="editSupplier(<?= $row['supplier_id']; ?>, '<?= htmlspecialchars($row['supplier_name']); ?>', '<?= htmlspecialchars($row['contact_email']); ?>', '<?= htmlspecialchars($row['phone']); ?>')">Edit</button>
+                                    <button class="btn btn-danger btn-sm" onclick="deleteSupplier(<?= $row['supplier_id']; ?>)">Delete</button>
+                                </td>
+                            </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
 
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Supplier Name</th>
-                <th>Contact Email</th>
-                <th>Phone</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody id="supplierTable">
-            <?php while ($row = $suppliers->fetch_assoc()): ?>
-                <tr id="supplier-<?= $row['supplier_id']; ?>">
-                    <td><?= htmlspecialchars($row['supplier_name']); ?></td>
-                    <td><?= htmlspecialchars($row['contact_email']); ?></td>
-                    <td><?= htmlspecialchars($row['phone']); ?></td>
-                    <td>
-                        <button class="btn btn-warning btn-sm" onclick="editSupplier(<?= $row['supplier_id']; ?>, '<?= htmlspecialchars($row['supplier_name']); ?>', '<?= htmlspecialchars($row['contact_email']); ?>', '<?= htmlspecialchars($row['phone']); ?>')">Edit</button>
-                        <button class="btn btn-danger btn-sm" onclick="deleteSupplier(<?= $row['supplier_id']; ?>)">Delete</button>
-                    </td>
-                </tr>
-            <?php endwhile; ?>
-        </tbody>
-    </table>
-    
-    
-    <div class="card p-4">
-        <h3 id="formTitle">Add New Supplier</h3>
-        <form id="supplierForm" method="POST">
-            <input type="hidden" name="supplier_id" id="supplier_id">
-            
-            <label>Supplier Name:</label>
-            <input type="text" name="supplier_name" id="supplier_name" class="form-control" required><br>
-            
-            <label>Contact Email:</label>
-            <input type="email" name="contact_email" id="contact_email" class="form-control" required><br>
-            
-            <label>Phone:</label>
-            <input type="text" name="phone" id="phone" class="form-control" required><br>
-            
-            <button type="submit" name="save_supplier" class="btn btn-primary">Save Supplier</button>
-            <button type="button" class="btn btn-secondary" onclick="resetForm()">Cancel</button>
-        </form>
+
+                <div class="card p-4">
+                    <h3 id="formTitle">Add New Supplier</h3>
+                    <form id="supplierForm" method="POST">
+                        <input type="hidden" name="supplier_id" id="supplier_id">
+
+                        <label>Supplier Name:</label>
+                        <input type="text" name="supplier_name" id="supplier_name" class="form-control" required><br>
+
+                        <label>Contact Email:</label>
+                        <input type="email" name="contact_email" id="contact_email" class="form-control" required><br>
+
+                        <label>Phone:</label>
+                        <input type="text" name="phone" id="phone" class="form-control" required><br>
+
+                        <button type="submit" name="save_supplier" class="btn btn-primary">Save Supplier</button>
+                        <button type="button" class="btn btn-secondary" onclick="resetForm()">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -143,9 +164,7 @@ $suppliers = $conn->query("SELECT * FROM suppliers");
             document.getElementById("phone").value = "";
         }
     </script>
-</body>
-</html>
 
-<?php
-$conn->close();
-?>
+    <?php
+    $conn->close();
+    ?>

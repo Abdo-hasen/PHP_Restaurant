@@ -12,8 +12,8 @@ if (isset($_GET['id'])) {
         $_SESSION['error'] = "Failed to delete offer";
     }
     
-    redirect(URL . "/admin/layout/view-special-offer.php");
+    redirect(URL . "/admin/view-special-offer.php");
 } else {
     $_SESSION['error'] = "Invalid offer ID";
-    redirect(URL . "/admin/layout/view-special-offer.php");
+    redirect(URL . "/admin/view-special-offer.php");
 }
