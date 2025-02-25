@@ -31,8 +31,7 @@ require_once "../handlers/admin/reservation.php";
     </div>
     <div class="page-category">
     <div class="container mt-5">
-        <h2 class="text-center mb-4">Manage Restaurant Tables</h2>
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary p-3">
+<!-- <nav class="navbar navbar-expand-lg navbar-dark bg-primary p-3">
     <div class="container">
         <a class="navbar-brand fw-bold" href="#">Admin Dashboard</a>
         <div class="dropdown">
@@ -45,7 +44,7 @@ require_once "../handlers/admin/reservation.php";
             </ul>
         </div>
     </div>
-</nav>
+</nav> -->
     <div class="container mt-5">
         <h2 class="text-center mb-4">Manage Restaurant Tables</h2>
 
