@@ -3,7 +3,7 @@ require_once "../init.php";
 header('Content-Type: application/json');
 
 try {
-    $conn = new mysqli("localhost", "root", "Michael@11099", "final_db");
+    $conn = new mysqli("localhost", "root", "2001", "restaurant_db");
 
     if ($conn->connect_error) {
         throw new Exception("Connection failed: " . $conn->connect_error);
