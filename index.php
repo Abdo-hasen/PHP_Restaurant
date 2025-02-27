@@ -80,7 +80,7 @@ require_once "./handlers/customer/reservation.php"
                     <div class="dropdown-user-scroll scrollbar-outer">
                         <li>
                             <a class="dropdown-item" href="profile.php">My Profile</a>
-                            <a class="dropdown-item" href="#">Order History</a>
+                            <a class="dropdown-item" href="order_history.php">Order History</a>
                             <a class="dropdown-item" href="#">Inbox</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#">Account Setting</a>
