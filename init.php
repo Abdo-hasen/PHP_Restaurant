@@ -6,7 +6,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
 // base url and root 
 //customize for every one
-define('URL', "http://127.0.0.1/PHP_Restaurant/"); // for redirect or location
+define('URL', "http://localhost:8080/"); // for redirect or location
 
 
 // include classes and function 

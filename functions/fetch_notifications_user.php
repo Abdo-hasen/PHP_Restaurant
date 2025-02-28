@@ -10,7 +10,7 @@ if (!isset($_SESSION["user_id"])) {
 
 try {
     
-    $conn = new mysqli("localhost", "root", "", "restaurant_db");
+    $conn = new mysqli("localhost", "root", "2001", "restaurant_db");
 
    
     if ($conn->connect_error) {

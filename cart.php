@@ -68,7 +68,7 @@ if (isset($_SESSION['cart']) && !is_array($_SESSION['cart'])) {
         
         <div class="container mt-5">
             <?php if (!empty($_SESSION['cart'])): ?>
-                <form action="<?= URL ?>handlers/admin/cart-handler.php" method="POST">
+                <form action="handlers/admin/cart-handler.php" method="POST">
                     <table class="table">
                         <thead>
                             <tr>
@@ -119,7 +119,7 @@ if (isset($_SESSION['cart']) && !is_array($_SESSION['cart'])) {
                             <button type="submit" name="update_cart" class="btn btn-warning me-2 mb-2">
                                 <i class="fas fa-sync-alt"></i> Update Cart
                             </button>
-                            <a href="<?= URL ?>handlers/admin/checkout-handler.php" class="btn btn-success mb-2">
+                            <a href="handlers/admin/checkout-handler.php" class="btn btn-success mb-2">
                                 <i class="fas fa-credit-card"></i> Proceed to Checkout
                             </a>
                         </div>
