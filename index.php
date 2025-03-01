@@ -22,7 +22,8 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
-require_once "./handlers/customer/reservation.php"
+require_once "./handlers/customer/reservation.php";
+require_once "./includes/customer/header.php";
 ?>
 
 <!DOCTYPE html>

@@ -4,7 +4,7 @@ include './../includes/admin/header.php';
 
 $host = "localhost";
 $user = "root";
-$pass = "";
+$pass = "2001";
 $dbname = "restaurant_db";
 
 $conn = new mysqli($host, $user, $pass, $dbname);

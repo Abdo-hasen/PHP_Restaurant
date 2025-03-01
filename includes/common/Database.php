@@ -167,6 +167,27 @@ class Database
         }
     }
 
+    // Add this method to the Database class in Database.php
+    public function rawQuery(string $query): array {
+        try {
+            $result = $this->mysqli->query($query);
+            if (!$result) {
+                throw new RuntimeException("Query failed: " . $this->mysqli->error);
+            }
+
+            $data = [];
+            while ($row = $result->fetch_assoc()) {
+                $data[] = $row;
+            }
+
+            $result->free();
+            return $data;
+        } catch (Exception $e) {
+            error_log("Raw query error: " . $e->getMessage());
+            throw $e;
+        }
+    }
+
     // Delete data from the database
     public function delete($id, string $column = 'id'): bool
     {
