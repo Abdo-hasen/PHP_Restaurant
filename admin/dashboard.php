@@ -1,16 +1,9 @@
 <?php
-session_start();
-
-// Redirect to login if not logged in or not an admin
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'staff') {
-    header("Location: ../login.php");
-    exit();
-}
-
-require_once "./../init.php";
+require_once "../init.php";
 include '../includes/admin/header.php';
 include '../includes/admin/sidebar.php';
 include '../functions/stats.php';
+include '../includes/admin/footer.php';
 
 // Fetch analytics data
 $totalOrders = getTotalOrders($db);
@@ -71,16 +64,16 @@ $yearlyRevenue = getYearlyRevenue($db);
                         <div class="card-body">
                             <h5 class="card-title">Revenue Over Time</h5>
 
-                            <!-- Bootstrap Tabs -->
+                            <!-- Bootstrap 5 Tabs -->
                             <ul class="nav nav-tabs" id="revenueTabs" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="weekly-tab" data-toggle="tab" href="#weekly" role="tab" aria-controls="weekly" aria-selected="true">Weekly Revenue</a>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="weekly-tab" data-bs-toggle="tab" data-bs-target="#weekly" type="button" role="tab" aria-controls="weekly" aria-selected="true">Weekly Revenue</button>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="monthly-tab" data-toggle="tab" href="#monthly" role="tab" aria-controls="monthly" aria-selected="false">Monthly Revenue</a>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="monthly-tab" data-bs-toggle="tab" data-bs-target="#monthly" type="button" role="tab" aria-controls="monthly" aria-selected="false">Monthly Revenue</button>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="yearly-tab" data-toggle="tab" href="#yearly" role="tab" aria-controls="yearly" aria-selected="false">Yearly Revenue</a>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="yearly-tab" data-bs-toggle="tab" data-bs-target="#yearly" type="button" role="tab" aria-controls="yearly" aria-selected="false">Yearly Revenue</button>
                                 </li>
                             </ul>
 
@@ -108,9 +101,6 @@ $yearlyRevenue = getYearlyRevenue($db);
         </div>
     </div>
 </div>
-
-<?php include '../includes/admin/footer.php'; ?>
-
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {

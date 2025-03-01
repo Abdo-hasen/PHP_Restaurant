@@ -33,13 +33,6 @@
                 </a>
               </li>
 
-              <!-- Menu Management -->
-              <!-- <li class="nav-item">
-                    <a href="../../admin/manage_menu.php">
-                        <i class="fas fa-layer-group"></i>
-                        <p>Menu Management</p>
-                    </a>
-                </li> -->
               <!-- Menu Management Dropdown -->
               <li class="nav-item">
                 <a href="../../admin/dashboard.php" data-bs-toggle="collapse" data-bs-target="#menuManagement"> <i class="fas fa-th-list"></i>
@@ -67,14 +60,6 @@
                 </div>
               </li>
 
-              <!-- Special Offers -->
-              <!-- <li class="nav-item">
-                    <a href="../../admin/layout/view-special-offer.php">
-                        <i class="fas fa-layer-group"></i>
-                        <p>Special Offer</p>
-                    </a>
-                </li> -->
-
               <!-- Order Management -->
               <li class="nav-item">
                 <a href="../../admin/manage_orders.php">
@@ -91,14 +76,14 @@
                 </a>
               </li>
 
-              <!-- Reservations -->
+              <!-- Inventory -->
               <li class="nav-item">
                 <a href="../../admin/inventory.php">
                   <i class="fas fa-pen-square"></i>
                   <p>Inventory Management</p>
                 </a>
               </li>
-              <!-- Reservations -->
+              <!-- Supplier -->
               <li class="nav-item">
                 <a href="../../admin/supplier.php">
                   <i class="fas fa-pen-square"></i>
@@ -176,40 +161,15 @@
                     </form>
                   </ul>
                 </li>
-                <li class="nav-item topbar-icon dropdown hidden-caret">
-                  <a
-                    class="nav-link dropdown-toggle"
-                    href="#"
-                    id="notifDropdown"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false">
-                    <i class="fa fa-bell"></i>
-                    <span class="notification">4</span>
-                  </a>
-                  <ul
-                    class="dropdown-menu notif-box animated fadeIn"
-                    aria-labelledby="notifDropdown">
-                    <li>
-                      <div class="notif-scroll scrollbar-outer">
-                        <div class="notif-center">
-                          <a href="#">
-                              <div class="dropdown">
-                                  <button class="btn btn-light position-relative rounded-circle p-2" id="notificationBell" data-bs-toggle="dropdown">
-                                      <i class="fas fa-bell fa-lg"></i>
-                                      <span class="badge bg-danger position-absolute top-0 start-100 translate-middle rounded-pill" id="adminNotificationCount"></span>
-                                  </button>
-                                  <ul class="dropdown-menu dropdown-menu-end shadow-sm p-2" id="adminNotificationDropdown" style="width: 300px; max-height: 300px; overflow-y: auto;">
-                                      <li class="text-center text-muted small">No notifications</li>
-                                  </ul>
-                            </div>
-                          </a>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                </li>
+                <div class="dropdown">
+                    <button class="btn btn-light position-relative rounded-circle p-2" id="notificationBell" data-bs-toggle="dropdown">
+                        <i class="fas fa-bell fa-lg"></i>
+                        <span class="badge bg-danger position-absolute top-0 start-100 translate-middle rounded-pill" id="adminNotificationCount"></span>
+                    </button>
+                      <ul class="dropdown-menu dropdown-menu-end shadow-sm p-2" id="adminNotificationDropdown" style="width: 300px; max-height: 300px; overflow-y: auto;">
+                          <li class="text-center text-muted small">No notifications</li>
+                      </ul>
+                </div>
                 <li class="nav-item topbar-user dropdown hidden-caret">
                   <a
                     class="dropdown-toggle profile-pic"
@@ -262,3 +222,37 @@
           </nav>
           <!-- End Navbar -->
         </div>
+
+        <script>
+            async function loadAdminNotifications() {
+            let response = await fetch("../functions/fetch_notifications_admin.php");
+            let notifications = await response.json();
+
+            let dropdown = document.getElementById("adminNotificationDropdown");
+            let count = document.getElementById("adminNotificationCount");
+
+            dropdown.innerHTML = "";
+            count.textContent = notifications.length;
+            console.log(notifications);
+
+            if (notifications.length === 0) {
+                dropdown.innerHTML = '<li class="dropdown-item text-muted">There is no Notifications</li>';
+                document.getElementById("adminNotificationCount").textContent = "";
+            } else {
+                notifications.forEach(notification => {
+                    let li = document.createElement("li");
+                    li.className = "dropdown-item";
+                    li.textContent = notification.message;
+                    dropdown.appendChild(li);
+                });
+            }
+        }
+        document.getElementById("notificationBell").addEventListener("click", async function() {
+
+            document.getElementById("adminNotificationCount").textContent = "";
+        });
+
+
+        loadAdminNotifications();
+        setInterval(loadAdminNotifications, 5000);
+        </script>

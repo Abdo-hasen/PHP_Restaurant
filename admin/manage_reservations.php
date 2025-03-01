@@ -1,53 +1,16 @@
 <?php
 require_once '../init.php';
-include '../includes/admin/sidebar.php';
 include '../includes/admin/header.php';
+include '../includes/admin/sidebar.php';
 require_once "../handlers/admin/reservation.php";
 ?>
 
 <div class="container">
   <div class="page-inner">
     <div class="page-header">
-      <h4 class="page-title">Dashboard</h4>
-      <ul class="breadcrumbs">
-        <li class="nav-home">
-          <a href="#">
-            <i class="icon-home"></i>
-          </a>
-        </li>
-        <li class="separator">
-          <i class="icon-arrow-right"></i>
-        </li>
-        <li class="nav-item">
-          <a href="#">Pages</a>
-        </li>
-        <li class="separator">
-          <i class="icon-arrow-right"></i>
-        </li>
-        <li class="nav-item">
-          <a href="#">Starter Page</a>
-        </li>
-      </ul>
+      <h2 class="page-title">Manage Restaurant Tables</h2>
     </div>
     <div class="page-category">
-    <div class="container mt-5">
-<!-- <nav class="navbar navbar-expand-lg navbar-dark bg-primary p-3">
-    <div class="container">
-        <a class="navbar-brand fw-bold" href="#">Admin Dashboard</a>
-        <div class="dropdown">
-            <button class="btn btn-light position-relative rounded-circle p-2" id="notificationBell" data-bs-toggle="dropdown">
-                <i class="fas fa-bell fa-lg"></i>
-                <span class="badge bg-danger position-absolute top-0 start-100 translate-middle rounded-pill" id="adminNotificationCount"></span>
-            </button>
-            <ul class="dropdown-menu dropdown-menu-end shadow-sm p-2" id="adminNotificationDropdown" style="width: 300px; max-height: 300px; overflow-y: auto;">
-                <li class="text-center text-muted small">No notifications</li>
-            </ul>
-        </div>
-    </div>
-</nav> -->
-    <div class="container mt-5">
-        <h2 class="text-center mb-4">Manage Restaurant Tables</h2>
-
         <div class="card mb-4">
             <div class="card-header bg-primary text-white">Add New Table</div>
             <div class="card-body">
@@ -249,38 +212,7 @@ require_once "../handlers/admin/reservation.php";
         }, 40000); 
     }
 });
-            async function loadAdminNotifications() {
-            let response = await fetch("../functions/fetch_notifications_admin.php");
-            let notifications = await response.json();
-
-            let dropdown = document.getElementById("adminNotificationDropdown");
-            let count = document.getElementById("adminNotificationCount");
-
-            dropdown.innerHTML = "";
-            count.textContent = notifications.length;
-            console.log(notifications);
-
-            if (notifications.length === 0) {
-                dropdown.innerHTML = '<li class="dropdown-item text-muted">There is no Notifications</li>';
-                document.getElementById("adminNotificationCount").textContent = "";
-            } else {
-                notifications.forEach(notification => {
-                    let li = document.createElement("li");
-                    li.className = "dropdown-item";
-                    li.textContent = notification.message;
-                    dropdown.appendChild(li);
-                });
-            }
-        }
-        document.getElementById("notificationBell").addEventListener("click", async function() {
-
-            document.getElementById("adminNotificationCount").textContent = "";
-        });
-
-
-        loadAdminNotifications();
-        setInterval(loadAdminNotifications, 5000);
-        </script>
+    </script>
 
 </body>
 
