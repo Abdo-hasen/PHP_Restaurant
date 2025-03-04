@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . "/../init.php";
+restrictToAdmin(); // Restrict access to admin pages
 include './../includes/admin/header.php';
 include './../includes/admin/sidebar.php';
 
@@ -105,10 +106,10 @@ $current_user = $db->find($user_id, 'user_id');
                 <!-- Profile Picture Section -->
                 <div class="col-md-4 text-center mb-4">
                     <div class="position-relative">
-                        <img src="<?= $current_user['profile_picture'] ?? 'assets/default-profile.png' ?>"
-                            class="img-thumbnail rounded-circle mb-3"
-                            style="width: 200px; height: 200px; object-fit: cover"
-                            alt="Profile Picture">
+                    <img src="<?= URL . ($current_user['profile_picture'] ?? 'assets/default-profile.png') ?>"
+                    class="img-thumbnail rounded-circle mb-3"
+                    style="width: 200px; height: 200px; object-fit: cover"
+                    alt="Profile Picture">
 
                         <form method="POST" enctype="multipart/form-data">
                             <div class="input-group">

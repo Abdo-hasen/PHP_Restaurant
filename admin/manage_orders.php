@@ -1,5 +1,6 @@
 <?php
 require_once "../init.php";
+restrictToAdmin(); // Restrict access to admin pages
 require_once "./../includes/admin/header.php";
 require_once "./../includes/admin/sidebar.php";
 
