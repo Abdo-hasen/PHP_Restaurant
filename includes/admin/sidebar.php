@@ -2,13 +2,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
       <!-- Sidebar -->
-      <div class="sidebar" data-background-color="dark">
+      <div class="sidebar" data-background-color="light">
         <div class="sidebar-logo">
           <!-- Logo Header -->
-          <div class="logo-header" data-background-color="dark">
-            <a href="index.html" class="logo">
-              <img src="../assets/admin/img/kaiadmin/logo_light.svg" alt="navbar brand" class="navbar-brand" height="20" />
-            </a>
+          <div class="logo-header" data-background-color="light">
+          <a class="navbar-brand fw-bold" href="#">Resto<span class="text-danger">.</span></a>
             <div class="nav-toggle">
               <button class="btn btn-toggle toggle-sidebar">
                 <i class="gg-menu-right"></i>
@@ -98,6 +96,12 @@
                   <p>User Management</p>
                 </a>
               </li>
+              <li class="nav-item">
+                    <a href="<?= URL ?>index.php" target="_blank">
+                        <i class="fas fa-store"></i>
+                        <p>View Store</p>
+                    </a>
+                </li>
             </ul>
           </div>
         </div>
@@ -177,10 +181,7 @@
                     href="#"
                     aria-expanded="false">
                     <div class="avatar-sm">
-                      <img
-                        src="<?php echo !empty($_SESSION['profile_picture']) ? $_SESSION['profile_picture'] : '../../assets/profile-image/avatar.png'; ?>"
-                        alt="Profile Picture"
-                        class="avatar-img rounded-circle" />
+                    <img src="<?= URL . ($_SESSION['profile_picture'] ?? 'assets/profile-image/avatar.png') ?>" alt="Profile Picture" class="avatar-img rounded-circle" />
                     </div>
                     <span class="profile-username">
                       <span class="op-7">Hi,</span>
@@ -192,10 +193,7 @@
                       <li>
                         <div class="user-box">
                           <div class="avatar-lg">
-                            <img
-                              src="<?php echo !empty($_SESSION['profile_picture']) ? $_SESSION['profile_picture'] : '../../assets/profile-image/avatar.png'; ?>"
-                              alt="Profile Picture"
-                              class="avatar-img rounded" />
+                              <img src="<?= URL . ($_SESSION['profile_picture'] ?? 'assets/profile-image/avatar.png') ?>" alt="Profile Picture" class="avatar-img rounded-circle" />
                           </div>
                           <div class="u-text">
                             <h4><?php echo htmlspecialchars($_SESSION['username'] ?? 'Guest'); ?></h4>
