@@ -1,7 +1,7 @@
 <?php
 require_once "./../init.php";
-include '../includes/admin/sidebar.php';
 include '../includes/admin/header.php';
+include '../includes/admin/sidebar.php';
 $pageTitle = "View Special Offers";
 
 $offers = $db->mysqli->query("
@@ -15,33 +15,10 @@ $offers = $db->mysqli->query("
 <div class="container">
     <div class="page-inner">
         <div class="page-header">
-            <h4 class="page-title">Dashboard</h4>
-            <ul class="breadcrumbs">
-                <li class="nav-home">
-                    <a href="#">
-                        <i class="icon-home"></i>
-                    </a>
-                </li>
-                <li class="separator">
-                    <i class="icon-arrow-right"></i>
-                </li>
-                <li class="nav-item">
-                    <a href="#">Pages</a>
-                </li>
-                <li class="separator">
-                    <i class="icon-arrow-right"></i>
-                </li>
-                <li class="nav-item">
-                    <a href="#">Starter Page</a>
-                </li>
-            </ul>
+            <h2 class="page-title">Manage Special Offers</h2>
         </div>
         <div class="page-category">
-            <div class="container mt-5">
-                <div class="row">
-                    <div class="col-12 d-flex justify-content-between align-items-center mb-4">
-                        <h1>Special Offers</h1>
-                        <a href="<?= URL ?>admin/layout/special-offer.php" class="btn btn-primary">
+                        <a href="admin/layout/special-offer.php" class="btn btn-primary">
                             <i class="fas fa-plus"></i> Add New Offer
                         </a>
                     </div>

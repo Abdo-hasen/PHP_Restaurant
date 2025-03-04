@@ -1,6 +1,8 @@
 <?php
-include './../includes/admin/sidebar.php';
+require_once "../init.php";
 include './../includes/admin/header.php';
+include './../includes/admin/sidebar.php';
+
 
 $host = "localhost";
 $user = "root";
@@ -38,29 +40,10 @@ $inventory = $conn->query("SELECT inventory.*, menu_items.item_name FROM invento
 $low_stock_items = $conn->query("SELECT inventory.*, menu_items.item_name FROM inventory JOIN menu_items ON inventory.item_id = menu_items.item_id WHERE inventory.quantity < inventory.reorder_level");
 ?>
 
-<div class="container mt-5">
+<div class="container">
     <div class="page-inner">
         <div class="page-header">
-            <h4 class="page-title">Inventory Management</h4>
-            <ul class="breadcrumbs">
-                <li class="nav-home">
-                    <a href="#">
-                        <i class="icon-home"></i>
-                    </a>
-                </li>
-                <li class="separator">
-                    <i class="icon-arrow-right"></i>
-                </li>
-                <li class="nav-item">
-                    <a href="#">Pages</a>
-                </li>
-                <li class="separator">
-                    <i class="icon-arrow-right"></i>
-                </li>
-                <li class="nav-item">
-                    <a href="#">Starter Page</a>
-                </li>
-            </ul>
+            <h4 class="page-title">Manage Inventory</h4>
         </div>
         <div class="page-category">
             <div class="container mt-4">

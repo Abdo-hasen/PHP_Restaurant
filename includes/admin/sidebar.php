@@ -200,17 +200,11 @@
                           <div class="u-text">
                             <h4><?php echo htmlspecialchars($_SESSION['username'] ?? 'Guest'); ?></h4>
                             <p class="text-muted"><?php echo htmlspecialchars($_SESSION['email'] ?? 'No email'); ?></p>
-                            <a href="../../profile.php" class="btn btn-xs btn-secondary btn-sm">View Profile</a>
+                            <a href="../../admin/profile.php" class="btn btn-xs btn-secondary btn-sm">View Profile</a>
                           </div>
                         </div>
                       </li>
                       <li>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="../../profile.php">My Profile</a>
-                        <a class="dropdown-item" href="#">My Balance</a>
-                        <a class="dropdown-item" href="#">Inbox</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Account Setting</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="../../handlers/common/logout.php">Logout</a>
                       </li>

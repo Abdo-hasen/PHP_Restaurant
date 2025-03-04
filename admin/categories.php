@@ -1,36 +1,16 @@
 <?php
-include '../includes/admin/sidebar.php';
+require_once "../init.php";
 include '../includes/admin/header.php';
+include '../includes/admin/sidebar.php';
 require_once "../handlers/admin/categories.php"
 ?>
 
 <div class="container">
   <div class="page-inner">
     <div class="page-header">
-      <h4 class="page-title">Dashboard</h4>
-      <ul class="breadcrumbs">
-        <li class="nav-home">
-          <a href="#">
-            <i class="icon-home"></i>
-          </a>
-        </li>
-        <li class="separator">
-          <i class="icon-arrow-right"></i>
-        </li>
-        <li class="nav-item">
-          <a href="#">Pages</a>
-        </li>
-        <li class="separator">
-          <i class="icon-arrow-right"></i>
-        </li>
-        <li class="nav-item">
-          <a href="#">Starter Page</a>
-        </li>
-      </ul>
+      <h2 class="page-title">Manage Menu Categories</h2>
     </div>
     <div class="page-category">
-    <div class="container mt-5">
-    <h2 class="text-center mb-4">Manage Menu Categories</h2>
     <div class="card mb-4">
         <div class="card-header bg-primary text-white">Add New Category</div>
         <div class="card-body">

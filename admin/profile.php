@@ -1,7 +1,7 @@
 <?php
-require_once __DIR__ . "/init.php";
-include './includes/customer/header.php';
-include './includes/customer/nav.php';
+require_once __DIR__ . "/../init.php";
+include './../includes/admin/header.php';
+include './../includes/admin/sidebar.php';
 
 if (!isset($_SESSION['user_id'])) {
     redirect('login.php');
@@ -80,7 +80,7 @@ if (checkRequestMethod('POST') && checkInput($_POST, 'update_profile')) {
     if (empty($errors)) {
         if ($db->update($data, ['user_id' => $user_id])) {
             setToastMessage('success', 'Profile updated successfully');
-            redirect('profile.php');
+            redirect('admin/profile.php');
         } else {
             setToastMessage('danger', 'Failed to update profile');
         }
@@ -96,14 +96,14 @@ $current_user = $db->find($user_id, 'user_id');
 <div class="container">
     <div class="page-inner">
         <div class="page-header">
-            <h2 class="page-title mt-5">My Profile</h2>
+            <h2 class="page-title">My Profile</h2>
         </div>
         <div class="page-category">
             <?php showToast(); ?>
 
-            <div class="row mt-5">
+            <div class="row">
                 <!-- Profile Picture Section -->
-                <div class="col-md-4 text-center mb-4 mt-5">
+                <div class="col-md-4 text-center mb-4">
                     <div class="position-relative">
                         <img src="<?= $current_user['profile_picture'] ?? 'assets/default-profile.png' ?>"
                             class="img-thumbnail rounded-circle mb-3"
@@ -182,7 +182,7 @@ $current_user = $db->find($user_id, 'user_id');
                                     class="btn btn-primary px-4">
                                     <i class="fas fa-save me-2"></i>Save Changes
                                 </button>
-                                <a href="index.php" class="btn btn-outline-secondary">
+                                <a href="admin/dashboard.php" class="btn btn-outline-secondary">
                                     Cancel
                                 </a>
                             </div>

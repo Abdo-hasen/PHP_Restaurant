@@ -1,15 +1,7 @@
 <?php
-session_start();
-
-
-if (!isset($_SESSION['user_id'])) {
-    header("Location: ../login.php");
-    exit();
-}
-
 require_once "./../init.php"; 
-include './../includes/admin/sidebar.php';
 include './../includes/admin/header.php';
+include './../includes/admin/sidebar.php';
 
 
 $db = new Database();
@@ -92,11 +84,9 @@ $menu_items = $db->table('menu_items')
 <div class="container">
     <div class="page-inner">
         <div class="page-header">
-            <h4 class="page-title">Dashboard</h4>
+            <h2 class="page-title">Manage Menu Items</h2>
         </div>
         <div class="page-category">
-            <div class="container mt-4">
-                <h2 class="text-center mb-4">Menu Items</h2>
 
                 <div class="row">
                     <?php foreach ($menu_items as $row): ?>
