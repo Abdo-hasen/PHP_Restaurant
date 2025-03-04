@@ -51,7 +51,6 @@ function handleLogin($email, $password) {
     $_SESSION['email'] = $user['email']; // Store the user's email
     $_SESSION['profile_picture'] = $user['profile_picture']; // Store the profile picture path
 
-
     // Redirect based on role
     if ($user['role'] === 'customer') {
         redirect(URL."index.php");
@@ -63,10 +62,10 @@ function handleLogin($email, $password) {
 /**
  * Handles user logout.
  */
-function handleLogout() {
-    session_unset();
-    session_destroy();
-    header("Location: index.php");
-    exit();
-}
+// function handleLogout() {
+//     session_unset();
+//     session_destroy();
+//     header("Location: index.php");
+//     exit();
+// }
 ?>
