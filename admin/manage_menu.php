@@ -14,7 +14,7 @@ $categories = $db->table('categories')->read();
 
 function uploadImage($file)
 {
-    $targetDir = "../../assets/admin/uploads/";
+    $targetDir = "../assets/admin/uploads/";
     $fileName = basename($file["name"]);
     $targetFilePath = $targetDir . $fileName;
 
