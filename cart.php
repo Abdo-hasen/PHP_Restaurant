@@ -1,54 +1,15 @@
 <?php
 require_once "init.php";
+require_once "./includes/customer/header.php";
+require_once "./includes/customer/nav.php";
+include 'includes/customer/footer.php';
+
 
 // Temporary fix to clear invalid cart data
 if (isset($_SESSION['cart']) && !is_array($_SESSION['cart'])) {
     unset($_SESSION['cart']);
 }
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cart - Resto</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg bg-white shadow-sm fixed-top">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="#">Resto<span class="text-danger">.</span></a>
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link" href="<?= URL ?>index.php#home">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="<?= URL ?>index.php#aboutUs">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="<?= URL ?>index.php#menu">Menu</a></li>
-                    <li class="nav-item"><a class="nav-link" href="<?= URL ?>index.php#gallery">Gallery</a></li>
-                    <li class="nav-item"><a class="nav-link" href="<?= URL ?>index.php#contact">Contact</a></li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= URL ?>cart.php">
-                            <i class="fas fa-shopping-cart"></i> Cart
-                            <?php if (!empty($_SESSION['cart'])): ?>
-                                <span class="badge bg-danger"><?= array_sum($_SESSION['cart']) ?></span>
-                            <?php endif; ?>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-
-            <a href="<?= URL ?>index.php#reservation" class="btn btn-book">Book a Table</a>
-        </div>
-    </nav>
-
     
     <div class="container-fluid py-5 mt-2" id="cart" >
         <?php if (isset($_SESSION['success'])): ?>

@@ -93,22 +93,43 @@ if (checkRequestMethod('POST') && checkInput($_POST, 'update_profile')) {
 $current_user = $db->find($user_id, 'user_id');
 ?>
 
-<div class="container">
-    <div class="page-inner">
-        <div class="page-header">
-            <h2 class="page-title mt-5">My Profile</h2>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order History - Resto</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <?php
+    require_once "./includes/customer/nav.php";
+    ?>
+
+
+    <!-- show order history -->
+    <div class="container-fluid py-5 mt-2">
+        <div class="text-center">
+            <p class="text-muted mt-3">Profile page</p>
+            <h2 class="menu-title">My <span>Acount</span></h2>
         </div>
-        <div class="page-category">
+
+        <div class="container mt-5">
             <?php showToast(); ?>
 
             <div class="row mt-5">
                 <!-- Profile Picture Section -->
                 <div class="col-md-4 text-center mb-4 mt-5">
                     <div class="position-relative">
-                        <img src="<?= $current_user['profile_picture'] ?? 'assets/default-profile.png' ?>"
-                            class="img-thumbnail rounded-circle mb-3"
-                            style="width: 200px; height: 200px; object-fit: cover"
-                            alt="Profile Picture">
+                    <img src="<?= URL . ($current_user['profile_picture'] ?? 'assets/default-profile.png') ?>"
+                    class="img-thumbnail rounded-circle mb-3"
+                    style="width: 200px; height: 200px; object-fit: cover"
+                    alt="Profile Picture">
 
                         <form method="POST" enctype="multipart/form-data">
                             <div class="input-group">

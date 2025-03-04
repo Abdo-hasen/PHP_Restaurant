@@ -1,5 +1,8 @@
 <?php
 require_once "init.php";
+require_once "./includes/customer/header.php";
+require_once "./includes/customer/nav.php";
+include 'includes/customer/footer.php';
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
@@ -19,29 +22,11 @@ $orders = $db->mysqli->query("
 ")->fetch_all(MYSQLI_ASSOC);
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order History - Resto</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-
-<body>
-    <!-- Navbar -->
-    <?php
-    require_once "./includes/customer/nav.php";
-    ?>
-
-
     <!-- show order history -->
     <div class="container-fluid py-5 mt-2">
         <div class="text-center">
             <p class="text-muted mt-3">ORDER HISTORY</p>
-            <h2 class="menu-title">Your Past <span>Orders</span></h2>
+            <h2 class="menu-title">My Past <span>Orders</span></h2>
         </div>
 
         <div class="container mt-5">
@@ -88,8 +73,3 @@ $orders = $db->mysqli->query("
             <?php endif; ?>
         </div>
     </div>
-
-    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-</body>
-
-</html>
