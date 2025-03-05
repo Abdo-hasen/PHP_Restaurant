@@ -1,8 +1,8 @@
 <?php
 require_once "../init.php";
-$pageTitle = "Manage Orders";
-require_once "./../includes/admin/sidebar.php";
+restrictToAdmin(); // Restrict access to admin pages
 require_once "./../includes/admin/header.php";
+require_once "./../includes/admin/sidebar.php";
 
 $orders = $db->mysqli->query("
     SELECT o.*, u.full_name, u.email, 
@@ -15,9 +15,12 @@ $orders = $db->mysqli->query("
     ORDER BY o.created_at DESC
 ")->fetch_all(MYSQLI_ASSOC);
 ?>
-
-<div class="container mt-4">
-    <h1 class="mb-4">Manage Orders</h1>
+<div class="container">
+  <div class="page-inner">
+    <div class="page-header">
+      <h2 class="page-title">Manage Orders</h2>
+    </div>
+    <div class="page-category">
 
     <!-- Filter -->
     <div class="mb-3">

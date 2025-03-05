@@ -58,6 +58,15 @@ try {
     unset($_SESSION['cart']);
 
     $_SESSION['success'] = "Payment processed successfully!";
+
+    // notifications
+    $db->table("notifications")->insert([
+        "user_id" => $_SESSION['user_id'], // Use the session variable
+        "message" => "Order from user: {$_SESSION['user_id']}!", // Use the session variable
+        "user_role" => "customer",
+        "type" => "Order"
+    ]);
+
     redirect(URL . "cart.php");
 } catch (Exception $e) {
     $db->mysqli->rollback();

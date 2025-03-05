@@ -1,8 +1,9 @@
 <?php
 // Include necessary files
 require_once '../init.php';
-include '../includes/admin/sidebar.php';
+restrictToAdmin(); // Restrict access to admin pages
 include '../includes/admin/header.php';
+include '../includes/admin/sidebar.php';
 
 // Handle Delete User
 if (isset($_GET['delete_id'])) {
@@ -60,30 +61,11 @@ if (isset($_SESSION['error'])) {
     unset($_SESSION['error']);
 }
 ?>
-<div class="container mt-5">
-          <div class="page-inner">
-            <div class="page-header">
-              <h4 class="page-title">Manage Users</h4>
-              <ul class="breadcrumbs">
-                <li class="nav-home">
-                  <a href="#">
-                    <i class="icon-home"></i>
-                  </a>
-                </li>
-                <li class="separator">
-                  <i class="icon-arrow-right"></i>
-                </li>
-                <li class="nav-item">
-                  <a href="#">Pages</a>
-                </li>
-                <li class="separator">
-                  <i class="icon-arrow-right"></i>
-                </li>
-                <li class="nav-item">
-                  <a href="#">Starter Page</a>
-                </li>
-              </ul>
-            </div>
+<div class="container">
+    <div class="page-inner">
+        <div class="page-header">
+            <h2 class="page-title">Manage Users</h2>
+        </div>
             <div class="page-category">
             <div class="container mt-4">
                 <a href="../functions/add_user.php" class="btn btn-primary mb-3">Add User</a>

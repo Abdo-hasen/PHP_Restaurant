@@ -171,31 +171,27 @@
     text-align: center;
     margin-bottom: 30px;
   }
-  .card-img-top {
-    width: 100%;
-    max-width: 200px;
-    border-radius: 50%;
-  }
-  .card-title {
-    margin-top: 15px;
-    font-weight: bold;
-  }
-  .card-text {
-    color: gray;
-  }
-  .card-price {
-    font-weight: bold;
-    color: #b22222;
-    font-size: 1.2rem;
-  }
-  .card-btn{
-      background-color: #b42e23; 
-    color: white;
-    border-radius: 20px;
-    padding: 8px 16px;
-    font-weight: bold;
-  }
-  
+/* menu styling   */
+#menu .btn-outline-primary {
+  color: #923A35;
+  border-color: #923A35;
+}
+
+#menu .btn-outline-primary:hover,
+#menu .btn-outline-primary.active {
+  background-color: #923A35;
+  color: white;
+}
+
+#menu .btn-primary {
+  background-color: #923A35;
+  border-color: #923A35;
+}
+
+#menu .btn-primary:hover {
+  background-color: #7F2E2A;
+  border-color: #7F2E2A;
+}
   /* book a table styling */
   .reservation-container {
     display: flex;

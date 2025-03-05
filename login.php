@@ -35,9 +35,13 @@ if (checkRequestMethod('POST')) {
                         </div>
                         <!-- check errors -->
                     
-                        <?php if (isset($_SESSION['error'])): ?>
-                            <div class="alert alert-danger"><?= htmlspecialchars($_SESSION['error']) ?></div>
-                            <?php unset($_SESSION['error']); ?>
+                        <?php if (isset($_SESSION['errors'])): ?>
+                            <div class="alert alert-danger">
+                                <?php foreach ($_SESSION['errors'] as $error): ?>
+                                    <p><?= htmlspecialchars($error) ?></p>
+                                <?php endforeach; ?>
+                            </div>
+                            <?php unset($_SESSION['errors']); ?>
                         <?php endif; ?>
 
                         <?php if (isset($_SESSION['success'])): ?>

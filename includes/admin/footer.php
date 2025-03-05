@@ -1,7 +1,7 @@
     <!--   Core JS Files   -->
     <script src="../assets/admin/js/core/jquery-3.7.1.min.js"></script>
     <script src="../assets/admin/js/core/popper.min.js"></script>
-    <script src="../assets/admin/js/core/bootstrap.min.js"></script>
+    <!-- <script src="../assets/admin/js/core/bootstrap.min.js"></script> -->
 
     <!-- jQuery Scrollbar -->
     <script src="../assets/admin/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
@@ -63,5 +63,14 @@
 
     <!-- Kaiadmin JS -->
     <script src="../assets/admin/js/kaiadmin.min.js"></script>
+
+    <!-- Include Chart.js -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+
+<!-- Include Bootstrap JS (for tabs functionality) -->
+<!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
+
   </body>
 </html>
