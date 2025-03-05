@@ -192,8 +192,3 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 ## Screenshots
 
 ![Preview](assets/customer/images/preview.png)
-
----
---- 
-
-This version of the `README.md` aligns with the directory structure and provides a clear, organized overview of the project. Let me know if you need further adjustments!
