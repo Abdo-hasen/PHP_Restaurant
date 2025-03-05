@@ -47,7 +47,7 @@ try {
     // Add payment
     $paymentData = [
         'order_id' => $order_id,
-        'payment_method' => 'Credit Card',
+        'payment_method' => 'Credit/Debit Card',
         'amount' => $total,
         'status' => 'Completed'
     ];

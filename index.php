@@ -71,7 +71,7 @@ require_once "./handlers/customer/reservation.php"
                 </ul>
             </div>
 
-                        <!-- Profile Dropdown -->
+            <!-- Profile Dropdown -->
             <div class="nav-item topbar-user dropdown hidden-caret">
                 <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#" aria-expanded="false">
                     <span>Profile</span>
@@ -175,14 +175,26 @@ require_once "./handlers/customer/reservation.php"
             <h2 class="menu-title">Check Our <span>Delicious Menu</span></h2>
         </div>
 
-        <div class="row mt-4">
+        <!-- Add search bar -->
+        <div class="row justify-content-center mb-4">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="menuSearch" placeholder="Search menu items...">
+                    <button class="btn btn-outline-secondary" type="button" id="searchButton">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4" id="menuItemsContainer">
             <?php foreach ($menu as $item): ?>
                 <?php
                 $isDiscounted = isset($discountMap[$item['item_id']]);
                 $discountPercent = $isDiscounted ? $discountMap[$item['item_id']]['discount_percent'] : 0;
                 $discountedPrice = $item['price'] * (1 - ($discountPercent / 100));
                 ?>
-                <div class="col-md-4 mb-4">
+                <div class="col-md-4 mb-4 menu-item">
                     <div class="card h-100">
                         <?php if ($item['image_url']): ?>
                             <img src="<?= $item['image_url'] ?>" class="card-img-top" alt="<?= $item['item_name'] ?>" style="height: 200px; object-fit: cover;">
@@ -245,68 +257,68 @@ require_once "./handlers/customer/reservation.php"
             <h2 class="menu-title">Book A <span>Table</span></h2>
         </div>
         <div class="container my-5">
-    <div class="row align-items-center reservation-container p-4 rounded shadow">
-        <!-- صورة الحجز -->
-        <div class="col-lg-6 mb-4 mb-lg-0">
-            <img class="img-fluid rounded w-100" src="assets/customer/images/about1.jpg" alt="Table Reservation">
+            <div class="row align-items-center reservation-container p-4 rounded shadow">
+                <!-- صورة الحجز -->
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <img class="img-fluid rounded w-100" src="assets/customer/images/about1.jpg" alt="Table Reservation">
+                </div>
+
+                <!-- نموذج الحجز -->
+                <div class="col-lg-6">
+                    <h2 class="text-center mb-4 " style="color: #923A35;">Book A Table</h2>
+                    <form method="POST" class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Select Date</label>
+                            <input type="date" class="form-control" name="reservation_date" required value="<?= $_POST['reservation_date'] ?? '' ?>">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Select Time</label>
+                            <input type="time" class="form-control" name="time_slot" required value="<?= $_POST['time_slot'] ?? '' ?>">
+                        </div>
+                        <div class="col-12 text-center">
+                            <button type="submit" name="check_availability" class="btn  w-100" style="background-color: #923A35; border-color: #923A35; color: white;">Check Availability</button>
+                        </div>
+                    </form>
+
+                    <?php if (!empty($_POST['reservation_date']) && !empty($_POST['time_slot'])): ?>
+                        <form method="POST" class="row g-3 mt-4">
+                            <input type="hidden" name="reservation_date" value="<?= $_POST['reservation_date'] ?>">
+                            <input type="hidden" name="time_slot" value="<?= $_POST['time_slot'] ?>">
+
+                            <div class="col-12">
+                                <label class="form-label">Select Table</label>
+                                <select name="table_id" class="form-select" required>
+                                    <?= $tablesOptions ?>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Your Name</label>
+                                <input type="text" class="form-control" name="name" placeholder="Your Name" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Your Email</label>
+                                <input type="email" class="form-control" name="email" placeholder="Your Email" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Your Phone</label>
+                                <input type="tel" class="form-control" name="phone" placeholder="Your Phone" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Number of Guests</label>
+                                <input type="number" class="form-control" name="guests" placeholder="# of people" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Additional Message</label>
+                                <textarea name="message" class="form-control" placeholder="Message" rows="3"></textarea>
+                            </div>
+                            <div class="col-12 text-center">
+                                <button type="submit" name="book_table" class="btn btn-success w-100">Book a Table</button>
+                            </div>
+                        </form>
+                    <?php endif; ?>
+                </div>
+            </div>
         </div>
-
-        <!-- نموذج الحجز -->
-        <div class="col-lg-6">
-            <h2 class="text-center mb-4 " style="color: #923A35;">Book A Table</h2>
-            <form method="POST" class="row g-3">
-                <div class="col-md-6">
-                    <label class="form-label">Select Date</label>
-                    <input type="date" class="form-control" name="reservation_date" required value="<?= $_POST['reservation_date'] ?? '' ?>">
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label">Select Time</label>
-                    <input type="time" class="form-control" name="time_slot" required value="<?= $_POST['time_slot'] ?? '' ?>">
-                </div>
-                <div class="col-12 text-center">
-                    <button type="submit" name="check_availability" class="btn  w-100" style="background-color: #923A35; border-color: #923A35; color: white;">Check Availability</button>
-                </div>
-            </form>
-
-            <?php if (!empty($_POST['reservation_date']) && !empty($_POST['time_slot'])): ?>
-                <form method="POST" class="row g-3 mt-4">
-                    <input type="hidden" name="reservation_date" value="<?= $_POST['reservation_date'] ?>">
-                    <input type="hidden" name="time_slot" value="<?= $_POST['time_slot'] ?>">
-
-                    <div class="col-12">
-                        <label class="form-label">Select Table</label>
-                        <select name="table_id" class="form-select" required>
-                            <?= $tablesOptions ?>
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Your Name</label>
-                        <input type="text" class="form-control" name="name" placeholder="Your Name" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Your Email</label>
-                        <input type="email" class="form-control" name="email" placeholder="Your Email" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Your Phone</label>
-                        <input type="tel" class="form-control" name="phone" placeholder="Your Phone" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Number of Guests</label>
-                        <input type="number" class="form-control" name="guests" placeholder="# of people" required>
-                    </div>
-                    <div class="col-12">
-                        <label class="form-label">Additional Message</label>
-                        <textarea name="message" class="form-control" placeholder="Message" rows="3"></textarea>
-                    </div>
-                    <div class="col-12 text-center">
-                        <button type="submit" name="book_table" class="btn btn-success w-100">Book a Table</button>
-                    </div>
-                </form>
-            <?php endif; ?>
-        </div>
-    </div>
-</div>
     </div>
 
     <!-- Gallery -->
@@ -529,4 +541,5 @@ require_once "./handlers/customer/reservation.php"
         loadUserNotifications();
         setInterval(loadUserNotifications, 5000);
     </script>
+    <script src="./assets/customer/js/script.js"></script>
     <?php include 'includes/customer/footer.php'; ?>

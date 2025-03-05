@@ -344,3 +344,24 @@
     color: #b22222;
   }
   
+  /* Search Bar Styling */
+  #menuSearch {
+    border-radius: 20px 0 0 20px;
+    padding: 12px 20px;
+    border: 1px solid #ddd;
+  }
+  
+  #searchButton {
+    border-radius: 0 20px 20px 0;
+    padding: 12px 20px;
+    background-color: #b42e23;
+    color: white;
+    border: 1px solid #b42e23;
+    transition: all 0.3s ease;
+  }
+  
+  #searchButton:hover {
+    background-color: #921e1a;
+    border-color: #921e1a;
+  }
+  
