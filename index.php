@@ -1,5 +1,12 @@
 <?php
 require_once "init.php";
+
+// Check if the user is logged in
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+
 require_once "./handlers/customer/reservation.php";
 require_once "./includes/customer/header.php";
 require_once "./includes/customer/nav.php";
@@ -17,12 +24,6 @@ $specialOffers = $db->mysqli->query("
 $discountMap = [];
 foreach ($specialOffers as $offer) {
     $discountMap[$offer['item_id']] = $offer;
-}
-
-// Check if the user is logged in
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit();
 }
 ?>
 
