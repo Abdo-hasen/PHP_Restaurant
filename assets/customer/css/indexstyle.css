@@ -171,30 +171,72 @@
     text-align: center;
     margin-bottom: 30px;
   }
-  .card-img-top {
+/* Menu Item Card Styling */
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content horizontally */
+    text-align: center; /* Center text inside the card */
+    border: 1px solid #ddd; /* Optional: Add a border for better visibility */
+    border-radius: 10px; /* Optional: Add rounded corners */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Optional: Add hover effect */
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Optional: Slight lift on hover */
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15); /* Optional: Enhance shadow on hover */
+}
+
+.card-img-top {
     width: 100%;
-    max-width: 200px;
-    border-radius: 50%;
-  }
-  .card-title {
-    margin-top: 15px;
+    height: 200px; /* Fixed height for images */
+    object-fit: cover; /* Ensure images cover the area */
+    border-top-left-radius: 10px; /* Match card border radius */
+    border-top-right-radius: 10px;
+}
+
+.card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Space out content */
+    padding: 15px; /* Add padding inside the card */
+    width: 100%; /* Ensure the body takes full width */
+}
+
+.card-title {
+    font-size: 1.25rem; /* Adjust title size */
     font-weight: bold;
-  }
-  .card-text {
-    color: gray;
-  }
-  .card-price {
+    margin-bottom: 10px; /* Space below the title */
+}
+
+.card-text {
+    color: #6c757d; /* Gray text for description */
+    margin-bottom: 15px; /* Space below the description */
+}
+
+.card-price {
     font-weight: bold;
-    color: #b22222;
+    color: #b22222; /* Red color for price */
     font-size: 1.2rem;
-  }
-  .card-btn{
-      background-color: #b42e23; 
+    margin-bottom: 15px; /* Space below the price */
+}
+
+.card-btn {
+    background-color: #b42e23; /* Red background for button */
     color: white;
     border-radius: 20px;
     padding: 8px 16px;
     font-weight: bold;
-  }
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.card-btn:hover {
+    background-color: #921e1a; /* Darker red on hover */
+}
   
   /* book a table styling */
   .reservation-container {

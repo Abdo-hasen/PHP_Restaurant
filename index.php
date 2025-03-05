@@ -106,7 +106,7 @@ foreach ($specialOffers as $offer) {
             $discountedPrice = $item['price'] * (1 - ($discountPercent / 100));
             ?>
             <div class="col-md-4 mb-4">
-                <div class="card h-100">
+                <div class="card h-100 text-center">
                     <?php if ($item['image_url']): ?>
                         <img src="<?= $item['image_url'] ?>" class="card-img-top" alt="<?= $item['item_name'] ?>" style="height: 200px; object-fit: cover;">
                     <?php endif; ?>
