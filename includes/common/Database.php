@@ -5,7 +5,7 @@ class Database
     // Database information
     const HOSTNAME = "localhost";
     const USERNAME = "root";
-    const PASSWORD = "";
+    const PASSWORD = "2001";
     const DATABASE = "restaurant_db";
 
     // Helper properties
@@ -163,6 +163,27 @@ class Database
             return $success;
         } catch (Exception $e) {
             error_log("Update error: " . $e->getMessage());
+            throw $e;
+        }
+    }
+
+    // Add this method to the Database class in Database.php
+    public function rawQuery(string $query): array {
+        try {
+            $result = $this->mysqli->query($query);
+            if (!$result) {
+                throw new RuntimeException("Query failed: " . $this->mysqli->error);
+            }
+
+            $data = [];
+            while ($row = $result->fetch_assoc()) {
+                $data[] = $row;
+            }
+
+            $result->free();
+            return $data;
+        } catch (Exception $e) {
+            error_log("Raw query error: " . $e->getMessage());
             throw $e;
         }
     }

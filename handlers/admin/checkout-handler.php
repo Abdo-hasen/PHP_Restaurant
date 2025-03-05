@@ -47,7 +47,11 @@ try {
     // Add payment
     $paymentData = [
         'order_id' => $order_id,
+<<<<<<< HEAD
         'payment_method' => 'Credit/Debit Card',
+=======
+        'payment_method' => 'Credit/Debit Card', // Use a valid ENUM value
+>>>>>>> e52a31900e16cb09d2e2b9c7e1b9b64474617ea0
         'amount' => $total,
         'status' => 'Completed'
     ];
@@ -58,6 +62,15 @@ try {
     unset($_SESSION['cart']);
 
     $_SESSION['success'] = "Payment processed successfully!";
+
+    // notifications
+    $db->table("notifications")->insert([
+        "user_id" => $_SESSION['user_id'], // Use the session variable
+        "message" => "Order from user: {$_SESSION['user_id']}!", // Use the session variable
+        "user_role" => "customer",
+        "type" => "Order"
+    ]);
+
     redirect(URL . "cart.php");
 } catch (Exception $e) {
     $db->mysqli->rollback();
