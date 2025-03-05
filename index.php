@@ -12,6 +12,18 @@ require_once "./includes/customer/header.php";
 require_once "./includes/customer/nav.php";
 
 $menu = $db->table("menu_items")->read();
+    $categories = $db->table('categories')->select()->get();
+    $menuData = [];
+
+    foreach ($categories as $category) {
+        $items = $db->table('menu_items')->select()->where(['category_id' => $category['category_id']])->get();
+        $menuData[] = [
+            'category' => $category,
+            'items' => $items,
+        ];
+    }
+
+
 
 //active offer
 $specialOffers = $db->mysqli->query("
@@ -90,76 +102,89 @@ foreach ($specialOffers as $offer) {
 </div>
 
 
-
-<!-- Menu -->
+<!-- menu -->
 <div class="container py-5" id="menu">
     <div class="text-center">
         <p class="text-muted">OUR MENU</p>
         <h2 class="menu-title">Check Our <span>Delicious Menu</span></h2>
     </div>
 
-    <div class="row mt-4">
-        <?php foreach ($menu as $item): ?>
-            <?php
-            $isDiscounted = isset($discountMap[$item['item_id']]);
-            $discountPercent = $isDiscounted ? $discountMap[$item['item_id']]['discount_percent'] : 0;
-            $discountedPrice = $item['price'] * (1 - ($discountPercent / 100));
-            ?>
-            <div class="col-md-4 mb-4">
-                <div class="card h-100 text-center">
-                    <?php if ($item['image_url']): ?>
-                        <img src="<?= $item['image_url'] ?>" class="card-img-top" alt="<?= $item['item_name'] ?>" style="height: 200px; object-fit: cover;">
-                    <?php endif; ?>
-                    <div class="card-body">
-                        <h5 class="card-title"><?= $item['item_name'] ?></h5>
-                        <?php if ($isDiscounted): ?>
-                            <p class="text-muted">
-                                <span class="text-decoration-line-through">$<?= number_format($item['price'], 2) ?></span>
-                                <span class="text-danger fw-bold"> $<?= number_format($discountedPrice, 2) ?></span>
-                            </p>
-                            <p class="text-success fw-bold"><?= $discountPercent ?>% OFF</p>
-                        <?php else: ?>
-                            <p class="text-muted fw-bold">$<?= number_format($item['price'], 2) ?></p>
-                        <?php endif; ?>
-                        <p class="card-text"><?= $item['description'] ?></p>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#itemModal<?= $item['item_id'] ?>">
-                            Add to Cart
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal for Special Requests -->
-            <div class="modal fade" id="itemModal<?= $item['item_id'] ?>" tabindex="-1">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title"><?= $item['item_name'] ?></h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="<?= URL ?>handlers/admin/cart-handler.php" method="POST">
-                                <input type="hidden" name="item_id" value="<?= $item['item_id'] ?>">
-                                <div class="mb-3">
-                                    <label for="quantity<?= $item['item_id'] ?>" class="form-label">Quantity</label>
-                                    <input type="number" name="quantity" id="quantity<?= $item['item_id'] ?>" class="form-control" value="1" min="1">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="notes<?= $item['item_id'] ?>" class="form-label">Special Requests</label>
-                                    <textarea name="notes" id="notes<?= $item['item_id'] ?>" class="form-control" rows="3" placeholder="e.g., no onions, extra cheese"></textarea>
-                                </div>
-                                <button type="submit" name="add_to_cart" class="btn btn-primary">Add to Cart</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+    <!-- Category Bar -->
+    <nav class="category-bar d-flex justify-content-center flex-wrap mb-4">
+        <?php foreach ($menuData as $index => $menuSection): ?>
+            <button class="category-btn btn btn-outline-primary m-2 <?= $index === 0 ? 'active' : '' ?>" 
+                    data-category-index="<?= $index ?>">
+                <?= htmlspecialchars($menuSection['category']['category_name']) ?>
+            </button>
         <?php endforeach; ?>
-    </div>
+    </nav>
+
+    <!-- Items Container -->
+    <?php foreach ($menuData as $index => $menuSection): ?>
+        <div class="items-container <?= $index === 0 ? 'active' : '' ?>" data-category-index="<?= $index ?>" style="<?= $index !== 0 ? 'display: none;' : '' ?>">
+            <h3 class="text-center mb-4"><?= htmlspecialchars($menuSection['category']['category_name']) ?></h3>
+            <p class="text-center text-muted"><?= htmlspecialchars($menuSection['category']['description']) ?></p>
+            <div class="row">
+                <?php foreach ($menuSection['items'] as $item): ?>
+                    <?php
+                    $isDiscounted = isset($discountMap[$item['item_id']]);
+                    $discountPercent = $isDiscounted ? $discountMap[$item['item_id']]['discount_percent'] : 0;
+                    $discountedPrice = $item['price'] * (1 - ($discountPercent / 100));
+                    ?>
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100 text-center">
+                            <?php if ($item['image_url']): ?>
+                                <img src="<?= $item['image_url'] ?>" class="card-img-top" alt="<?= $item['item_name'] ?>" style="height: 200px; object-fit: cover;">
+                            <?php endif; ?>
+                            <div class="card-body">
+                                <h5 class="card-title"><?= $item['item_name'] ?></h5>
+                                <?php if ($isDiscounted): ?>
+                                    <p class="text-muted">
+                                        <span class="text-decoration-line-through">$<?= number_format($item['price'], 2) ?></span>
+                                        <span class="text-danger fw-bold"> $<?= number_format($discountedPrice, 2) ?></span>
+                                    </p>
+                                    <p class="text-success fw-bold"><?= $discountPercent ?>% OFF</p>
+                                <?php else: ?>
+                                    <p class="text-muted fw-bold">$<?= number_format($item['price'], 2) ?></p>
+                                <?php endif; ?>
+                                <p class="card-text"><?= $item['description'] ?></p>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#itemModal<?= $item['item_id'] ?>">
+                                    Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal for Special Requests -->
+                    <div class="modal fade" id="itemModal<?= $item['item_id'] ?>" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title"><?= $item['item_name'] ?></h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="<?= URL ?>handlers/admin/cart-handler.php" method="POST">
+                                        <input type="hidden" name="item_id" value="<?= $item['item_id'] ?>">
+                                        <div class="mb-3">
+                                            <label for="quantity<?= $item['item_id'] ?>" class="form-label">Quantity</label>
+                                            <input type="number" name="quantity" id="quantity<?= $item['item_id'] ?>" class="form-control" value="1" min="1">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="notes<?= $item['item_id'] ?>" class="form-label">Special Requests</label>
+                                            <textarea name="notes" id="notes<?= $item['item_id'] ?>" class="form-control" rows="3" placeholder="e.g., no onions, extra cheese"></textarea>
+                                        </div>
+                                        <button type="submit" name="add_to_cart" class="btn btn-primary">Add to Cart</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    <?php endforeach; ?>
 </div>
-
-
 
 <!-- book a table -->
 <div class="container-fluid my-5" id="reservation">
@@ -169,12 +194,12 @@ foreach ($specialOffers as $offer) {
     </div>
     <div class="container my-5">
         <div class="row align-items-center reservation-container p-4 rounded shadow">
-            <!-- صورة الحجز -->
+           
             <div class="col-lg-6 mb-4 mb-lg-0">
                 <img class="img-fluid rounded w-100" src="assets/customer/images/about1.jpg" alt="Table Reservation">
             </div>
 
-            <!-- نموذج الحجز -->
+            
             <div class="col-lg-6">
                 <h2 class="text-center mb-4 " style="color: #923A35;">Book A Table</h2>
                 <form method="POST" class="row g-3">
@@ -407,6 +432,27 @@ foreach ($specialOffers as $offer) {
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
+document.addEventListener('DOMContentLoaded', function () {
+    const categoryButtons = document.querySelectorAll('.category-btn');
+    const itemsContainers = document.querySelectorAll('.items-container');
+    itemsContainers.forEach((container, index) => {
+        container.style.display = index === 0 ? 'block' : 'none';
+    });
+    categoryButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            categoryButtons.forEach(btn => btn.classList.remove('active'));
+            itemsContainers.forEach(container => {
+                container.style.display = 'none';
+            });
+            this.classList.add('active');
+            const categoryIndex = this.getAttribute('data-category-index');
+            const targetContainer = document.querySelector(`.items-container[data-category-index="${categoryIndex}"]`);
+            if (targetContainer) {
+                targetContainer.style.display = 'block';
+            }
+        });
+    });
+});
     document.getElementById("notificationBell").addEventListener("click", async function() {
         let response = await fetch("../functions/mark_all_notifications_read.php", {
             method: "POST"
