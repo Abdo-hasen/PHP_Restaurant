@@ -2,11 +2,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
       <!-- Sidebar -->
-      <div class="sidebar" data-background-color="light">
+      <div class="sidebar" data-background-color="dark">
         <div class="sidebar-logo">
           <!-- Logo Header -->
-          <div class="logo-header" data-background-color="light">
-          <a class="navbar-brand fw-bold" href="#">Resto<span class="text-danger">.</span></a>
+          <div class="logo-header" data-background-color="dark">
+          <a class="navbar-brand fw-bold text-light" href="#">Resto<span class="text-light">.</span></a>
             <div class="nav-toggle">
               <button class="btn btn-toggle toggle-sidebar">
                 <i class="gg-menu-right"></i>
