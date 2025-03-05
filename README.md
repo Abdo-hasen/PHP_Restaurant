@@ -1,7 +1,3 @@
-Here’s the modified `README.md` file based on the directory structure and details you provided:
-
----
-
 # Restaurant Management System
 
 A PHP-based web application for managing restaurant operations, including menu management, order processing, table reservations, and inventory tracking.
@@ -198,9 +194,6 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 ![Preview](assets/customer/images/preview.png)
 
 ---
-
-For any questions or issues, please open an issue on the GitHub repository.
-
 --- 
 
 This version of the `README.md` aligns with the directory structure and provides a clear, organized overview of the project. Let me know if you need further adjustments!
