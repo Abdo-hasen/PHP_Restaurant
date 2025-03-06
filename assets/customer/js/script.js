@@ -1,23 +1,37 @@
 // Menu Search Functionality
 document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('menuSearch');
-    const menuItems = document.querySelectorAll('.menu-item');
+    const searchButton = document.getElementById('searchButton');
+    const menuItems = document.querySelectorAll('.card-title');
+    const categoryButtons = document.querySelectorAll('.category-btn');
 
-    function filterMenu() {
+    function searchMenuItems() {
         const searchTerm = searchInput.value.toLowerCase();
         
+        document.querySelectorAll('.items-container').forEach(container => {
+            container.style.display = 'block';
+        });
+
         menuItems.forEach(item => {
-            const itemName = item.querySelector('.card-title').textContent.toLowerCase();
-            const itemDescription = item.querySelector('.card-text').textContent.toLowerCase();
-            
-            if (itemName.includes(searchTerm) || itemDescription.includes(searchTerm)) {
-                item.style.display = 'block';
+            const card = item.closest('.col-md-4');
+            if (item.textContent.toLowerCase().includes(searchTerm)) {
+                card.style.display = 'block';
             } else {
-                item.style.display = 'none';
+                card.style.display = 'none';
             }
         });
+
+      
+        if (searchTerm === '') {
+            document.querySelectorAll('.items-container').forEach((container, index) => {
+                container.style.display = index === 0 ? 'block' : 'none';
+            });
+            categoryButtons.forEach((button, index) => {
+                button.classList.toggle('active', index === 0);
+            });
+        }
     }
 
-    searchInput.addEventListener('input', filterMenu);
-    document.getElementById('searchButton').addEventListener('click', filterMenu);
+    searchInput.addEventListener('input', searchMenuItems);
+    searchButton.addEventListener('click', searchMenuItems);
 });

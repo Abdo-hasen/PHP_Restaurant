@@ -109,6 +109,18 @@ foreach ($specialOffers as $offer) {
         <h2 class="menu-title">Check Our <span>Delicious Menu</span></h2>
     </div>
 
+    <!-- Add Search Bar Here -->
+    <div class="row justify-content-center mb-4">
+        <div class="col-md-6">
+            <div class="input-group">
+                <input type="text" id="menuSearch" class="form-control" placeholder="Search menu items...">
+                <button class="btn btn-primary" id="searchButton" type="button">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Category Bar -->
     <nav class="category-bar d-flex justify-content-center flex-wrap mb-4">
         <?php foreach ($menuData as $index => $menuSection): ?>
@@ -394,7 +406,7 @@ foreach ($specialOffers as $offer) {
 
             <div class="col-md-3 mb-4">
                 <h5 class="fw-bold">Our Menu</h5>
-                <ul class="list-unstyled">
+                <ul class="list-unstyled" id="menuList">
                     <li><a href="#" class="menu-link">🍽️ Appetizers</a></li>
                     <li><a href="#" class="menu-link">🥩 Main Courses</a></li>
                     <li><a href="#" class="menu-link">🍰 Desserts</a></li>
@@ -498,4 +510,5 @@ document.addEventListener('DOMContentLoaded', function () {
     loadUserNotifications();
     setInterval(loadUserNotifications, 5000);
 </script>
-<?php include 'includes/customer/footer.php'; ?>
+<script src="assets/customer/js/script.js"></script>
+</body>
