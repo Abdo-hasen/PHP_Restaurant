@@ -102,11 +102,8 @@ The **Restaurant Management System** leverages a variety of technologies to ensu
 ### Backend
 - **PHP**: The core server-side scripting language used for backend logic.
 - **MySQL**: The relational database management system for storing application data.
-- **PDO (PHP Data Objects)**: A secure and consistent interface for database access.
 - **Composer**: A dependency manager for PHP, used to manage libraries and packages.
 - **PHPMailer**: A library for sending email notifications (e.g., password reset, order confirmation).
-- **Stripe API**: Integrated for secure online payment processing.
-- **JWT (JSON Web Tokens)**: Used for secure user authentication and session management.
 
 ### Frontend
 - **HTML5**: The standard markup language for creating web pages.
@@ -249,8 +246,6 @@ Below are **detailed examples and use cases** to help you understand how to use 
 3. **Delete Outdated Items**:
    - Remove outdated items from the inventory to keep it up-to-date.
 
-It’s generally a good idea to add screenshots in a **separate section** rather than embedding them directly into the detailed documentation. This keeps the documentation clean and focused on explanations, while the screenshots section can visually showcase the system's functionality. Here's how you can structure it:
-
 ---
 
 ## 5. Screenshots 📸  
@@ -352,8 +347,3 @@ Below are screenshots of the **Restaurant Management System** to give you a visu
 #### **Forgot Password**
 ![Forgot Password](Documentation/Demo/Auth/Forgot_Password.png)  
 *Users can reset their password by providing their email address.*
-
----
-
-### **Conclusion**
-The screenshots provide a visual overview of the **Restaurant Management System**, showcasing its features and user interface for both admin and customer roles. The system is designed to streamline restaurant operations and enhance the customer experience, with intuitive interfaces for menu management, order processing, table reservations, inventory tracking, and more.
