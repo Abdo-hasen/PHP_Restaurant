@@ -1,10 +1,10 @@
-# Restaurant Management System Documentation 📚  
+# Restaurant Management System Documentation  
 
 Welcome to the **detailed documentation** for the **Restaurant Management System**, a comprehensive web-based solution designed to streamline restaurant operations. This documentation provides an in-depth look at the project structure, technologies used, features, examples, advanced use cases, and additional resources to help you fully understand and utilize the system.
 
 ---
 
-## 1. Project Structure 🗂️  
+## 1. Project Structure 
 
 The **Restaurant Management System** is organized into a modular structure to ensure scalability, maintainability, and ease of development. Below is the **detailed breakdown** of the project structure:
 
@@ -120,7 +120,7 @@ The **Restaurant Management System** leverages a variety of technologies to ensu
 
 ---
 
-## 3. Features 🌟  
+## 3. Features  
 
 The **Restaurant Management System** is packed with features to help restaurant owners and staff manage their operations efficiently. Below is a **detailed breakdown** of the features:
 
@@ -196,7 +196,7 @@ The **Restaurant Management System** is packed with features to help restaurant 
 
 ---
 
-## 4. Examples and Use Cases 🧩  
+## 4. Examples and Use Cases  
 
 Below are **detailed examples and use cases** to help you understand how to use the **Restaurant Management System** effectively:
 
