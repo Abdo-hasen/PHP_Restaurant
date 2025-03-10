@@ -337,13 +337,13 @@ Below are screenshots of the **Restaurant Management System** to give you a visu
 ### **Authentication**
 
 #### **Login**
-![Login](Documentation/Demo/Auth/Login.png)  
+![Login](Documentation/Demo/Authentication/Login.png)  
 *Users can log in to their accounts using their credentials.*
 
 #### **Register**
-![Register](Documentation/Demo/Auth/Register.png)  
+![Register](Documentation/Demo/Authentication/Register.png)  
 *New users can create an account by providing their details.*
 
 #### **Forgot Password**
-![Forgot Password](Documentation/Demo/Auth/Forgot_Password.png)  
+![Forgot Password](Documentation/Demo/Authentication/Forgot_Password.png)  
 *Users can reset their password by providing their email address.*
