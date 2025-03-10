@@ -1,6 +1,6 @@
-# Restaurant Management System Documentation  
+# Restaurant Management System   
 
-Welcome to the **detailed documentation** for the **Restaurant Management System**, a comprehensive web-based solution designed to streamline restaurant operations. This documentation provides an in-depth look at the project structure, technologies used, features, examples, advanced use cases, and additional resources to help you fully understand and utilize the system.
+Welcome to the **Resto** a **Restaurant Management System**, a comprehensive web-based solution designed to streamline restaurant operations. 
 
 ---
 
