@@ -1,6 +1,6 @@
 # Restaurant Management System   
 
-Welcome to the **Resto** a **Restaurant Management System**, a comprehensive web-based solution designed to streamline restaurant operations. 
+Welcome to **Resto** a **Restaurant Management System**, a comprehensive web-based solution designed to streamline restaurant operations. 
 
 ---
 
