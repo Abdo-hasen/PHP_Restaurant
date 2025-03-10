@@ -47,11 +47,7 @@ try {
     // Add payment
     $paymentData = [
         'order_id' => $order_id,
-<<<<<<< HEAD
         'payment_method' => 'Credit/Debit Card',
-=======
-        'payment_method' => 'Credit/Debit Card', // Use a valid ENUM value
->>>>>>> e52a31900e16cb09d2e2b9c7e1b9b64474617ea0
         'amount' => $total,
         'status' => 'Completed'
     ];
